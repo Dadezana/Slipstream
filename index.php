@@ -15,10 +15,10 @@
     <!-- Right-sided navbar links -->
     <div class="right hide-small">
       <a href="#about" class="bar-item button">ABOUT</a>
-      <a href="#team" class="bar-item button"><i class="fa fa-user"></i> TEAM</a>
-      <a href="#work" class="bar-item button"><i class="fa fa-th"></i> WORK</a>
-      <a href="#pricing" class="bar-item button"><i class="fa fa-usd"></i> PRICING</a>
-      <a href="#contact" class="bar-item button"><i class="fa fa-envelope"></i> CONTACT</a>
+      <a href="#team" class="bar-item button">TEAM</a>
+      <a href="#work" class="bar-item button">GARAGE</a>
+      <a href="#pricing" class="bar-item button">PISTE</a>
+      <a href="pages/login.php" class="bar-item button">LOGIN</a>
     </div>
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
@@ -30,12 +30,11 @@
 
 <!-- Sidebar on small screens when clicking the menu icon -->
 <nav class="sidebar bar-block black card animate-left hide-medium hide-large" style="display:none" id="mySidebar">
-  <a href="javascript:void(0)" onclick="w3_close()" class="bar-item button large padding-16">Close ×</a>
-  <a href="#about" onclick="w3_close()" class="bar-item button">ABOUT</a>
+  <!-- <a href="#about" onclick="w3_close()" class="bar-item button">ABOUT</a> -->
   <a href="#team" onclick="w3_close()" class="bar-item button">TEAM</a>
-  <a href="#work" onclick="w3_close()" class="bar-item button">WORK</a>
-  <a href="#pricing" onclick="w3_close()" class="bar-item button">PRICING</a>
-  <a href="#contact" onclick="w3_close()" class="bar-item button">CONTACT</a>
+  <a href="#work" onclick="w3_close()" class="bar-item button">GARAGE</a>
+  <a href="#pricing" onclick="w3_close()" class="bar-item button">PISTE</a>
+  <a href="pages/login.php" class="bar-item button">LOGIN</a>
 </nav>
 
 <!-- Header with full-height image -->

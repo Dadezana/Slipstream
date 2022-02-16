@@ -561,7 +561,7 @@
 	<!-- Bootstrap Js -->
     <script src="js/bootstrap.min.js"></script>
 	
-	<script src="js/materialize.min.js"></script>
+	<script src="/js/materialize.min.js"></script>
 	
     <!-- Metis Menu Js -->
     <script src="js/jquery.metisMenu.js"></script>
