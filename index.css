@@ -1,4 +1,6 @@
 ﻿/* W3.CSS 4.15 December 2020 by Jan Egil and Borge Refsnes */
+@import url('https://fonts.googleapis.com/css2?family=Zen+Dots&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 html{
     box-sizing:border-box
 }
@@ -6,7 +8,12 @@ html{
     box-sizing:inherit
 }
 
-body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+:root{
+    /* --main-color: rgb(76, 155, 179); */
+    --main-color: rgb(228, 6, 6);
+}
+
+body,h1,h2,h3,h4,h5,h6 {font-family: 'Audiowide', sans-serif}
 
 body, html {
   height: 100%;
@@ -17,12 +24,15 @@ body, html {
 .bgimg-1 {
   background-position: center;
   background-size: cover;
-  background-image: url("/w3images/mac.jpg");
+  background-image: url("/img/imolaBG.jpg");
   min-height: 100%;
 }
 
 .bar .button {
   padding: 16px;
+}
+.bar .button:hover{
+    color:var(--main-color);
 }
  
 
@@ -50,7 +60,7 @@ audio,canvas,progress,video{
 
  
 code,kbd,pre,samp{
-    font-family:monospace,monospace;font-size:1em
+    font-family:'Audiowide',monospace;font-size:1em
 }
  hr{
     box-sizing:content-box;height:0;overflow:visible
@@ -115,7 +125,9 @@ legend{
  
 /* End extract */
 html,body{
-    font-family:Verdana,sans-serif;font-size:15px;line-height:1.5
+    font-family: 'Audiowide',sans-serif;
+    font-size:15px;
+    line-height:1.5
 }
  html{
     overflow-x:hidden
@@ -141,7 +153,7 @@ h1{
 }
  
 h1,h2,h3,h4,h5,h6{
-    font-family:"Segoe UI",Arial,sans-serif;font-weight:400;margin:10px 0
+    font-family:'Audiowide',Arial,sans-serif;font-weight:400;margin:10px 0
 }
  .wide{
     letter-spacing:4px
@@ -156,7 +168,18 @@ hr{
 }
 
 .button{
-    border:none;display:inline-block;padding:8px 16px;vertical-align:middle;overflow:hidden;text-decoration:none;color:inherit;background-color:inherit;text-align:center;cursor:pointer;white-space:nowrap
+    border:none;
+    display:inline-block;
+    padding:8px 16px;
+    vertical-align:middle;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    background-color:inherit;
+    text-align:center;
+    cursor:pointer;
+    white-space:nowrap;
+    font-family: 'Audiowide', 'Orbitron', monospace;
 }
  
 .button{
@@ -190,14 +213,27 @@ hr{
 }
  
 .bar{
-    width:100%;overflow:hidden
+    width:100%;
+    height: auto;
+    overflow:hidden;
 }
  .center .bar{
     display:inline-block;width:auto
 }
  
 .bar .bar-item{
-    padding:8px 16px;float:left;width:auto;border:none;display:block;outline:0
+    /* padding:8px 16px; */
+    width: auto;
+    display:block;
+    height: auto;
+    float:left;
+    border:none;
+    outline:0;
+}
+
+.bar .bar-item:hover{
+    color: var(--main-color);
+    background-color: initial;
 }
  
 .bar .button{
@@ -205,12 +241,25 @@ hr{
 }
  
 .bar-block .bar-item{
-    width:100%;display:block;padding:8px 16px;text-align:left;border:none;white-space:normal;float:none;outline:0
+    width:100%;
+    display:block;
+    padding:8px 16px;
+    text-align:left;
+    border:none;
+    white-space:normal;
+    float:none;
+    outline:0
 }
  
 .bar-block.center .bar-item{
     text-align:center
 }
+.display-container .fa{
+    color: var(--main-color);
+    cursor: pointer;
+    font-size: 20px;
+}
+
  .block{
     display:block;width:100%
 }
@@ -224,7 +273,7 @@ hr{
     float:left;width:100%
 }
  
-@media (min-width:601px){
+@media (min-width:641px){
  .quarter{
     width:24.99999%
 }
@@ -244,7 +293,7 @@ hr{
 }
 
  
-@media (max-width:600px){
+@media (max-width:640px){
     .modal-content{
         margin:0 10px;width:auto!important
     }
@@ -280,7 +329,7 @@ hr{
  
 }
  
-@media (max-width:992px) and (min-width:601px){
+@media (max-width:992px) and (min-width:641px){
     .hide-medium{
         display:none!important
     }
@@ -358,17 +407,6 @@ hr{
 }
  .opacity-off,.hover-opacity-off:hover{
     opacity:1
-}
- 
-.greyscale-max{
-    filter:grayscale(100%)
-}
- 
-.greyscale,.grayscale{
-    filter:grayscale(75%)
-}
-.grayscale-min{
-    filter:grayscale(50%)
 }
  .large{
     font-size:18px!important
@@ -448,7 +486,8 @@ hr{
 }
  
 .button:hover{
-    color:#000!important;background-color:#ccc!important
+    color:#000;
+    background-color:#ccc;
 }
  
 .transparent,.hover-none:hover{
