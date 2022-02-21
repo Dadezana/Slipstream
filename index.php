@@ -21,15 +21,16 @@
 
     <!-- Right-sided navbar links -->
     <div class="right hide-small">
-      <a href="#about" class="bar-item button">ABOUT</a>
+    <a href="index.php" class="bar-item button" style="color: var(--main-color);">HOME</a>
+      <!-- <a href="#about" class="bar-item button">ABOUT</a> -->
       <a href="#team" class="bar-item button">TEAM</a>
-      <a href="#work" class="bar-item button">GARAGE</a>
+      <a href="pages/garage.php" class="bar-item button">GARAGE</a>
       <a href="#pricing" class="bar-item button">PISTE</a>
       <a href="pages/login.php" class="bar-item button">LOGIN</a>
     </div>
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
 
-    <a href="javascript:void(0)" class="bar-item button right hide-large hide-medium" onclick="w3_open()">
+    <a href="javascript:void(0)" class="bar-item button right hide-large hide-medium" onclick="openSidebar()">
       <i class="fa fa-bars"></i>
     </a>
   </div>
@@ -37,10 +38,11 @@
 
 <!-- Sidebar on small screens when clicking the menu icon -->
 <nav class="sidebar bar-block black card animate-left hide-medium hide-large" style="display:none" id="mySidebar">
-  <!-- <a href="#about" onclick="w3_close()" class="bar-item button">ABOUT</a> -->
-  <a href="#team" onclick="w3_close()" class="bar-item button">TEAM</a>
-  <a href="#work" onclick="w3_close()" class="bar-item button">GARAGE</a>
-  <a href="#pricing" onclick="w3_close()" class="bar-item button">PISTE</a>
+  <a href="index.php" onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">HOME</a>
+  <!-- <a href="#about" onclick="closeSidebar()" class="bar-item button">ABOUT</a> -->
+  <a href="#team" onclick="closeSidebar()" class="bar-item button">TEAM</a>
+  <a href="pages/garage.php" onclick="closeSidebar()" class="bar-item button">GARAGE</a>
+  <a href="#pricing" onclick="closeSidebar()" class="bar-item button">PISTE</a>
   <a href="pages/login.php" class="bar-item button">LOGIN</a>
 </nav>
 
@@ -55,29 +57,19 @@
   <div class="display-bottomleft text-grey large" style="padding:24px 48px">
     <i class="fa fa-facebook-official hover-opacity"></i>
     <i class="fa fa-instagram hover-opacity"></i>
-    <!-- <i class="fa fa-snapchat hover-opacity"></i> -->
-    <!-- <i class="fa fa-pinterest-p hover-opacity"></i> -->
     <i class="fa fa-twitter hover-opacity"></i>
-    <!-- <i class="fa fa-linkedin hover-opacity"></i> -->
   </div>
 </header>
 
 <!-- About Section -->
  
 <script>
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
 
 
 // Toggle between showing and hiding the sidebar when clicking the menu icon
 var mySidebar = document.getElementById("mySidebar");
 
-function w3_open() {
+function openSidebar() {
   if (mySidebar.style.display === 'block') {
     mySidebar.style.display = 'none';
   } else {
@@ -86,7 +78,7 @@ function w3_open() {
 }
 
 // Close the sidebar with the close button
-function w3_close() {
+function closeSidebar() {
     mySidebar.style.display = "none";
 }
 </script>
