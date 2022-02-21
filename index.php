@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
+<title>Slipstream | Home</title>
+<link rel="icon" href="img/logoIcon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -22,14 +23,13 @@
     <!-- Right-sided navbar links -->
     <div class="right hide-small">
     <a href="index.php" class="bar-item button" style="color: var(--main-color);">HOME</a>
-      <!-- <a href="#about" class="bar-item button">ABOUT</a> -->
       <a href="#team" class="bar-item button">TEAM</a>
       <a href="pages/garage.php" class="bar-item button">GARAGE</a>
-      <a href="#pricing" class="bar-item button">PISTE</a>
+      <a href="pages/piste.php" class="bar-item button">PISTE</a>
       <a href="pages/login.php" class="bar-item button">LOGIN</a>
     </div>
-    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
-
+    
+  <!-- Hide right-floated links on small screens and replace them with a menu icon -->
     <a href="javascript:void(0)" class="bar-item button right hide-large hide-medium" onclick="openSidebar()">
       <i class="fa fa-bars"></i>
     </a>
@@ -47,7 +47,7 @@
 </nav>
 
 <!-- Header with full-height image -->
-<header class="bgimg-1 display-container" id="home">
+<header class="bgimage display-container" id="home">
   <div class="display-left text-white" style="padding:48px">
     <span class="jumbo hide-small">Start something that matters</span><br>
     <span class="xxlarge hide-large hide-medium">Start something that matters</span><br>

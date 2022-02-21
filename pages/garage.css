@@ -1,0 +1,4 @@
+.bgimage{
+    background-image: url("img/lambobg.jpg")!important;
+    filter: opacity(50%);
+}

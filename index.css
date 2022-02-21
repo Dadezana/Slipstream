@@ -19,12 +19,17 @@ body, html {
   line-height: 1.8;
 }
 
+body{
+    background-color: #111;
+}
+
 /* Full height image header */
-.bgimg-1 {
+.bgimage {
   background-position: center;
   background-size: cover;
-  background-image: url("/img/imolaBG.jpg");
+  background-image: url("img/imolaBG.jpg");
   min-height: 100%;
+  filter: opacity(87%);
 }
 
 .bar .button {

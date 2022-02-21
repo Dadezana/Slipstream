@@ -1,0 +1,4 @@
+.bgimage{
+    background-image: url("img/mclarenbg.jpg")!important;
+    filter: opacity(50%);
+}
