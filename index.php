@@ -38,12 +38,11 @@
 
 <!-- Sidebar on small screens when clicking the menu icon -->
 <nav class="sidebar bar-block black card animate-left hide-medium hide-large" style="display:none" id="mySidebar">
-  <a href="index.php" onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">HOME</a>
-  <!-- <a href="#about" onclick="closeSidebar()" class="bar-item button">ABOUT</a> -->
-  <a href="#team" onclick="closeSidebar()" class="bar-item button">TEAM</a>
+  <a href="index.php"        onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">HOME</a>
+  <a href="#team"            onclick="closeSidebar()" class="bar-item button">TEAM</a>
   <a href="pages/garage.php" onclick="closeSidebar()" class="bar-item button">GARAGE</a>
-  <a href="#pricing" onclick="closeSidebar()" class="bar-item button">PISTE</a>
-  <a href="pages/login.php" class="bar-item button">LOGIN</a>
+  <a href="#pricing"         onclick="closeSidebar()" class="bar-item button">PISTE</a>
+  <a href="pages/login.php"  onclick="closeSidebar()" class="bar-item button">LOGIN</a>
 </nav>
 
 <!-- Header with full-height image -->
@@ -52,7 +51,9 @@
     <span class="jumbo hide-small">Start something that matters</span><br>
     <span class="xxlarge hide-large hide-medium">Start something that matters</span><br>
     <span class="large">Stop wasting valuable time with projects that just isn't you.</span>
-    <p><a href="#about" class="button white padding-large large margin-top opacity hover-opacity-off">Learn more and start today</a></p>
+    
+    <!-- TODO: provare testo rosso -->
+    <p><a href="pages/garage.php" class="button padding-large large margin-top hover-red border-red">Learn more and start today</a></p>
   </div> 
   <div class="display-bottomleft text-grey large" style="padding:24px 48px">
     <i class="fa fa-facebook-official hover-opacity"></i>

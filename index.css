@@ -325,7 +325,6 @@ hr{
     text-align:center!important
 }
 
-
  .margin-top{
     margin-top:16px!important
 }
@@ -339,15 +338,11 @@ hr{
  .right{
     float:right!important
 }
- 
-.button:hover{
-    color:#000;
-    background-color:#ccc;
-}
 /* Colors */
 
 .white,.hover-white:hover{
-    color:#000!important;background-color:#fff!important
+    color:#000!important;
+    background-color:#fff!important
 }
  
 .black,.hover-black:hover{
@@ -362,4 +357,12 @@ hr{
     color:#757575!important
 }
 
- 
+.bg-red, .hover-red:hover{
+    background-color: var(--main-color);
+    border-color: var(--main-color)
+}
+
+
+.border-red{
+    border: 2px solid white;
+}
