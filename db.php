@@ -1,32 +1,33 @@
 <?php
     class DB{
-        protected $server, $db, $table;
-        private $user, $psw;
-        private $conn = NULL;
-        private $isConnected = false;
+        // protected $server, $db;
+        // private $user, $psw;
+        private $conn;
+        // private $isConnected = false;
 
-        function __construct($server, $db, $user="root", $psw=""){
-            $this->server = $server;
-            $this->db = $db;
-            $this->user = $user;
-            $this->psw = $psw;
+        function __construct(){
+            // $this->server = "localhost";
+            // $this->db = "slipstream";
+            // $this->user = "root";
+            // $this->psw = "";
         }
 
-        function connect(){
-            $conn = mysqli_connect($this->server, $this->user, $this->psw, $this->db);
-            $isConnected = false;
-            if(!$conn) return false;
+        public function connect(){
+            $this->conn = new mysqli("localhost", "root", "", "slipstream");
+            // $isConnected = false;
+            if($this->conn == false) return false;
 
-            $isConnected = true;
-            return $conn;
+            // $isConnected = true;
+            return true;
         }
 
-        function query($query){
-            return mysqli_query($this->conn, $query);
+        public function query($query){
+            $res = mysqli_query($this->conn, $query);
+            return $res;
         }
 
-        function disconnect(){
-            if(!$this->isConnected) return true;
+        public function disconnect(){
+            // if(!$this->isConnected) return true;
             return mysqli_close($this->conn);
         }
     }
