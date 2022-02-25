@@ -18,7 +18,7 @@
             if(!$conn) return false;
 
             $isConnected = true;
-            return true;
+            return $conn;
         }
 
         function query($query){
