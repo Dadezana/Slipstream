@@ -5,7 +5,7 @@
         private $conn = NULL;
         private $isConnected = false;
 
-        function DB($server, $db, $user="root", $psw=""){
+        function __construct($server, $db, $user="root", $psw=""){
             $this->server = $server;
             $this->db = $db;
             $this->user = $user;
