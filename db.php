@@ -1,34 +1,36 @@
 <?php
     class DB{
-        // protected $server, $db;
-        // private $user, $psw;
+        protected $server, $db;
+        private $user, $psw;
         private $conn;
-        // private $isConnected = false;
+        protected $res, $res_assoc;
 
         function __construct(){
-            // $this->server = "localhost";
-            // $this->db = "slipstream";
-            // $this->user = "root";
-            // $this->psw = "";
+            $this->server = "localhost";
+            $this->db = "slipstream";
+            $this->user = "root";
+            $this->psw = "";
         }
 
         public function connect(){
-            $this->conn = new mysqli("localhost", "root", "", "slipstream");
-            // $isConnected = false;
+            $this->conn = new mysqli($this->server, $this->user, $this->psw, $this->db);
             if($this->conn == false) return false;
 
-            // $isConnected = true;
             return true;
         }
 
         public function query($query){
-            $res = mysqli_query($this->conn, $query);
-            return $res;
+            $this->res = mysqli_query($this->conn, $query);
+            return $this->res;
         }
 
         public function disconnect(){
-            // if(!$this->isConnected) return true;
             return mysqli_close($this->conn);
+        }
+
+        public function fetch(){
+            $this->res_assoc = mysqli_fetch_assoc($this->res);
+            return $this->res_assoc;
         }
     }
 ?>
