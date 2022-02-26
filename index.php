@@ -52,8 +52,7 @@
     <span class="xxlarge hide-large hide-medium">Start something that matters</span><br>
     <span class="large">Stop wasting valuable time with projects that just isn't you.</span>
     
-    <!-- TODO: provare testo rosso -->
-    <p><a href="pages/garage.php" class="button padding-large large margin-top hover-red border-red">Learn more and start today</a></p>
+    <p><a href="pages/garage.php" class="button padding-large large margin-top hover-red border-white">Learn more and start today</a></p>
   </div> 
   <div class="display-bottomleft text-grey large" style="padding:24px 48px">
     <i class="fa fa-facebook-official hover-opacity"></i>

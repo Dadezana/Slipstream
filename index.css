@@ -362,7 +362,6 @@ hr{
     border-color: var(--main-color)
 }
 
-
-.border-red{
+.border-white{
     border: 2px solid white;
 }
