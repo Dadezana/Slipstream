@@ -1,3 +1,375 @@
+/* W3.CSS 4.15 December 2020 by Jan Egil and Borge Refsnes */
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+html{
+    box-sizing:border-box
+}
+ *,*:before,*:after{
+    box-sizing:inherit
+}
+
+:root{
+    /* --main-color: rgb(76, 155, 179); */
+    --main-color: rgb(228, 6, 6);
+}
+
+body,h1,h2,h3,h4,h5,h6 {font-family: 'Audiowide', sans-serif}
+
+body, html {
+  height: 100%;
+  line-height: 1.8;
+}
+
+body{
+    background-color: #111;
+}
+
+/* Full height image header */
+.bgimage {
+  background-position: center;
+  background-size: cover;
+  background-image: url("img/imolaBG.jpg");
+  min-height: 100%;
+  filter: opacity(87%);
+}
+
+.bar .button {
+  padding: 16px;
+}
+.bar .button:hover{
+    color:var(--main-color);
+}
+ 
+
+html{
+    -ms-text-size-adjust:100%;-webkit-text-size-adjust:100%
+}
+ body{
+    margin:0
+}
+ 
+footer,header,nav{
+    display:block
+}
+ 
+ hr{
+    box-sizing:content-box;height:0;overflow:visible
+}
+ 
+button,input,select,textarea,optgroup{
+    font:inherit;margin:0
+}
+ optgroup{
+    font-weight:bold
+}
+ 
+button,input{
+    overflow:visible
+}
+ button,select{
+    text-transform:none
+}
+ 
+button,[type=button],[type=reset],[type=submit]{
+    -webkit-appearance:button
+}
+ 
+button::-moz-focus-inner,[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner{
+    border-style:none;padding:0
+}
+ 
+button:-moz-focusring,[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring{
+    outline:1px dotted ButtonText
+}
+
+textarea{
+    overflow:auto
+}
+ 
+[type=checkbox],[type=radio]{
+    padding:0
+}
+ 
+[type=search]{
+    -webkit-appearance:textfield;outline-offset:-2px
+}
+ 
+[type=search]::-webkit-search-decoration{
+    -webkit-appearance:none
+}
+ 
+::-webkit-file-upload-button{
+    -webkit-appearance:button;font:inherit
+}
+ 
+/* End extract */
+html,body{
+    font-family: 'Audiowide',sans-serif;
+    font-size:15px;
+    line-height:1.5
+}
+ html{
+    overflow-x:hidden
+}
+ 
+h1{
+    font-size:36px
+}
+ h2{
+    font-size:30px
+}
+ h3{
+    font-size:24px
+}
+ h4{
+    font-size:20px
+}
+ h5{
+    font-size:18px
+}
+ h6{
+    font-size:16px
+}
+ 
+h1,h2,h3,h4,h5,h6{
+    font-family:'Audiowide',Arial,sans-serif;
+    font-weight:400;
+    margin:10px 0;
+}
+.wide{
+    letter-spacing:4px
+}
+ 
+hr{
+    border:0;border-top:1px solid #eee;margin:20px 0
+}
+ 
+.image{
+    max-width:100%;
+    height:auto
+}
+
+.button{
+    border:none;
+    display:inline-block;
+    padding:8px 16px;
+    vertical-align:middle;
+    overflow:hidden;
+    text-decoration:none;
+    color:inherit;
+    background-color:inherit;
+    text-align:center;
+    cursor:pointer;
+    white-space:nowrap;
+    font-family: 'Audiowide', 'Raleway', monospace;
+}
+ 
+.button{
+    -webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none
+}
+ 
+.ul{
+    list-style-type:none;padding:0;margin:0
+}
+.ul li{
+    padding:8px 16px;border-bottom:1px solid #ddd
+}
+ .ul li:last-child{
+    border-bottom:none
+}
+ 
+.input{
+    padding:8px;display:block;border:none;border-bottom:1px solid #ccc;width:100%
+}
+ 
+.sidebar{
+    height:100%;width:200px;background-color:#fff;position:fixed!important;z-index:1;overflow:auto
+}
+.bar{
+    width:100%;
+    height: auto;
+    overflow:hidden;
+}
+ .center .bar{
+    display:inline-block;width:auto
+}
+ 
+.bar .bar-item{
+    /* padding:8px 16px; */
+    width: auto;
+    display:block;
+    height: auto;
+    float:left;
+    border:none;
+    outline:0;
+}
+
+.bar .bar-item:hover{
+    color: var(--main-color);
+    background-color: initial;
+}
+ 
+.bar .button{
+    white-space:normal
+}
+ 
+.bar-block .bar-item{
+    width:100%;
+    display:block;
+    padding:8px 16px;
+    text-align:left;
+    border:none;
+    white-space:normal;
+    float:none;
+    outline:0
+}
+ 
+.bar-block.center .bar-item{
+    text-align:center
+}
+.display-container .fa{
+    color: var(--main-color);
+    cursor: pointer;
+    font-size: 20px;
+}
+
+ .block{
+    display:block;width:100%
+}
+ 
+.bar:before,.bar:after{
+    content:"";display:table;clear:both
+}
+
+ 
+@media (max-width:640px){
+    .hide-small{
+        display:none!important
+    }
+    .bar-item.mobile,.dropdown-hover.mobile,.dropdown-click.mobile{
+        text-align:center
+    }
+ 
+}
+ 
+@media (min-width:993px){
+
+    .hide-large{
+        display:none!important
+    }
+}
+ 
+@media (max-width:992px) and (min-width:641px){
+    .hide-medium{
+        display:none!important
+    }
+}
+ 
+.top{
+    position:fixed;width:100%;z-index:1;top:0;
+}
+ 
+.display-bottomleft{
+    position:absolute;left:0;bottom:0
+}
+ 
+.display-left{
+    position:absolute;top:50%;left:0%;transform:translate(0%,-50%);-ms-transform:translate(-0%,-50%)
+}
+ 
+.display-container:hover .display-hover{
+    display:block
+}
+ .display-container:hover span.display-hover{
+    display:inline-block
+}
+ 
+.card{
+    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+}
+ 
+.animate-left{
+    position:relative;animation:animateleft 0.4s
+}
+ @keyframes animateleft{
+    from{
+        left:-300px;opacity:0
+    }
+    to{
+        left:0;opacity:1
+    }
+}
+ 
+.opacity,.hover-opacity:hover{
+    opacity:0.60
+}
+ .opacity-off,.hover-opacity-off:hover{
+    opacity:1
+}
+ .large{
+    font-size:18px!important
+}
+ 
+.xlarge{
+    font-size:24px!important
+}
+ .xxlarge{
+    font-size:36px!important
+}
+ .jumbo{
+    font-size:64px!important
+}
+ .justify{
+    text-align:justify!important
+}
+ .center{
+    text-align:center!important
+}
+
+ .margin-top{
+    margin-top:16px!important
+}
+ .padding-large{
+    padding:12px 24px!important
+}
+ 
+.left{
+    float:left!important
+}
+ .right{
+    float:right!important
+}
+/* Colors */
+
+.white,.hover-white:hover{
+    color:#000!important;
+    background-color:#fff!important
+}
+ 
+.black,.hover-black:hover{
+    color:#fff!important;background-color:#000!important
+}
+ 
+.text-white,.hover-text-white:hover{
+    color:#fff!important
+}
+ 
+.text-grey,.hover-text-grey:hover,.text-gray,.hover-text-gray:hover{
+    color:#757575!important
+}
+
+.bg-red, .hover-red:hover{
+    background-color: var(--main-color);
+}
+
+ 
+
+
+
+
+
+
+/* Custom CSS */
+
 .bgimage{
     background-image: url("img/mclarenbg.jpg")!important;
     filter: opacity(50%);
