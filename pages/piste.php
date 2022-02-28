@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="piste.css">
-    <link rel="stylesheet" href="../index.css">
+    <link rel="stylesheet" href="css/piste.css">
     <title>Piste</title>
     <link rel="icon" href="../img/logoIcon.png" type="image/x-icon">
 </head>

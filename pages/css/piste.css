@@ -371,6 +371,6 @@ hr{
 /* Custom CSS */
 
 .bgimage{
-    background-image: url("img/mclarenbg.jpg")!important;
-    filter: opacity(50%);
+    background-image: url("../img/mclarenbg.jpg")!important;
+    filter: opacity(80%);
 }
