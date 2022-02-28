@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 25, 2022 at 08:15 PM
+-- Generation Time: Feb 28, 2022 at 04:23 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -90,7 +90,7 @@ CREATE TABLE `cliente` (
 CREATE TABLE `pista` (
   `nome` varchar(50) NOT NULL,
   `nazione` varchar(30) NOT NULL,
-  `città` varchar(30) NOT NULL,
+  `citta` varchar(30) NOT NULL,
   `km` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -98,9 +98,9 @@ CREATE TABLE `pista` (
 -- Dumping data for table `pista`
 --
 
-INSERT INTO `pista` (`nome`, `nazione`, `città`, `km`) VALUES
+INSERT INTO `pista` (`nome`, `nazione`, `citta`, `km`) VALUES
 ('Autodromo Enzo e Dino Ferrari', 'Italia', 'Imola', '4,909'),
-('Autodromo Internazionale Del Mugello', 'Italia', 'Firenze', '5245'),
+('Autodromo Internazionale Del Mugello', 'Italia', 'Firenze', '5,245'),
 ('Autodromo Nazionale Di Monza', 'Italia', 'Monza', '5,793'),
 ('Autodromo Vallelunga', 'Italia', 'Roma', '3,800');
 
