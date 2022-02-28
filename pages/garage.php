@@ -49,7 +49,7 @@
 <nav class="sidebar bar-block black card1 animate-left hide-medium hide-large" style="display:none" id="mySidebar">
   <a href="../index.php"     onclick="closeSidebar()" class="bar-item button">HOME</a>
   <a href="#team"            onclick="closeSidebar()" class="bar-item button">TEAM</a>
-  <a href="pages/garage.php" onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">GARAGE</a>
+  <a href="garage.php" onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">GARAGE</a>
   <a href="#pricing"         onclick="closeSidebar()" class="bar-item button">PISTE</a>
   <a href="login.php"        onclick="closeSidebar()" class="bar-item button">LOGIN</a>
 </nav>
@@ -62,15 +62,6 @@
 
   if(!$conn->connect()){
     echo "<script>console.log('Failed to connect to db')</script>";
-  }
-
-  $result = $conn->query("select * from auto");
-
-  if(mysqli_num_rows($result) >= 1){
-    $result = $conn->fetch();
-    // echo "<script>console.log('$result')</script>";
-  }else{
-    echo "<script>console.log('no data found')</script>";
   }
 ?>
 
