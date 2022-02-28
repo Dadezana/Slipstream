@@ -1,5 +1,12 @@
 /* W3.CSS 4.15 December 2020 by Jan Egil and Borge Refsnes */
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+:root{
+    --info-width: 440px;
+    --info-height: 50px;
+    --main-color: rgb(228, 6, 6);
+}
+
 html{
     box-sizing:border-box
 }
@@ -328,6 +335,18 @@ hr{
  .margin-top{
     margin-top:16px!important
 }
+.margin-top-120{
+    margin-top:120px!important
+}
+.margin-right-120{
+    margin-right: 120px!important;
+}
+.margin-top-40{
+    margin-top:40px!important
+}
+.margin-bottom{
+    margin-bottom:16px!important
+}
  .padding-large{
     padding:12px 24px!important
 }
@@ -359,6 +378,11 @@ hr{
 
 .bg-red, .hover-red:hover{
     background-color: var(--main-color);
+    border-color: var(--main-color);
+}
+
+.border-white{
+    border: 2px solid white;
 }
 
  
@@ -371,6 +395,57 @@ hr{
 /* Custom CSS */
 
 .bgimage{
+    /* background-image: url("../img/piste/mugellobg.jpg")!important; */
     background-image: url("../img/mclarenbg.jpg")!important;
+    background-attachment: fixed;
     filter: opacity(80%);
+}
+
+.container{
+    position: relative;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;   
+    flex-wrap: wrap;
+    /* max-width: 1200px; */
+    
+    margin: 0;
+    /* border: 1px solid red; */
+}
+
+.container .card{
+    background: rgba(50, 50 ,50, 0.3);
+    position: relative;
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(75%, -50%); */
+    width: var(--info-width);
+    height: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    box-shadow: #111 5px 5px 15px;
+    margin: 30px 25px;
+}
+
+.container .card .content{
+    /* position: relative; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    text-align: center;
+    color: white;
+}
+
+.container .card .content p{
+    font-size: 1.2em;
+    font-weight: 400;
+    margin: 9px 20px;
+}
+
+.container .track{
+    width: 300px;
+    margin-top: 20px
 }

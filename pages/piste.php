@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/piste.css">
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+<script src="https://kit.fontawesome.com/99e3b4866c.js" crossorigin="anonymous"></script>
+
+
     <title>Piste</title>
     <link rel="icon" href="../img/logoIcon.png" type="image/x-icon">
 </head>
@@ -26,6 +30,7 @@
       <a href="garage.php" class="bar-item button">GARAGE</a>
       <a href="piste.php" class="bar-item button" style="color: var(--main-color);">PISTE</a>
       <a href="login.php" class="bar-item button">LOGIN</a>
+    
     </div>
    
  <!-- Hide right-floated links on small screens and replace them with a menu icon -->
@@ -39,15 +44,74 @@
 <nav class="sidebar bar-block black card animate-left hide-medium hide-large" style="display:none" id="mySidebar">
   <a href="../index.php"     onclick="closeSidebar()" class="bar-item button">HOME</a>
   <a href="#team"            onclick="closeSidebar()" class="bar-item button">TEAM</a>
-  <a href="pages/garage.php" onclick="closeSidebar()" class="bar-item button" >GARAGE</a>
+  <a href="garage.php" onclick="closeSidebar()" class="bar-item button" >GARAGE</a>
   <a href="piste.php"         onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">PISTE</a>
   <a href="login.php"        onclick="closeSidebar()" class="bar-item button">LOGIN</a>
 </nav>
+<?php
+  require "../db.php";
 
+  $conn = new DB;
+
+  if(!$conn->connect()){
+    echo "<script>console.log('Failed to connect to db')</script>";
+  }
+?>
 <header class="bgimage display-container" id="home">
-    <!-- Page content here -->
-</header>
+    
+  <div class="container">
+    <?php $result = $conn->fetch( $conn->query("select * from pista where nome like '%Mugello%'") )?>
+    <img src="img/piste/mugellobg1.png" width="45%" class="margin-top-120">
+    
+    <div class="card">
+      <div class="content">
+        <img src="img/piste/mugello1.png" class="track">
+        <p><?php echo $result["nome"] ?></p>
+        <p style="position:absolute; top: 2px; right: 5px;"><?php echo $result["citta"] ?></p>
+        <p><?php echo $result["km"]."Km" ?></p>
 
+        <div class="container" style="width: 100%">
+          <button type="submit" value="monza" name="monza"
+              class="button hover-red border-white text-white margin-bottom margin-top-40" 
+              style="width:70%; font-size: 19px;">
+              Gareggia
+          </button>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+  </div>
+
+
+  <div class="container">
+    <?php $result = $conn->fetch( $conn->query("select * from pista where nome like '%Monza%'") )?>
+    
+    <div class="card">
+      <div class="content">
+        <img src="img/piste/monza.png" class="track">
+        <p><?php echo $result["nome"] ?></p>
+        <p style="position:absolute; top: 2px; right: 5px;"><?php echo $result["citta"] ?></p>
+        <p><?php echo $result["km"]."Km" ?></p>
+
+        <div class="container" style="width: 100%">
+          <button type="submit" value="monza" name="monza"
+              class="button hover-red border-white text-white margin-bottom margin-top-40" 
+              style="width:70%; font-size: 19px;">
+              Gareggia
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <img src="img/piste/mugellobg1.png" width="45%" class="margin-top-120">
+  </div>
+
+</header>
+<?php
+  $conn->disconnect();
+?>
 <script>
 // Toggle between showing and hiding the sidebar when clicking the menu icon
 var mySidebar = document.getElementById("mySidebar");
