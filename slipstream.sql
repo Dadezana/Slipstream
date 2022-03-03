@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 28, 2022 at 04:23 PM
+-- Generation Time: Mar 03, 2022 at 12:26 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -76,10 +76,16 @@ INSERT INTO `auto` (`targa`, `modello`, `potenza`, `coppia`, `freni`, `cilindrat
 
 CREATE TABLE `cliente` (
   `username` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
-  `età` varchar(30) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cliente`
+--
+
+INSERT INTO `cliente` (`username`, `password`, `email`) VALUES
+('ciao', '$2y$10$8vPcuKW0vnXlxzzhI4JA..5C5F6iloP1a6vQRXrIDWQdM.t2.bxQq', 'ciao@gmail.com');
 
 -- --------------------------------------------------------
 
