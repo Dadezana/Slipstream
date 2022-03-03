@@ -13,14 +13,15 @@
         }
 
         public function connect(){
-            $this->conn = new mysqli($this->server, $this->user, $this->psw, $this->db);
+        	$this->conn = new mysqli("localhost", "root", "", "slipstream");
+
             if($this->conn == false) return false;
 
             return true;
         }
 
         public function query($query){
-            $this->res = mysqli_query($this->conn, $query);
+            $this->res = mysqli_query($this->conn, $query) or die(mysqli_error($this->conn));
             return $this->res;
         }
 
