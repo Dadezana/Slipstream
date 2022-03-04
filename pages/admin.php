@@ -57,17 +57,53 @@
   <a href="admin.php"  		onclick="closeSidebar()" class="bar-item button">ACCOUNT</a>
 </nav>
 
+<?php
+	require "../db.php";
+
+	$conn = new DB;
+
+	if(!$conn->connect()){
+		echo "console.log('Failed to connect to DB')";
+		die();
+	}
+
+	$user = $_SESSION["user"];
+	$sql = "SELECT * 
+			FROM 
+			cliente INNER JOIN prenotazione
+			ON prenotazione.cliente=\"$user\"";
+	$conn->query($sql);
+	$res = $conn->fetch();
+
+	$sql = "SELECT * 
+			FROM 
+			cliente INNER JOIN 
+			(
+			`prenotazione` INNER JOIN `auto` 
+			ON 
+			prenotazione.targa=auto.targa
+			) 
+			ON 
+			prenotazione.cliente=cliente.username 
+			WHERE 
+			cliente=\"$user\"";
+
+	$auto = $conn->fetch( $conn->query($sql) );
+
+?>
+
 <header class="bgimage display-container" id="home">
 
 	<div class="container">
 	<div class="card">
 			<div class="icon-container">
-				<i class="fas fa-map-marker-alt icon"></i>
+				<i class="fas fa-clock icon"></i>
 			</div>
 			<div class="content">
-				<img src="img/piste/monza.png" class="track">
-				<p id="trackName">Monza</p>
-				<p>Persone</p>
+				<p id="topRight"><?php echo $res["ora"]; ?></p>
+				<!-- <img src="img/piste/monza.png" class="track"> -->
+				<p id="mainContent"><?php echo $res["data"]; ?></p>
+				<p>Data e Ora</p>
 			</div>
 		</div>
 
@@ -76,8 +112,9 @@
 				<i class="fas fa-steering-wheel icon wheel"></i>
 			</div>
 			<div class="content">
-				<img src="img/garage/ferrari488.png" class="track">
-				<p id="trackName">Ferrari 488</p>
+				<img src="<?php echo $auto["img"]; ?>" class="track">
+				<!-- <img src="img/garage/ferrari488.png" class="track"> -->
+				<p id="topRight"><?php echo $auto["modello"]; ?></p>
 				<p>Auto</p>
 			</div>
 		</div>
@@ -88,18 +125,18 @@
 			</div>
 			<div class="content">
 				<img src="img/piste/monza.png" class="track">
-				<p id="trackName">Monza</p>
+				<p id="topRight">Monza</p>
 				<p>Circuito</p>
 			</div>
 		</div>
 
 		<div class="card">
 			<div class="icon-container">
-				<i class="fas fa-map-marker-alt icon"></i>
+				<i class="fas fa-euro-sign icon"></i>
 			</div>
 			<div class="content">
-				<img src="img/piste/monza.png" class="track">
-				<p id="trackName">Monza</p>
+				<!-- <img src="img/piste/monza.png" class="track"> -->
+				<p id="mainContent"><?php echo $res["costo"]."€"; ?></p>
 				<p>Prezzo</p>
 			</div>
 		</div>
@@ -108,7 +145,9 @@
 </header>
  
 <a href="logout.php" style="color: white; font-size: 25px;">Logout</a>
-
+<?php
+	$conn->disconnect();
+?>
 </body>
 
 </html>
