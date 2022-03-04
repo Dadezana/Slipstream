@@ -4,14 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/garage.css">
-    <!-- <link rel="stylesheet" href="../index.css"> -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-    <!-- <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
-      integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
-      crossorigin="anonymous"
-    /> -->
     <script src="https://kit.fontawesome.com/99e3b4866c.js" crossorigin="anonymous"></script>
 
     <title>Slipstream | Garage</title>
@@ -58,7 +50,14 @@
   <a href="#team"            onclick="closeSidebar()" class="bar-item button">TEAM</a>
   <a href="garage.php" onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">GARAGE</a>
   <a href="#pricing"         onclick="closeSidebar()" class="bar-item button">PISTE</a>
-  <a href="login.php"        onclick="closeSidebar()" class="bar-item button">LOGIN</a>
+  <?php
+        session_start();
+        if(!isset($_SESSION["user"])){
+          echo "<a href=\"login.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">LOGIN</a>";
+        }else{
+          echo "<a href=\"admin.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">ACCOUNT</a>";
+        }
+	?>
 </nav>
 
 
@@ -74,6 +73,7 @@
 
 
 <header class="bgimage display-container margin-top-50" id="home">
+<form method="POST" action="garage.php">
 
   <div class="car-container">
     <div class="imgContainer">
@@ -123,16 +123,13 @@
 
         <div class="container" style="width: 100%">
 
-          <button type="submit" value="ferrari488" name="ferrari488"
+          <button type="submit" value="Ferrari 488" name="sub"
               class="button hover-red border-white text-white margin-bottom margin-top-50" 
               style="width:70%; font-size: 19px;">
               Gareggia
-          </button>
-
-          
+          </button>  
         </div>
         
-
       </div>
     </div>
   </div>
@@ -181,7 +178,7 @@
 
         <div class="container" style="width: 100%">
 
-          <button type="submit" value="ferrari488" name="ferrari488"
+          <button type="submit" value="Audi R8" name="sub"
               class="button hover-red border-white text-white margin-bottom margin-top-50" 
               style="width:70%; font-size: 19px;">
               Gareggia
@@ -201,7 +198,37 @@
 
   </div>
 
+
+</form> <!-- Deve contenere tutte le auto -->
+
 </header>
+
+<?php 
+  if(isset($_POST["sub"])){
+    session_start();
+
+    if(!isset($_SESSION["user"])){
+      echo "<script>window.location.href='admin.php';</script>";
+
+    }
+    $modello = $_POST["sub"];
+    $sql = "SELECT * FROM auto WHERE modello=\"$modello\"";
+    $result = $conn->query($sql);
+    $result = $conn->fetch();
+    $costo = 200;
+    $durata = 2;
+    $data = '2020-01-01';
+    $ora = '12:00';
+    $targa = $result["targa"];
+    $cliente = $_SESSION["user"];
+
+    $sql = "INSERT INTO prenotazione (costo, durata, data, ora, targa, cliente) VALUES (\"$costo\", \"$durata\", \"$data\", \"$ora\", \"$targa\", \"$cliente\")";
+    //mysqli_query($conn, $sql) or die( "Error: ".mysqli_errno($conn) );
+    $query = $conn->query($sql);
+  }
+  
+?>
+
 <?php
   $conn->disconnect();
 ?>
