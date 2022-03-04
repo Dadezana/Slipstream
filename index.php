@@ -32,7 +32,7 @@
           echo "<a href=\"pages/login.php\" class=\"bar-item button\">LOGIN</a>";
         }else{
           $user = $_SESSION["user"];
-          echo "<a href=\"admin.php\" class=\"bar-item button\">$user</a>";
+          echo "<a href=\"pages/admin.php\" class=\"bar-item button\">$user</a>";
         }
       ?>
       
