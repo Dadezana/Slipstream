@@ -282,6 +282,7 @@ html{
       float:left;
       border:none;
       outline:0;
+      text-transform: uppercase;
   }
   
   .bar .bar-item:hover{
