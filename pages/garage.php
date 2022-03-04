@@ -32,7 +32,8 @@
         if(!isset($_SESSION["user"])){
           echo "<a href=\"login.php\" class=\"bar-item button\">LOGIN</a>";
         }else{
-          echo "<a href=\"admin.php\" class=\"bar-item button\">ACCOUNT</a>";
+          $user = $_SESSION["user"];
+          echo "<a href=\"admin.php\" class=\"bar-item button\">$user</a>";
         }
       ?>
     </div>
@@ -55,7 +56,8 @@
         if(!isset($_SESSION["user"])){
           echo "<a href=\"login.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">LOGIN</a>";
         }else{
-          echo "<a href=\"admin.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">ACCOUNT</a>";
+          $user = $_SESSION["user"];
+          echo "<a href=\"admin.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">$user</a>";
         }
 	?>
 </nav>
@@ -196,7 +198,7 @@
       <img class="garageCar" src="img/garage/ferrari488back.png" style="width: 576px">
     </div>
 
-  </div>
+  </div>  <!-- Fine car-container -->
 
 
 </form> <!-- Deve contenere tutte le auto -->

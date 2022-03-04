@@ -1,3 +1,9 @@
+<?php
+if(isset($_SESSION["user"])){
+	header("Location: admin.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>

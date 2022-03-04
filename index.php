@@ -31,7 +31,8 @@
         if(!isset($_SESSION["user"])){
           echo "<a href=\"pages/login.php\" class=\"bar-item button\">LOGIN</a>";
         }else{
-          echo "<a href=\"pages/admin.php\" class=\"bar-item button\">ACCOUNT</a>";
+          $user = $_SESSION["user"];
+          echo "<a href=\"admin.php\" class=\"bar-item button\">$user</a>";
         }
       ?>
       
@@ -55,7 +56,8 @@
         if(!isset($_SESSION["user"])){
           echo "<a href=\"pages/login.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">LOGIN</a>";
         }else{
-          echo "<a href=\"pages/admin.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">ACCOUNT</a>";
+          $user = $_SESSION["user"];
+          echo "<a href=\"pages/admin.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">$user</a>";
         }
 	?>
 </nav>

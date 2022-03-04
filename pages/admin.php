@@ -38,7 +38,7 @@
       <a href="#team" class="bar-item button">TEAM</a>
       <a href="garage.php" class="bar-item button">GARAGE</a>
       <a href="piste.php" class="bar-item button">PISTE</a>
-      <a href="admin.php" class="bar-item button" style="color: var(--main-color);">ACCOUNT</a>
+      <a href="admin.php" class="bar-item button" style="color: var(--main-color);"><?php echo $_SESSION["user"];?></a>
     </div>
     
   <!-- Hide right-floated links on small screens and replace them with a menu icon -->
@@ -54,7 +54,7 @@
   <a href="#team"           onclick="closeSidebar()" class="bar-item button">TEAM</a>
   <a href="garage.php" 		onclick="closeSidebar()" class="bar-item button">GARAGE</a>
   <a href="piste.php"       onclick="closeSidebar()" class="bar-item button">PISTE</a>
-  <a href="admin.php"  		onclick="closeSidebar()" class="bar-item button">ACCOUNT</a>
+  <a href="admin.php"  		onclick="closeSidebar()" class="bar-item button"><?php echo $_SESSION["user"];?></a>
 </nav>
 
 <?php
