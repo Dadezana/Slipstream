@@ -32,9 +32,9 @@
       <?php
         session_start();
         if(!isset($_SESSION["user"])){
-          echo "<a href=\"pages/login.php\" class=\"bar-item button\">LOGIN</a>";
+          echo "<a href=\"login.php\" class=\"bar-item button\">LOGIN</a>";
         }else{
-          echo "<a href=\"pages/admin.php\" class=\"bar-item button\">ACCOUNT</a>";
+          echo "<a href=\"admin.php\" class=\"bar-item button\">ACCOUNT</a>";
         }
       ?>
     
