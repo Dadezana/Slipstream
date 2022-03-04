@@ -35,7 +35,14 @@
       <a href="#team" class="bar-item button">TEAM</a>
       <a href="pages/garage.php" class="bar-item button" style="color: var(--main-color);">GARAGE</a>
       <a href="piste.php" class="bar-item button">PISTE</a>
-      <a href="login.php" class="bar-item button">LOGIN</a>
+      <?php
+        session_start();
+        if(!isset($_SESSION["user"])){
+          echo "<a href=\"login.php\" class=\"bar-item button\">LOGIN</a>";
+        }else{
+          echo "<a href=\"admin.php\" class=\"bar-item button\">ACCOUNT</a>";
+        }
+      ?>
     </div>
    
  <!-- Hide right-floated links on small screens and replace them with a menu icon -->

@@ -4,8 +4,9 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Slipstream | Login</title>
 	<link rel="icon" href="../img/logoIcon.png" type="image/x-icon">
+	<title>Slipstream | Login</title>
+	
 	<link rel="stylesheet" href="css/login.css">
 	<link rel="icon" href="img/icon.ico">
 </head>
@@ -44,7 +45,14 @@
   <a href="#team"            onclick="closeSidebar()" class="bar-item button">TEAM</a>
   <a href="garage.php" onclick="closeSidebar()" class="bar-item button">GARAGE</a>
   <a href="piste.php"         onclick="closeSidebar()" class="bar-item button">PISTE</a>
-  <a href="login.php"  onclick="closeSidebar()" class="bar-item button">LOGIN</a>
+  <?php
+        session_start();
+        if(!isset($_SESSION["user"])){
+          echo "<a href=\"login.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">LOGIN</a>";
+        }else{
+          echo "<a href=\"admin.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">ACCOUNT</a>";
+        }
+	?>
 </nav>
 
 <header class="bgimage display-container" id="home">
@@ -160,7 +168,11 @@
 		$passw_hashed = $res["password"];
 
 		if( password_verify($_POST["pswlog"], $passw_hashed) ){
-			echo "<script>alert('login effettuato')</script>";
+			session_start();
+			$_SESSION["user"] = $username;
+			// header("Location: admin.php");
+			echo "<script>window.location.href='admin.php';</script>";
+			
 		}
 	}
 	$conn->disconnect();

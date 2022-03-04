@@ -26,7 +26,15 @@
       <a href="#team" class="bar-item button">TEAM</a>
       <a href="pages/garage.php" class="bar-item button">GARAGE</a>
       <a href="pages/piste.php" class="bar-item button">PISTE</a>
-      <a href="pages/login.php" class="bar-item button">LOGIN</a>
+      <?php
+        session_start();
+        if(!isset($_SESSION["user"])){
+          echo "<a href=\"pages/login.php\" class=\"bar-item button\">LOGIN</a>";
+        }else{
+          echo "<a href=\"pages/admin.php\" class=\"bar-item button\">ACCOUNT</a>";
+        }
+      ?>
+      
     </div>
     
   <!-- Hide right-floated links on small screens and replace them with a menu icon -->
@@ -41,8 +49,15 @@
   <a href="index.php"        onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">HOME</a>
   <a href="#team"            onclick="closeSidebar()" class="bar-item button">TEAM</a>
   <a href="pages/garage.php" onclick="closeSidebar()" class="bar-item button">GARAGE</a>
-  <a href="#pricing"         onclick="closeSidebar()" class="bar-item button">PISTE</a>
-  <a href="pages/login.php"  onclick="closeSidebar()" class="bar-item button">LOGIN</a>
+  <a href="pages/piste.php"  onclick="closeSidebar()" class="bar-item button">PISTE</a>
+  <?php
+        session_start();
+        if(!isset($_SESSION["user"])){
+          echo "<a href=\"pages/login.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">LOGIN</a>";
+        }else{
+          echo "<a href=\"pages/admin.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">ACCOUNT</a>";
+        }
+	?>
 </nav>
 
 <!-- Header with full-height image -->
