@@ -70,31 +70,28 @@
 	$user = $_SESSION["user"];
 	$sql = "SELECT * 
 			FROM 
-			cliente INNER JOIN prenotazione
-			ON prenotazione.cliente=\"$user\"";
-	$conn->query($sql);
-	$res = $conn->fetch();
-
-	$sql = "SELECT * 
-			FROM 
 			cliente INNER JOIN 
 			(
-			`prenotazione` INNER JOIN `auto` 
-			ON 
-			prenotazione.targa=auto.targa
-			) 
+				prenotazione INNER JOIN `auto` 
+				ON 
+				prenotazione.targa=auto.targa
+			)
 			ON 
 			prenotazione.cliente=cliente.username 
-			WHERE 
+			WHERE
 			cliente=\"$user\"";
-
-	$auto = $conn->fetch( $conn->query($sql) );
+	$reserv_query = $conn->query($sql);
+	
+	$sql1 = "SELECT * FROM pista INNER JOIN ( cliente INNER JOIN ( prenotazione INNER JOIN `auto` ON prenotazione.targa=auto.targa ) ON prenotazione.cliente=cliente.username ) ON pista.nome=auto.pista WHERE cliente=\"$user\"";
+	$track_query = $conn->query($sql1);
 
 ?>
 
-<header class="bgimage display-container" id="home">
+<header class="display-container" id="home">
 
-	<div class="container">
+<?php while($res = $conn->fetch($reserv_query)){ ?> <!-- Per mostrare più risultati della query -->
+
+	<div class="container" id="reservation">
 	<div class="card">
 			<div class="icon-container">
 				<i class="fas fa-clock icon"></i>
@@ -109,12 +106,12 @@
 
 		<div class="card">
 			<div class="icon-container">
-				<i class="fas fa-steering-wheel icon wheel"></i>
+				<i class="fas fa-car icon wheel"></i>
 			</div>
 			<div class="content">
-				<img src="<?php echo $auto["img"]; ?>" class="track">
+				<img src="<?php echo $res["img"]; ?>" class="track">
 				<!-- <img src="img/garage/ferrari488.png" class="track"> -->
-				<p id="topRight"><?php echo $auto["modello"]; ?></p>
+				<p id="topRight"><?php echo $res["modello"]; ?></p>
 				<p>Auto</p>
 			</div>
 		</div>
@@ -124,8 +121,10 @@
 				<i class="fas fa-road icon"></i>
 			</div>
 			<div class="content">
-				<img src="img/piste/monza.png" class="track">
-				<p id="topRight">Monza</p>
+				<?php  $track = $conn->fetch($track_query); ?>
+				<img src="<?php echo $track["imgT"] ?>" class="track">
+				<!-- <img src="img/piste/monza.png" class="track"> -->
+				<p id="topRight"><?php echo $track["citta"] ?></p>
 				<p>Circuito</p>
 			</div>
 		</div>
@@ -140,11 +139,52 @@
 				<p>Prezzo</p>
 			</div>
 		</div>
+		<form method="POST" action="admin.php" id="form-delete-btn">
+			
+			<button type="submit" value="<?php echo $res["ID"] ?>" name="sub" class="button" id="delete-btn"><i class="fas fa-trash-alt margin-right"></i>Elimina</button>
+		</form>
 	</div>
-        
+	
+
+<?php } ?>
+
 </header>
  
 <a href="logout.php" style="color: white; font-size: 25px;">Logout</a>
+
+
+
+<script>
+// Toggle between showing and hiding the sidebar when clicking the menu icon
+var mySidebar = document.getElementById("mySidebar");
+
+function openSidebar() {
+  if (mySidebar.style.display === 'block') {
+    mySidebar.style.display = 'none';
+  } else {
+    mySidebar.style.display = 'block';
+  }
+}
+
+// Close the sidebar with the close button
+function closeSidebar() {
+    mySidebar.style.display = "none";
+}
+</script>
+<!-- 
+	GESTIRE PRENOTAZIONI
+ -->
+<?php
+	if(!isset($_POST["sub"])){
+		die();
+	}
+
+	$id = $_POST["sub"];
+	$sql = "DELETE FROM prenotazione WHERE ID=$id";
+	$conn->query($sql);
+	
+?>
+
 <?php
 	$conn->disconnect();
 ?>
