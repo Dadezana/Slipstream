@@ -29,15 +29,7 @@
       <a href="#team" class="bar-item button">TEAM</a>
       <a href="garage.php" class="bar-item button">GARAGE</a>
       <a href="piste.php" class="bar-item button" style="color: var(--main-color);">PISTE</a>
-      <?php
-        session_start();
-        if(!isset($_SESSION["user"])){
-          echo "<a href=\"login.php\" class=\"bar-item button\">LOGIN</a>";
-        }else{
-          $user = $_SESSION["user"];
-          echo "<a href=\"admin.php\" class=\"bar-item button\">$user</a>";
-        }
-      ?>
+      <a href="login.php" class="bar-item button">LOGIN</a>
     
     </div>
    
@@ -52,17 +44,9 @@
 <nav class="sidebar bar-block black card animate-left hide-medium hide-large" style="display:none" id="mySidebar">
   <a href="../index.php"     onclick="closeSidebar()" class="bar-item button">HOME</a>
   <a href="#team"            onclick="closeSidebar()" class="bar-item button">TEAM</a>
-  <a href="garage.php"      onclick="closeSidebar()" class="bar-item button" >GARAGE</a>
+  <a href="garage.php" onclick="closeSidebar()" class="bar-item button" >GARAGE</a>
   <a href="piste.php"         onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">PISTE</a>
-  <?php
-        session_start();
-        if(!isset($_SESSION["user"])){
-          echo "<a href=\"login.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">LOGIN</a>";
-        }else{
-          $user = $_SESSION["user"];
-          echo "<a href=\"admin.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">$user</a>";
-        }
-	?>
+  <a href="login.php"        onclick="closeSidebar()" class="bar-item button">LOGIN</a>
 </nav>
 <?php
   require "../db.php";
@@ -77,7 +61,7 @@
     
   <div class="container">
     <?php $result = $conn->fetch( $conn->query("select * from pista where nome like '%Mugello%'") )?>
-    <img src="img/piste/mugellobg1.png" width="45%" class="margin-top-120">
+    <!-- <img src="img/piste/mugellobg1.png" width="45%" class="margin-top-120"> -->
     
     <div class="card">
       <div class="content">
@@ -121,9 +105,53 @@
       </div>
     </div>
 
-    <img src="img/piste/mugellobg1.png" width="45%" class="margin-top-120">
+    <!-- <img src="img/piste/mugellobg1.png" width="45%" class="margin-top-120"> -->
   </div>
 
+<div class="container">
+    <?php $result = $conn->fetch( $conn->query("select * from pista where nome like '%Vallelunga%'") )?>
+    <!-- <img src="img/piste/vallelunga.jpg" width="40%" class="margin-top-100"> -->
+    
+    <div class="card">
+      <div class="content">
+      <img src="img/piste/circuitoVallelunga.png" class="track">
+        <p><?php echo $result["nome"] ?></p>
+        <p style="position:absolute; top: 2px; right: 5px;"><?php echo $result["citta"] ?></p>
+        <p><?php echo $result["km"]."Km" ?></p>
+
+        <div class="container" style="width: 100%">
+          <button type="submit" value="Vallelunga" name="Vallelunga"
+              class="button hover-red border-white text-white margin-bottom margin-top-40" 
+              style="width:70%; font-size: 19px;">
+              Gareggia
+          </button>
+        </div>
+      </div>
+    </div>
+</div>
+
+  
+  <div class="container">
+    <?php $result = $conn->fetch( $conn->query("select * from pista where nome like '%Autodromo Enzo e Dino Ferrari%'") )?>    
+    <div class="card">
+      <div class="content">
+      <img src="img/piste/planimetraImola.png" class="track">
+        <p><?php echo $result["nome"] ?></p>
+        <p style="position:absolute; top: 2px; right: 5px;"><?php echo $result["citta"] ?></p>
+        <p><?php echo $result["km"]."Km" ?></p>
+
+        <div class="container" style="width: 100%">
+          <button type="submit" value="Vallelunga" name="Vallelunga"
+              class="button hover-red border-white text-white margin-bottom margin-top-40" 
+              style="width:70%; font-size: 19px;">
+              Gareggia
+          </button>
+        </div>
+      </div>
+       
+    </div>
+    <!-- <img src="img/piste/autodromoimola.jpg" width="40%" class="margin-top-100"> -->
+  </div>
 </header>
 <?php
   $conn->disconnect();
