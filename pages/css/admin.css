@@ -21,6 +21,8 @@ body, html {
 body{
     background-color: #111;
     margin: 0;
+    background-image: url("../img/loginbg1.jpg")!important;
+    background-attachment: fixed;
 }
 
 html{
@@ -59,7 +61,10 @@ html{
     min-width: var(--min-card-width);
     max-height: var(--min-card-height);
     /* width: var(--info-width); */
-    height: auto;
+    height: 310px;
+    min-width: 340px;
+    max-width: 350px;
+    min-height: 160px;
     border-radius: 2px;
     /* box-shadow: #111 5px 5px 15px; */
     margin: 80px 25px 30px;
@@ -127,6 +132,32 @@ html{
     width: auto;
 }
 
+#reservation{
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    border-right: 1px solid rgba(0, 0, 0, 0.5);
+    margin-top: 80px;
+    margin-bottom: -70px;   /*10px di spazio tra uno e l'altro*/
+    background-color: rgba(247, 247, 247, 0.02);
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#form-delete-btn{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+#delete-btn{
+    color: white;
+}
+#delete-btn:hover{
+    color: rgb(255, 72, 72);
+    /* text-shadow: 1px 1px 0px ; */
+}
    
   footer,header,nav{
       display:block
@@ -409,6 +440,9 @@ html{
   
    .margin-top{
       margin-top:16px!important
+  }
+  .margin-right{
+     margin-right: 5px; 
   }
    .padding-large{
       padding:12px 24px!important
