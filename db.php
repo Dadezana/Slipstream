@@ -29,8 +29,10 @@
             return mysqli_close($this->conn);
         }
 
-        public function fetch(){
-            $this->res_assoc = mysqli_fetch_assoc($this->res);
+        public function fetch($res = NULL)
+        {
+            if ($res == NULL) $res = $this->res;
+            $this->res_assoc = mysqli_fetch_assoc($res);
             return $this->res_assoc;
         }
     }
