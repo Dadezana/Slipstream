@@ -68,6 +68,22 @@
 		die();
 	}
 
+	
+?>
+<!-- 
+	GESTIRE PRENOTAZIONI
+ -->
+ <?php
+	if(isset($_POST["sub"])){
+		$id = $_POST["sub"];
+		$sql = "DELETE FROM prenotazione WHERE ID=$id";
+		$conn->query($sql);
+	}
+
+	
+	
+?>
+<?php
 	$user = $_SESSION["user"];
 	
 	if($user == "admin")
@@ -185,19 +201,6 @@ function closeSidebar() {
     mySidebar.style.display = "none";
 }
 </script>
-<!-- 
-	GESTIRE PRENOTAZIONI
- -->
-<?php
-	if(!isset($_POST["sub"])){
-		die();
-	}
-
-	$id = $_POST["sub"];
-	$sql = "DELETE FROM prenotazione WHERE ID=$id";
-	$conn->query($sql);
-	
-?>
 
 <?php
 	$conn->disconnect();
