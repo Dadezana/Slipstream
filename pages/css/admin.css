@@ -158,6 +158,24 @@ html{
     color: rgb(255, 72, 72);
     /* text-shadow: 1px 1px 0px ; */
 }
+
+#logout-btn{
+    position: fixed;
+    bottom: 8px;
+    right: 10px;
+    text-decoration: none;
+    color: white;
+}
+#logout-btn:hover{
+    color: var(--main-color)!important;
+}
+
+#username-title{
+    position: absolute;
+    text-align: center;
+    top: 5px;
+    color:white;
+}
    
   footer,header,nav{
       display:block
