@@ -56,6 +56,7 @@
   <a href="piste.php"       onclick="closeSidebar()" class="bar-item button">PISTE</a>
   <a href="admin.php"  		onclick="closeSidebar()" class="bar-item button"><?php echo $_SESSION["user"];?></a>
 </nav>
+<!-- <a href="logout.php" style="color: white; font-size: 25px;">Logout</a> -->
 
 <?php
 	require "../db.php";
@@ -68,23 +69,34 @@
 	}
 
 	$user = $_SESSION["user"];
-	$sql = "SELECT * 
-			FROM 
-			cliente INNER JOIN 
-			(
-				prenotazione INNER JOIN `auto` 
-				ON 
-				prenotazione.targa=auto.targa
-			)
-			ON 
-			prenotazione.cliente=cliente.username 
-			WHERE
-			cliente=\"$user\"";
-	$reserv_query = $conn->query($sql);
 	
-	$sql1 = "SELECT * FROM pista INNER JOIN ( cliente INNER JOIN ( prenotazione INNER JOIN `auto` ON prenotazione.targa=auto.targa ) ON prenotazione.cliente=cliente.username ) ON pista.nome=auto.pista WHERE cliente=\"$user\"";
-	$track_query = $conn->query($sql1);
+	if($user == "admin")
+		$sql = "SELECT * FROM 
+				pista INNER JOIN
+				(
+					cliente INNER JOIN
+					( 
+						prenotazione INNER JOIN `auto` 
+						ON prenotazione.targa=auto.targa
+					) 
+					ON prenotazione.cliente=cliente.username
+				)
+				ON pista.nome=auto.pista";
+	else
+		$sql = "SELECT * FROM 
+		pista INNER JOIN
+		(
+			cliente INNER JOIN
+			( 
+				prenotazione INNER JOIN `auto` 
+				ON prenotazione.targa=auto.targa
+			) 
+			ON prenotazione.cliente=cliente.username
+		)
+		ON pista.nome=auto.pista
+		WHERE cliente=\"$user\"";
 
+	$reserv_query = $conn->query($sql);
 ?>
 
 <header class="display-container" id="home">
@@ -92,13 +104,19 @@
 <?php while($res = $conn->fetch($reserv_query)){ ?> <!-- Per mostrare più risultati della query -->
 
 	<div class="container" id="reservation">
-	<div class="card">
+
+		<?php if($user == "admin"){?>
+			<div id="username-title">
+				<h3><?php echo $res["cliente"] ?></h3>
+			</div>
+		<?php } ?>
+
+		<div class="card">
 			<div class="icon-container">
 				<i class="fas fa-clock icon"></i>
 			</div>
 			<div class="content">
 				<p id="topRight"><?php echo $res["ora"]; ?></p>
-				<!-- <img src="img/piste/monza.png" class="track"> -->
 				<p id="mainContent"><?php echo $res["data"]; ?></p>
 				<p>Data e Ora</p>
 			</div>
@@ -110,7 +128,6 @@
 			</div>
 			<div class="content">
 				<img src="<?php echo $res["img"]; ?>" class="track">
-				<!-- <img src="img/garage/ferrari488.png" class="track"> -->
 				<p id="topRight"><?php echo $res["modello"]; ?></p>
 				<p>Auto</p>
 			</div>
@@ -121,10 +138,8 @@
 				<i class="fas fa-road icon"></i>
 			</div>
 			<div class="content">
-				<?php  $track = $conn->fetch($track_query); ?>
-				<img src="<?php echo $track["imgT"] ?>" class="track">
-				<!-- <img src="img/piste/monza.png" class="track"> -->
-				<p id="topRight"><?php echo $track["citta"] ?></p>
+				<img src="<?php echo $res["imgT"] ?>" class="track">
+				<p id="topRight"><?php echo $res["citta"] ?></p>
 				<p>Circuito</p>
 			</div>
 		</div>
@@ -134,7 +149,6 @@
 				<i class="fas fa-euro-sign icon"></i>
 			</div>
 			<div class="content">
-				<!-- <img src="img/piste/monza.png" class="track"> -->
 				<p id="mainContent"><?php echo $res["costo"]."€"; ?></p>
 				<p>Prezzo</p>
 			</div>
@@ -150,7 +164,7 @@
 
 </header>
  
-<a href="logout.php" style="color: white; font-size: 25px;">Logout</a>
+<a href="logout.php" id="logout-btn" style="color: white; font-size: 25px;">Logout</a>
 
 
 
