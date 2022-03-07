@@ -94,7 +94,7 @@
       <div class="card">
       
       <div class="container" style="width: 100%">
-        <h2 class="text-white"><?php echo $res["modello"]; ?></h2>
+        <h2 class="text-white" style="margin-left: 10px; margin-right: 10px;"><?php echo $res["modello"]; ?></h2>
         <h5 class="text-white margin-bottom"><?php echo $res["pista"]; ?></h4>
       </div>
       
@@ -153,7 +153,6 @@
 
     if(!isset($_SESSION["user"])){
       echo "<script>window.location.href='admin.php';</script>";
-
     }
     $targa = $_POST["sub"];
     $sql = "SELECT * FROM auto WHERE targa=\"$targa\"";
