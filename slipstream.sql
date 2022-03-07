@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 07, 2022 at 01:41 PM
+-- Generation Time: Mar 07, 2022 at 02:00 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -49,26 +49,26 @@ CREATE TABLE `auto` (
 --
 
 INSERT INTO `auto` (`targa`, `modello`, `potenza`, `coppia`, `freni`, `cilindrata`, `colore`, `manutenzione`, `pista`, `motore`, `peso`, `passo`, `img`, `imgBack`) VALUES
-('EE000HG', 'Mclaren 720s', 717, 770, 35, 3994, 'Arancione', 'true', 'Autodromo Nazionale Di Monza', 'V8', '1419', '2670 mm', 'img/garage/mclaren720davvanti.png', 'pages/img/garage/mclaren720dietro.png'),
-('EH784BG', 'Aston Martin Vulcan Amr Pro', 831, 780, 30, 7000, 'Verde chiaro', 'true', 'Autodromo Enzo e Dino Ferrari', 'V12', '1350', '4500 mm', 'img/garage/astonmartinvulcandavanti.png', 'pages/img/garage/astonmartinvulcan.png'),
-('EP865CP', 'Ferrari 488', 670, 760, 31, 3902, 'Rosso', 'true', 'Autodromo Internazionale Del Mugello', 'V8', '1385', '2650 mm', 'img/garage/ferrari488.png', 'pages/img/garage/ferrari488back.png'),
-('EW977KL', 'Porsche GT3 RS', 490, 470, 26, 3996, 'Nero', 'false', 'Autodromo Internazionale Del Mugello', '6 cilindri', '1430', '2457 mm', 'img/garage/porschegt3davanti.png', 'pages/img/garage/porschegt3dietro.png'),
-('EZ769TG', 'Audi R8', 311, 410, 39, 2200, 'Bianco', 'false', 'Autodromo Enzo e Dino Ferrari', '5 cilindri', '1595', '2597 mm', 'img/garage/Audi_R8.png', 'pages/img/garage/Audiback.png'),
-('FA488NT', 'Lotus Evora GT', 416, 420, 37, 3500, 'Arancione', 'true', 'Autodromo Internazionale Del Mugello', '6 cilindri', '1248', '2580 mm', 'img/garage/lotusdavanti.png', 'pages/img/garage/lotusdietro.png'),
-('FC59ODA', 'Mclaren 570 GT', 570, 630, 29, 3799, 'Grigio', 'true', 'Autodromo Internazionale Del Mugello', 'V8', '1495', '2670 mm', 'img/garage/mclaren570davanti.png', 'pages/img/garage/mclaren570dietro.png'),
-('FF462GS', 'Mercedes AMG GT-R', 585, 550, 37, 3982, 'Grigio', 'false', 'Autodromo Vallelunga', 'V8', '1650', '2630 mm', 'img/garage/mercedesamgdavanti.png', 'pages/img/garage/mercedesamgdietro.png'),
-('FH888LY', 'Pagani Huayra', 730, 1000, 37, 5980, 'Grigio', 'true', 'Autodromo Enzo e Dino Ferrari', 'V12', '1350', '2800 mm', 'img/garage/paganidavanti.png', 'pages/img/garage/paganidietro.png'),
-('FI119MM', 'Chevrolet Corvette', 495, 470, 37, 6162, 'Marrone', 'true', 'Autodromo Vallelunga', 'V8', '1592', '4630 mm', 'img/garage/chevroletdavanti.png', 'pages/img/garage/chevroletdietro.png'),
-('FJ558PD', 'Nissan ZGT 500', 570, 637, 29, 4000, 'Grigio', 'false', 'Autodromo Vallelunga', '4 cilindri', '1740', '2780 mm', 'img/garage/nissandavanti.png', 'pages/img/garage/nissandietro.png'),
-('FZ035CX', 'Ferrari sf90 stradale', 479, 577, 29, 2986, 'Rosso', 'false', 'Autodromo Nazionale Di Monza', 'V8', '1670', '2650 mm', 'img/garage/ferraresf90davanti.png', 'pages/img/garage/ferrsrisf90dietro.png'),
-('GA123YK', 'Mazda RX vision', 570, 270, 36, 6216, 'Rosso', 'true', 'Autodromo Enzo e Dino Ferrari', 'Rotativo', '1250', '2700 mm', 'img/garage/mazdadavanti.png', 'pages/img/garage/mazdadietro.png'),
-('GA139KM', 'Maserati MC20', 630, 710, 33, 5204, 'Blu', 'true', 'Autodromo Nazionale Di Monza', 'V6', '1478', '2700 mm', 'img/garage/maseratimc20avanti.png', 'pages/img/garage/maseratimc20dietro.png'),
-('GB352WN', 'Bugatti Divo', 1500, 1600, 39, 7993, 'Grigio', 'flase', 'Autodromo Vallelunga', 'W16', '1961', '2711 mm', 'img/garage/bugattidivodavanti.png', 'pages/img/garage/bugattidivo.png'),
-('GC228LT', 'Ford Mustang Shelby', 760, 840, 29, 5200, 'Lime', 'false', 'Autodromo Vallelunga', 'V8', '1778', '2720 mm', 'img/garage/mustangshelbydavanti.png', 'pages/img/garage/mustangshelbydietro.png'),
+('EE000HG', 'Mclaren 720s', 717, 770, 35, 3994, 'Arancione', 'true', 'Autodromo Nazionale Di Monza', 'V8', '1419', '2670 mm', 'img/garage/mclaren720davvanti.png', 'img/garage/mclaren720dietro.png'),
+('EH784BG', 'Aston Martin Vulcan Amr Pro', 831, 780, 30, 7000, 'Verde chiaro', 'true', 'Autodromo Enzo e Dino Ferrari', 'V12', '1350', '4500 mm', 'img/garage/astonmartinvulcandavanti.png', 'img/garage/astonmartinvulcan.png'),
+('EP865CP', 'Ferrari 488', 670, 760, 31, 3902, 'Rosso', 'true', 'Autodromo Internazionale Del Mugello', 'V8', '1385', '2650 mm', 'img/garage/ferrari488.png', 'img/garage/ferrari488back.png'),
+('EW977KL', 'Porsche GT3 RS', 490, 470, 26, 3996, 'Nero', 'false', 'Autodromo Internazionale Del Mugello', '6 cilindri', '1430', '2457 mm', 'img/garage/porschegt3davanti.png', 'img/garage/porschegt3dietro.png'),
+('EZ769TG', 'Audi R8', 311, 410, 39, 2200, 'Bianco', 'false', 'Autodromo Enzo e Dino Ferrari', '5 cilindri', '1595', '2597 mm', 'img/garage/Audi_R8.png', 'img/garage/Audiback.png'),
+('FA488NT', 'Lotus Evora GT', 416, 420, 37, 3500, 'Arancione', 'true', 'Autodromo Internazionale Del Mugello', '6 cilindri', '1248', '2580 mm', 'img/garage/lotusdavanti.png', 'img/garage/lotusdietro.png'),
+('FC59ODA', 'Mclaren 570 GT', 570, 630, 29, 3799, 'Grigio', 'true', 'Autodromo Internazionale Del Mugello', 'V8', '1495', '2670 mm', 'img/garage/mclaren570davanti.png', 'img/garage/mclaren570dietro.png'),
+('FF462GS', 'Mercedes AMG GT-R', 585, 550, 37, 3982, 'Grigio', 'false', 'Autodromo Vallelunga', 'V8', '1650', '2630 mm', 'img/garage/mercedesamgdavanti.png', 'img/garage/mercedesamgdietro.png'),
+('FH888LY', 'Pagani Huayra', 730, 1000, 37, 5980, 'Grigio', 'true', 'Autodromo Enzo e Dino Ferrari', 'V12', '1350', '2800 mm', 'img/garage/paganidavanti.png', 'img/garage/paganidietro.png'),
+('FI119MM', 'Chevrolet Corvette', 495, 470, 37, 6162, 'Marrone', 'true', 'Autodromo Vallelunga', 'V8', '1592', '4630 mm', 'img/garage/chevroletdavanti.png', 'img/garage/chevroletdietro.png'),
+('FJ558PD', 'Nissan ZGT 500', 570, 637, 29, 4000, 'Grigio', 'false', 'Autodromo Vallelunga', '4 cilindri', '1740', '2780 mm', 'img/garage/nissandavanti.png', 'img/garage/nissandietro.png'),
+('FZ035CX', 'Ferrari sf90 stradale', 479, 577, 29, 2986, 'Rosso', 'false', 'Autodromo Nazionale Di Monza', 'V8', '1670', '2650 mm', 'img/garage/ferraresf90davanti.png', 'img/garage/ferrsrisf90dietro.png'),
+('GA123YK', 'Mazda RX vision', 570, 270, 36, 6216, 'Rosso', 'true', 'Autodromo Enzo e Dino Ferrari', 'Rotativo', '1250', '2700 mm', 'img/garage/mazdadavanti.png', 'img/garage/mazdadietro.png'),
+('GA139KM', 'Maserati MC20', 630, 710, 33, 5204, 'Blu', 'true', 'Autodromo Nazionale Di Monza', 'V6', '1478', '2700 mm', 'img/garage/maseratimc20avanti.png', 'img/garage/maseratimc20dietro.png'),
+('GB352WN', 'Bugatti Divo', 1500, 1600, 39, 7993, 'Grigio', 'flase', 'Autodromo Vallelunga', 'W16', '1961', '2711 mm', 'img/garage/bugattidivodavanti.png', 'img/garage/bugattidivo.png'),
+('GC228LT', 'Ford Mustang Shelby', 760, 840, 29, 5200, 'Lime', 'false', 'Autodromo Vallelunga', 'V8', '1778', '2720 mm', 'img/garage/mustangshelbydavanti.png', 'img/garage/mustangshelbydietro.png'),
 ('GEY271K', 'Lamborghini Aventador', 530, 615, 31, 5200, 'Bianco', 'false', 'Autodromo Internazionale Del Mugello', 'V12', '1600', '2700 mm', '', ''),
-('GL127IJ', 'Ford GT', 410, 687, 34, 3497, 'Bianco', 'true', 'Autodromo Nazionale Di Monza', 'V6', '1500', '2710 mm', 'img/garage/fordgtdavanti.png', 'pages/img/garage/fordgtdietro.png'),
-('GM036FA', 'Bmw i8', 570, 620, 33, 4200, 'Nero', 'false', 'Autodromo Nazionale Di Monza', '3 cilindri', '1600', '2800 mm', 'img/garage/bmwdavanti.png', 'pages/img/garage/bmwdietro.png'),
-('GN472VG', 'Ferrari P80/C', 600, 700, 29, 3900, 'Rosso', 'true', 'Autodromo Enzo e Dino Ferrari', 'V8', '1260', '1800 mm', 'img/garage/ferrariP80davanti.png', 'pages/img/garage/ferrariP80dietro.png');
+('GL127IJ', 'Ford GT', 410, 687, 34, 3497, 'Bianco', 'true', 'Autodromo Nazionale Di Monza', 'V6', '1500', '2710 mm', 'img/garage/fordgtdavanti.png', 'img/garage/fordgtdietro.png'),
+('GM036FA', 'Bmw i8', 570, 620, 33, 4200, 'Nero', 'false', 'Autodromo Nazionale Di Monza', '3 cilindri', '1600', '2800 mm', 'img/garage/bmwdavanti.png', 'img/garage/bmwdietro.png'),
+('GN472VG', 'Ferrari P80/C', 600, 700, 29, 3900, 'Rosso', 'true', 'Autodromo Enzo e Dino Ferrari', 'V8', '1260', '1800 mm', 'img/garage/ferrariP80davanti.png', 'img/garage/ferrariP80dietro.png');
 
 -- --------------------------------------------------------
 
@@ -181,7 +181,7 @@ ALTER TABLE `prenotazione`
 -- AUTO_INCREMENT for table `prenotazione`
 --
 ALTER TABLE `prenotazione`
-  MODIFY `ID` int(29) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `ID` int(29) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- Constraints for dumped tables
