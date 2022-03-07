@@ -67,20 +67,43 @@
 		echo "console.log('Failed to connect to DB')";
 		die();
 	}
-
-	
 ?>
 <!-- 
 	GESTIRE PRENOTAZIONI
  -->
  <?php
-	if(isset($_POST["sub"])){
-		$id = $_POST["sub"];
+	if(isset($_POST["del"])){
+		$id = $_POST["del"];
 		$sql = "DELETE FROM prenotazione WHERE ID=$id";
 		$conn->query($sql);
 	}
 
-	
+	if(isset($_POST["mod"]))
+	{
+		$id = $_POST["mod"];
+
+		if(!empty($_POST["data"]))
+		{
+			$data = $_POST["data"];
+			echo "<script>console.log('$data')</script>";
+			$sql = "UPDATE prenotazione SET data=\"$data\" WHERE ID=\"$id\"";
+			$conn->query($sql);
+		}
+		if(!empty($_POST["auto"]))
+		{
+			$targa = $_POST["auto"];
+			echo "<script>console.log('$targa')</script>";
+			$sql = "UPDATE prenotazione SET targa=\"$targa\" WHERE ID=\"$id\"";
+			$conn->query($sql);
+		}
+		if(!empty($_POST["ora"]))
+		{
+			$ora = $_POST["ora"];
+			echo "<script>console.log('$ora')</script>";
+			$sql = "UPDATE prenotazione SET ora=\"$ora\" WHERE ID=\"$id\"";
+			$conn->query($sql);
+		}
+	}
 	
 ?>
 <?php
@@ -170,12 +193,35 @@
 			</div>
 		</div>
 		<form method="POST" action="admin.php" id="form-delete-btn">
+		
+			<button type="button" onclick="showForm()" class="button control-btn"><i class="fas fa-cog margin-right"></i>Modifica</button>
+			<button type="submit" value="<?php echo $res["ID"] ?>" name="del" class="button control-btn"><i class="fas fa-trash-alt margin-right"></i>Elimina</button>
+		</form>
+
+		<?php
+			$sql = "SELECT modello, targa FROM auto";
+			$conn->query($sql);
+		?>
+		<form method="POST" action="admin.php" id="modify-form">
+			<label for="data">Data</label>
+			<input type="date" name="data">
 			
-			<button type="submit" value="<?php echo $res["ID"] ?>" name="sub" class="button" id="delete-btn"><i class="fas fa-trash-alt margin-right"></i>Elimina</button>
+			<label for="ora">Ora</label>
+			<input type="time" name="ora">
+
+			<label for="auto">Auto</label>
+			<select name="auto">
+				<option value=""></option>
+				<?php while($temp = $conn->fetch()) { ?>
+					<option value="<?php echo $temp["targa"] ?>"><?php echo $temp["modello"] ?></option>
+				<?php } ?>
+			</select>
+
+			<button type="submit" name="mod" value="<?php echo $res["ID"]; ?>" class="button hover-red border-white margin-bottom margin-top-40">Modifica</button>
+			<button type="button" onclick="hideForm()" id="closeBtn" class="button"><i class="fas fa-times"></i></button>
 		</form>
 	</div>
 	
-
 <?php } ?>
 
 </header>
@@ -199,6 +245,15 @@ function openSidebar() {
 // Close the sidebar with the close button
 function closeSidebar() {
     mySidebar.style.display = "none";
+}
+
+function showForm(){
+	let modifyForm = document.getElementById("modify-form");
+	modifyForm.style.display = 'flex';
+}
+function hideForm(){
+	let modifyForm = document.getElementById("modify-form");
+	modifyForm.style.display = 'none';
 }
 </script>
 
