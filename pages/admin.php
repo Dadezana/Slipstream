@@ -85,21 +85,18 @@
 		if(!empty($_POST["data"]))
 		{
 			$data = $_POST["data"];
-			echo "<script>console.log('$data')</script>";
 			$sql = "UPDATE prenotazione SET data=\"$data\" WHERE ID=\"$id\"";
 			$conn->query($sql);
 		}
 		if(!empty($_POST["auto"]))
 		{
 			$targa = $_POST["auto"];
-			echo "<script>console.log('$targa')</script>";
 			$sql = "UPDATE prenotazione SET targa=\"$targa\" WHERE ID=\"$id\"";
 			$conn->query($sql);
 		}
 		if(!empty($_POST["ora"]))
 		{
 			$ora = $_POST["ora"];
-			echo "<script>console.log('$ora')</script>";
 			$sql = "UPDATE prenotazione SET ora=\"$ora\" WHERE ID=\"$id\"";
 			$conn->query($sql);
 		}
