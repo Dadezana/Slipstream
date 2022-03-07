@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 07, 2022 at 02:00 PM
+-- Generation Time: Mar 07, 2022 at 05:05 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -65,7 +65,7 @@ INSERT INTO `auto` (`targa`, `modello`, `potenza`, `coppia`, `freni`, `cilindrat
 ('GA139KM', 'Maserati MC20', 630, 710, 33, 5204, 'Blu', 'true', 'Autodromo Nazionale Di Monza', 'V6', '1478', '2700 mm', 'img/garage/maseratimc20avanti.png', 'img/garage/maseratimc20dietro.png'),
 ('GB352WN', 'Bugatti Divo', 1500, 1600, 39, 7993, 'Grigio', 'flase', 'Autodromo Vallelunga', 'W16', '1961', '2711 mm', 'img/garage/bugattidivodavanti.png', 'img/garage/bugattidivo.png'),
 ('GC228LT', 'Ford Mustang Shelby', 760, 840, 29, 5200, 'Lime', 'false', 'Autodromo Vallelunga', 'V8', '1778', '2720 mm', 'img/garage/mustangshelbydavanti.png', 'img/garage/mustangshelbydietro.png'),
-('GEY271K', 'Lamborghini Aventador', 530, 615, 31, 5200, 'Bianco', 'false', 'Autodromo Internazionale Del Mugello', 'V12', '1600', '2700 mm', '', ''),
+('GEY271K', 'Lamborghini Aventador', 530, 615, 31, 5200, 'Bianco', 'false', 'Autodromo Internazionale Del Mugello', 'V12', '1600', '2700 mm', 'img/garage/aventador.png', 'img/garage/aventadorback.png'),
 ('GL127IJ', 'Ford GT', 410, 687, 34, 3497, 'Bianco', 'true', 'Autodromo Nazionale Di Monza', 'V6', '1500', '2710 mm', 'img/garage/fordgtdavanti.png', 'img/garage/fordgtdietro.png'),
 ('GM036FA', 'Bmw i8', 570, 620, 33, 4200, 'Nero', 'false', 'Autodromo Nazionale Di Monza', '3 cilindri', '1600', '2800 mm', 'img/garage/bmwdavanti.png', 'img/garage/bmwdietro.png'),
 ('GN472VG', 'Ferrari P80/C', 600, 700, 29, 3900, 'Rosso', 'true', 'Autodromo Enzo e Dino Ferrari', 'V8', '1260', '1800 mm', 'img/garage/ferrariP80davanti.png', 'img/garage/ferrariP80dietro.png');
@@ -138,7 +138,7 @@ CREATE TABLE `prenotazione` (
 
 INSERT INTO `prenotazione` (`ID`, `costo`, `durata`, `data`, `ora`, `targa`, `cliente`) VALUES
 (17, 200, 2, '2020-01-01', '12:00', 'GB352WN', 'gino'),
-(18, 200, 2, '2022-03-08', '16:30', 'FH888LY', 'ciao'),
+(18, 200, 2, '2022-03-08', '16:30', 'GEY271K', 'ciao'),
 (4, 200, 2, '2020-01-01', '12:00', 'EW977KL', 'admin'),
 (22, 200, 2, '2022-05-11', '15:30', 'GL127IJ', 'ciao');
 
