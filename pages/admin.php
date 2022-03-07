@@ -93,6 +93,10 @@
 			$targa = $_POST["auto"];
 			$sql = "UPDATE prenotazione SET targa=\"$targa\" WHERE ID=\"$id\"";
 			$conn->query($sql);
+
+
+	$reserv_query = $conn->query($sql);
+
 		}
 		if(!empty($_POST["ora"]))
 		{
@@ -137,7 +141,7 @@
 
 <header class="display-container" id="home">
 
-<?php while($res = $conn->fetch($reserv_query)){ ?> <!-- Per mostrare più risultati della query -->
+<?php $i = 0; while($res = $conn->fetch($reserv_query)){ ?> <!-- Per mostrare più risultati della query -->
 
 	<div class="container" id="reservation">
 
@@ -191,15 +195,18 @@
 		</div>
 		<form method="POST" action="admin.php" id="form-delete-btn">
 		
-			<button type="button" onclick="showForm()" class="button control-btn"><i class="fas fa-cog margin-right"></i>Modifica</button>
+			<button type="button" onclick="showForm(<?php echo $i ?>)" class="button control-btn"><i class="fas fa-cog margin-right"></i>Modifica</button>
 			<button type="submit" value="<?php echo $res["ID"] ?>" name="del" class="button control-btn"><i class="fas fa-trash-alt margin-right"></i>Elimina</button>
 		</form>
 
 		<?php
 			$sql = "SELECT modello, targa FROM auto";
-			$conn->query($sql);
+			$auto = $conn->query($sql);
+
+			$sql = "SELECT * FROM pista";
+			$piste = $conn->query($sql);
 		?>
-		<form method="POST" action="admin.php" id="modify-form">
+		<form method="POST" action="admin.php" class="modify-form" id="<?php echo "modify-form".$i ?>">
 			<label for="data">Data</label>
 			<input type="date" name="data">
 			
@@ -209,17 +216,17 @@
 			<label for="auto">Auto</label>
 			<select name="auto">
 				<option value=""></option>
-				<?php while($temp = $conn->fetch()) { ?>
+				<?php while( $temp = $conn->fetch($auto) ) { ?>
 					<option value="<?php echo $temp["targa"] ?>"><?php echo $temp["modello"] ?></option>
 				<?php } ?>
 			</select>
 
 			<button type="submit" name="mod" value="<?php echo $res["ID"]; ?>" class="button hover-red border-white margin-bottom margin-top-40">Modifica</button>
-			<button type="button" onclick="hideForm()" id="closeBtn" class="button"><i class="fas fa-times"></i></button>
+			<button type="button" onclick="hideForm(<?php echo $i ?>)" id="closeBtn" class="button"><i class="fas fa-times"></i></button>
 		</form>
 	</div>
 	
-<?php } ?>
+<?php $i++; } ?>
 
 </header>
  
@@ -244,12 +251,12 @@ function closeSidebar() {
     mySidebar.style.display = "none";
 }
 
-function showForm(){
-	let modifyForm = document.getElementById("modify-form");
+function showForm(index){
+	let modifyForm = document.getElementById("modify-form" + index);
 	modifyForm.style.display = 'flex';
 }
-function hideForm(){
-	let modifyForm = document.getElementById("modify-form");
+function hideForm(index){
+	let modifyForm = document.getElementById("modify-form" + index);
 	modifyForm.style.display = 'none';
 }
 </script>
