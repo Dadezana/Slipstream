@@ -177,10 +177,9 @@ html{
     color:white;
 }
 
-#modify-form{
+.modify-form{
     position: absolute;
     color: black;
-    display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -192,25 +191,25 @@ html{
     display: none;
 }
 
-#modify-form label{
+.modify-form label{
     width:100%;
     text-align: center;
     margin: 10px 0 2px;
 }
-#modify-form input{
+.modify-form input{
     margin: auto;
 }
-#modify-form button{
+.modify-form button{
     margin: 30px 20px 10px;
     border-color: black;
 
 }
-#modify-form button:hover{
+.modify-form button:hover{
     color:white;
     border-color: var(--main-color);
 }
 
-#modify-form #closeBtn{
+.modify-form #closeBtn{
     position: absolute;
     top: 2px;
     right:5px;
@@ -220,7 +219,7 @@ html{
     cursor: pointer;
     background-color: transparent;
 }
-#modify-form #closeBtn:hover{
+.modify-form #closeBtn:hover{
     color: var(--main-color);
 }
    
