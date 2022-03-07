@@ -73,62 +73,67 @@
   }
 ?>
 
+<?php
+		$sql = "SELECT * FROM auto WHERE 1";
+    $reserv_query = $conn->query($sql);
+?>
+
+
 
 <header class="bgimage display-container margin-top-50" id="home">
+  <?php while($res = $conn->fetch($reserv_query)){ ?>
 <form method="POST" action="garage.php">
 
   <div class="car-container">
     <div class="imgContainer">
-      <img class="garageCar" src="img/garage/ferrari488.png" style="width: 576px">
-      <img class="garageCar" src="img/garage/ferrari488back.png" style="width: 576px">
+      <img class="garageCar" src="<?php echo $res["img"];?>" style="width: 576px">
+      <img class="garageCar" src="<?php echo $res["imgBack"];?>" style="width: 576px">
     </div>
   
     <div class="container">
       <div class="card">
-      <?php $result = $conn->fetch( $conn->query("select * from auto where modello LIKE 'Ferrari 488'") ); ?>
       
       <div class="container" style="width: 100%">
-        <h2 class="text-white"><?php echo $result["modello"]; ?></h2>
-        <h5 class="text-white margin-bottom"><?php echo $result["pista"]; ?></h4>
+        <h2 class="text-white"><?php echo $res["modello"]; ?></h2>
+        <h5 class="text-white margin-bottom"><?php echo $res["pista"]; ?></h4>
       </div>
       
 
         <div class="content">
             <p id="info2">Potenza</p>
-            <p id="value2"><?php echo $result["potenza"]."cv" ?></p>  <!-- cavalli -->
+            <p id="value2"><?php echo $res["potenza"]."cv" ?></p>  <!-- cavalli -->
         </div>
 
         <div class="content">
             <p id="info3">Coppia</p>
-            <p id="value3"><?php echo $result["coppia"]."Nm" ?></p> <!-- Newton metro -->
+            <p id="value3"><?php echo $res["coppia"]."Nm" ?></p> <!-- Newton metro -->
         </div>
 
         <div class="content">
             <p id="info4">Freni</p>
-            <p id="value4"><?php echo $result["freni"]."m" ?></p> <!-- Metri. Calcolati andando a 100km/h -->
+            <p id="value4"><?php echo $res["freni"]."m" ?></p> <!-- Metri. Calcolati andando a 100km/h -->
         </div>
 
         <div class="content">
             <p id="info5">Cilindrata</p>
-            <p id="value5"><?php echo $result["cilindrata"]."cc" ?></p> <!-- Centimetri cubici -->
+            <p id="value5"><?php echo $res["cilindrata"]."cc" ?></p> <!-- Centimetri cubici -->
         </div>
 
         <div class="content">
             <p id="info5">Peso</p>
-            <p id="value5"><?php echo $result["peso"]."Kg" ?></p> <!-- Kilogrammi -->
+            <p id="value5"><?php echo $res["peso"]."Kg" ?></p> <!-- Kilogrammi -->
         </div>
 
         <div class="content">
             <p id="info5">Colore</p>
-            <p id="value5"><?php echo $result["colore"] ?></p> 
+            <p id="value5"><?php echo $res["colore"] ?></p> 
         </div>
 
         <div class="container" style="width: 100%">
 
-          <button type="submit" value="Ferrari 488" name="sub"
+          <button type="submit" value="<?php echo $res["targa"]?>" name="sub"
               class="button hover-red border-white text-white margin-bottom margin-top-50" 
-              style="width:70%; font-size: 19px;">
-              Gareggia
+              style="width:70%; font-size: 19px;">Gareggia
           </button>  
         </div>
         
@@ -136,72 +141,9 @@
     </div>
   </div>
 
-<!-- CAR 2 -->
-  <div class="car-container">
-  
-    <div class="container">
-      <div class="card">
-        <?php $result = $conn->fetch( $conn->query("select * from auto where modello LIKE 'Audi R8'") ); ?>
-      
-        <div class="container" style="width: 100%">
-          <h2 class="text-white"><?php echo $result["modello"]; ?></h2>
-          <h5 class="text-white margin-bottom"><?php echo $result["pista"]; ?></h4>
-        </div>
-      
-        <div class="content">
-            <p id="info2">Potenza</p>
-            <p id="value2"><?php echo $result["potenza"]."cv" ?></p>  <!-- cavalli -->
-        </div>
-
-        <div class="content">
-            <p id="info3">Coppia</p>
-            <p id="value3"><?php echo $result["coppia"]."Nm" ?></p> <!-- Newton metro -->
-        </div>
-
-        <div class="content">
-            <p id="info4">Freni</p>
-            <p id="value4"><?php echo $result["freni"]."m" ?></p> <!-- Metri. Calcolati andando a 100km/h -->
-        </div>
-
-        <div class="content">
-            <p id="info5">Cilindrata</p>
-            <p id="value5"><?php echo $result["cilindrata"]."cc" ?></p> <!-- Centimetri cubici -->
-        </div>
-
-        <div class="content">
-            <p id="info5">Peso</p>
-            <p id="value5"><?php echo $result["peso"]."Kg" ?></p> <!-- Kilogrammi -->
-        </div>
-
-        <div class="content">
-            <p id="info5">Colore</p>
-            <p id="value5"><?php echo $result["colore"] ?></p> 
-        </div>
-
-        <div class="container" style="width: 100%">
-
-          <button type="submit" value="Audi R8" name="sub"
-              class="button hover-red border-white text-white margin-bottom margin-top-50" 
-              style="width:70%; font-size: 19px;">
-              Gareggia
-          </button>
-
-          
-        </div>
-        
-
-      </div>
-    </div> <!-- Card -->
-
-    <div class="imgContainer">
-      <img class="garageCar" src="img/garage/ferrari488.png" style="width: 576px">
-      <img class="garageCar" src="img/garage/ferrari488back.png" style="width: 576px">
-    </div>
-
-  </div>  <!-- Fine car-container -->
-
-
 </form> <!-- Deve contenere tutte le auto -->
+
+<?php } ?>
 
 </header>
 
@@ -213,15 +155,15 @@
       echo "<script>window.location.href='admin.php';</script>";
 
     }
-    $modello = $_POST["sub"];
-    $sql = "SELECT * FROM auto WHERE modello=\"$modello\"";
+    $targa = $_POST["sub"];
+    $sql = "SELECT * FROM auto WHERE targa=\"$targa\"";
     $result = $conn->query($sql);
     $result = $conn->fetch();
     $costo = 200;
     $durata = 2;
     $data = '2020-01-01';
     $ora = '12:00';
-    $targa = $result["targa"];
+    // $targa = $result["targa"];
     $cliente = $_SESSION["user"];
 
     $sql = "INSERT INTO prenotazione (costo, durata, data, ora, targa, cliente) VALUES (\"$costo\", \"$durata\", \"$data\", \"$ora\", \"$targa\", \"$cliente\")";
