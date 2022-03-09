@@ -29,7 +29,15 @@
       <a href="#team" class="bar-item button">TEAM</a>
       <a href="garage.php" class="bar-item button">GARAGE</a>
       <a href="piste.php" class="bar-item button" style="color: var(--main-color);">PISTE</a>
-      <a href="login.php" class="bar-item button">LOGIN</a>
+      <?php
+        session_start();
+        if(!isset($_SESSION["user"])){
+          echo "<a href=\"login.php\" class=\"bar-item button\">LOGIN</a>";
+        }else{
+          $user = $_SESSION["user"];
+          echo "<a href=\"admin.php\" class=\"bar-item button\">$user</a>";
+        }
+      ?>
     
     </div>
    
@@ -46,7 +54,15 @@
   <a href="#team"            onclick="closeSidebar()" class="bar-item button">TEAM</a>
   <a href="garage.php" onclick="closeSidebar()" class="bar-item button" >GARAGE</a>
   <a href="piste.php"         onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">PISTE</a>
-  <a href="login.php"        onclick="closeSidebar()" class="bar-item button">LOGIN</a>
+  <?php
+        session_start();
+        if(!isset($_SESSION["user"])){
+          echo "<a href=\"login.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">LOGIN</a>";
+        }else{
+          $user = $_SESSION["user"];
+          echo "<a href=\"admin.php\" class=\"bar-item button\" onclick=\"closeSidebar()\">$user</a>";
+        }
+	?>
 </nav>
 <?php
   require "../db.php";
