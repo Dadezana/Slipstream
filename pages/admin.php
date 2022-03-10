@@ -202,9 +202,6 @@
 		<?php
 			$sql = "SELECT modello, targa FROM auto";
 			$auto = $conn->query($sql);
-
-			$sql = "SELECT * FROM pista";
-			$piste = $conn->query($sql);
 		?>
 		<form method="POST" action="admin.php" class="modify-form" id="<?php echo "modify-form".$i ?>">
 			<label for="data">Data</label>
@@ -221,7 +218,7 @@
 				<?php } ?>
 			</select>
 
-			<button type="submit" name="mod" value="<?php echo $res["ID"]; ?>" class="button hover-red border-white margin-bottom margin-top-40">Modifica</button>
+			<button type="submit" name="mod" value="<?php echo $res["ID"]; ?>" style="width: 50%;" class="button hover-red border-black margin-bottom margin-top-20">Modifica</button>
 			<button type="button" onclick="hideForm(<?php echo $i ?>)" id="closeBtn" class="button"><i class="fas fa-times"></i></button>
 		</form>
 	</div>
@@ -229,37 +226,136 @@
 <?php $i++; } ?>
 
 </header>
- 
-<a href="logout.php" id="logout-btn" style="color: white; font-size: 25px;">Logout</a>
 
+<!--
+	MODIFICARE STATO MANUTENZIONE AUTO
+-->
+<div class="control-btn-low">
+	<?php if($user == "admin"){ ?>
+		<button type="button" class="a" onclick="showMantainance()">Officina</button>
+	<?php } ?>
+	<button type="button" onclick="window.location.href='logout.php'" class="a">Logout</a>
+</div>
+
+<!--
+	CAMBIARE STATO MANUTENZIONE
+ -->
+ <?php
+	$auto = array();
+	if(isset($_POST["mantSub"])){
+		
+		// if(!empty($_POST["auto"])){
+
+			foreach($_POST["auto"] as $targa)
+			{
+				array_push($auto, $targa);
+				$sql = "UPDATE 
+							auto 
+						SET 
+							manutenzione = true
+						WHERE
+							targa = \"$targa\"";
+				$conn->query($sql);
+			}
+
+		// }
+
+		$auto_query = $conn->query("SELECT * FROM auto");
+
+		while($res = $conn->fetch($auto_query))
+		{
+			$targa = $res["targa"];
+			if( !in_array($targa, $auto) )
+			{
+				$sql = "UPDATE 
+							auto 
+						SET 
+							manutenzione = false
+						WHERE
+							targa = \"$targa\"";
+				$conn->query($sql);
+			}
+		}
+
+	}
+	
+?>
+
+<?php
+	if($user == "admin"){
+		$sql = "SELECT * FROM auto";
+		$conn->query($sql);
+?>
+		<div class="manutenzione-container" id="officina">
+			<form action="admin.php" method="POST" class="manutenzione-form">
+
+				<div style="width: 100%;display: flex;justify-content: space-between;align-items: center;">
+					<p style="margin-left: 80px">Auto</p>
+					<p style="margin-right: 80px">Manutenzione</p>
+				</div>    
+				
+				<?php $i = 0;while($res = $conn->fetch()) {?>
+					<div class="content">
+						<?php if($res["manutenzione"]) {?>
+							<i class="fas fa-tools" style="margin-left: 20px; font-size:13px; color: rgba(0, 0, 0, 0.5)"></i> 
+						<?php }else { ?>
+							<i class="fas fa-tools" style="margin-left: 20px; font-size:13px; color:transparent"></i>
+						<?php } ?>				
+
+						<label for="manutenzione<?php echo $i;?>"><?php echo $res["modello"] ?></label>
+						<input type="checkbox" value="<?php echo $res["targa"];?>" id="manutenzione<?php echo $i;?>" name="auto[]" <?php if($res["manutenzione"]) echo "checked"; ?>>
+					</div>
+				<?php $i++;} ?>
+				<button type="button" onclick="hideMantainance()" id="closeBtn" class="button"><i class="fas fa-times"></i></button>
+				
+				<button type="submit" name="mantSub" style="width: 73%;" class="button hover-red border-black margin-bottom-20 margin-top">Modifica</button>
+				
+			</form>
+		</div>
+<?php } ?>
 
 
 <script>
-// Toggle between showing and hiding the sidebar when clicking the menu icon
-var mySidebar = document.getElementById("mySidebar");
+	// Toggle between showing and hiding the sidebar when clicking the menu icon
+	var mySidebar = document.getElementById("mySidebar");
 
-function openSidebar() {
-  if (mySidebar.style.display === 'block') {
-    mySidebar.style.display = 'none';
-  } else {
-    mySidebar.style.display = 'block';
-  }
-}
+	function openSidebar() {
+	if (mySidebar.style.display === 'block') {
+		mySidebar.style.display = 'none';
+	} else {
+		mySidebar.style.display = 'block';
+	}
+	}
+	// Close the sidebar with the close button
+	function closeSidebar() {
+		mySidebar.style.display = "none";
+	}
 
-// Close the sidebar with the close button
-function closeSidebar() {
-    mySidebar.style.display = "none";
-}
 
-function showForm(index){
-	let modifyForm = document.getElementById("modify-form" + index);
-	modifyForm.style.display = 'flex';
-}
-function hideForm(index){
-	let modifyForm = document.getElementById("modify-form" + index);
-	modifyForm.style.display = 'none';
-}
+	function showForm(index){
+		let modifyForm = document.getElementById("modify-form" + index);
+		modifyForm.style.display = 'flex';
+		modifyForm.classList.add('');
+	}
+	function hideForm(index){
+		let modifyForm = document.getElementById("modify-form" + index);
+		modifyForm.style.display = 'none';
+	}
 </script>
+
+<?php if($user == "admin"){ ?>
+<script>
+	function showMantainance(){
+		officina = document.getElementById("officina");
+		officina.style.display = 'flex';
+	}
+
+	function hideMantainance(){
+		officina = document.getElementById("officina");
+		officina.style.display = 'none';
+	}
+</script>
+<?php } ?>
 
 <?php
 	$conn->disconnect();
