@@ -187,6 +187,68 @@ a{color:inherit;text-decoration:none}
 	text-align:center;
 }
 
+.notify-container{
+    position: fixed;
+    color: black;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 340px;
+    background-color: rgba(255, 255, 255, 0.0);
+    border-radius: 2px;
+    top: 80px;
+    right: -300px;
+    box-shadow: 3px 3px 8px black;
+    padding: 0;
+    border-top: 1px solid rgb(255, 255, 255);
+    border-left: 1px solid rgb(255, 255, 255);
+    animation: notify 7s linear;
+    max-width: 250px;
+    min-width: 250px;
+}
+@keyframes notify {
+    0%, 100%{
+        right: -300px;
+    }
+
+    10%{
+        right: 30px;
+    }
+
+    85%{
+        right: 30px;
+    }
+}
+
+.notify-line{
+    animation: expand 7s linear;
+    height: 7px !important;
+    margin: 0 !important;
+    padding:0 !important;
+}
+
+@keyframes expand {
+    0%, 10%{
+        width: 0.1%;
+        opacity: 1;
+    }
+    85%{
+        width: 100%;
+        opacity: 1;
+    }
+    86%, 100%{
+        opacity: 0;
+    }
+}
+
+.notify-container p{
+    font-size: 18px;
+    color: white;
+    width: 100%;
+    text-align: center;
+    margin: 9px 0;
+}
 
 
 

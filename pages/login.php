@@ -179,7 +179,12 @@ if(isset($_SESSION["user"])){
 			// header("Location: admin.php");
 			echo "<script>window.location.href='admin.php';</script>";
 			
-		}
+		}else{ ?>
+			<div class="notify-container">
+				<p>Credenziali errate</p>
+				<p class="bg-red notify-line"></p>
+			</div>
+	<?php }
 	}
 	$conn->disconnect();
 ?>
