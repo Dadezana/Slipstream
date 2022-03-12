@@ -599,3 +599,6 @@ hr{
 .border-white{
     border: 2px solid white;
 }
+  .bg-white{
+      background-color: white!important;
+  }

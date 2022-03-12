@@ -151,7 +151,11 @@ if(isset($_SESSION["user"])){
 
 		echo "<script>console.log('before query')</script>";
 		$query = $conn->query($sql);
-		echo "<script>alert('Registrazione effettuata con successo!'); </script>";
+		echo "<div class=\"notify-container\">
+				<p>Registrazione effettuata!</p>
+				<p class=\"bg-red notify-line\"></p>
+			</div>";
+		
 
 	}
 	else if($_POST["sub"] == "Accedi")
@@ -180,9 +184,9 @@ if(isset($_SESSION["user"])){
 			echo "<script>window.location.href='admin.php';</script>";
 			
 		}else{ ?>
-			<div class="notify-container">
+			<div class="notify-container bg-red">
 				<p>Credenziali errate</p>
-				<p class="bg-red notify-line"></p>
+				<p class="notify-line bg-white"></p>
 			</div>
 	<?php }
 	}
