@@ -151,9 +151,9 @@ if(isset($_SESSION["user"])){
 
 		echo "<script>console.log('before query')</script>";
 		$query = $conn->query($sql);
-		echo "<div class=\"notify-container\">
+		echo "<div class=\"notify-container bg-red\">
 				<p>Registrazione effettuata!</p>
-				<p class=\"bg-red notify-line\"></p>
+				<p class=\"bg-red notify-line bg-white\"></p>
 			</div>";
 		
 
