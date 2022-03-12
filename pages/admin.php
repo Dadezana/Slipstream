@@ -75,7 +75,10 @@
 	if(isset($_POST["del"])){
 		$id = $_POST["del"];
 		$sql = "DELETE FROM prenotazione WHERE ID=$id";
-		$conn->query($sql);
+		$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+									<p>Errore nel cancellare la prenotazione</p>
+									<p class=\"notify-line bg-white\"></p>
+								</div>");
 	}
 
 	if(isset($_POST["mod"]))
@@ -86,23 +89,29 @@
 		{
 			$data = $_POST["data"];
 			$sql = "UPDATE prenotazione SET data=\"$data\" WHERE ID=\"$id\"";
-			$conn->query($sql);
+			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+										<p>Errore nell'effettuare la modifica</p>
+										<p class=\"notify-line bg-white\"></p>
+									</div>");
 		}
 		if(!empty($_POST["auto"]))
 		{
 			$targa = $_POST["auto"];
 			$sql = "UPDATE prenotazione SET targa=\"$targa\" WHERE ID=\"$id\"";
-			$conn->query($sql);
-
-
-	$reserv_query = $conn->query($sql);
+			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+										<p>Errore nell'effettuare la modifica</p>
+										<p class=\"notify-line bg-white\"></p>
+									</div>");
 
 		}
 		if(!empty($_POST["ora"]))
 		{
 			$ora = $_POST["ora"];
 			$sql = "UPDATE prenotazione SET ora=\"$ora\" WHERE ID=\"$id\"";
-			$conn->query($sql);
+			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+										<p>Errore nell'effettuare la modifica</p>
+										<p class=\"notify-line bg-white\"></p>
+									</div>");
 		}
 	}
 	
@@ -136,7 +145,10 @@
 		ON pista.nome=auto.pista
 		WHERE cliente=\"$user\"";
 
-	$reserv_query = $conn->query($sql);
+	$reserv_query = $conn->query($sql) or die("<div class=\"notify-container bg-red\">
+												<p>Errore nel caricare le prenotazioni</p>
+												<p class=\"notify-line bg-white\"></p>
+											</div>");
 ?>
 
 <header class="display-container" id="home">
@@ -261,7 +273,10 @@
 							manutenzione = true
 						WHERE
 							targa = \"$targa\"";
-				$conn->query($sql);
+				$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+											<p>Errore: modifica non effettuata</p>
+											<p class=\"notify-line bg-white\"></p>
+										</div>");
 			}
 
 		// }
@@ -279,7 +294,10 @@
 							manutenzione = false
 						WHERE
 							targa = \"$targa\"";
-				$conn->query($sql);
+				$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+											<p>Errore: modifica non effettuata</p>
+											<p class=\"notify-line bg-white\"></p>
+										</div>");
 			}
 		}
 		echo "<div class=\"notify-container bg-red\">
