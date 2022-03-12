@@ -141,9 +141,15 @@
 
 <header class="display-container" id="home">
 
+<?php if(mysqli_num_rows($reserv_query) == 0){ ?>
+    <div class="container reservation text-white" style="justify-content: center; background-color: rgba(255, 255, 255, 0.15)">
+		<h2>Nessuna prenotazione effettuata</h2>
+    </div>
+<?php } ?>
+
 <?php $i = 0; while($res = $conn->fetch($reserv_query)){ ?> <!-- Per mostrare più risultati della query -->
 
-	<div class="container" id="reservation">
+	<div class="container reservation" id="">
 
 		<?php if($user == "admin"){?>
 			<div id="username-title">
@@ -276,7 +282,10 @@
 				$conn->query($sql);
 			}
 		}
-
+		echo "<div class=\"notify-container bg-red\">
+				<p>Modifica effettuata!</p>
+				<p class=\"notify-line bg-white\"></p>
+			</div>";
 	}
 	
 ?>
