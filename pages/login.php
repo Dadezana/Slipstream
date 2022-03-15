@@ -2,6 +2,28 @@
 if(isset($_SESSION["user"])){
 	header("Location: admin.php");
 }
+
+function validateEmail($email){
+	if( filter_var($email, FILTER_SANITIZE_EMAIL) === false){
+		return false;
+	}
+
+	if( filter_var($email, FILTER_VALIDATE_EMAIL) === false ){
+		return false;
+	}
+	return true;
+}
+function clear($val){
+	$new_val = htmlspecialchars($val, ENT_QUOTES);
+	if($new_val != $val) return false;
+	$new_val = strip_tags($val);
+	if($new_val != $val) return false;
+	if( filter_var($val, FILTER_SANITIZE_SPECIAL_CHARS) === false){
+		return false;
+	}
+	return true;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +36,6 @@ if(isset($_SESSION["user"])){
 	<title>Slipstream | Login</title>
 	
 	<link rel="stylesheet" href="css/login.css">
-	<link rel="icon" href="img/icon.ico">
 </head>
 <body>
 
@@ -129,13 +150,27 @@ if(isset($_SESSION["user"])){
 			die();
 		}
 
-		$username = $_POST["usrreg"];
+		$username = trim($_POST["usrreg"]);
 		$password = password_hash($_POST["pswreg"], PASSWORD_DEFAULT);
 		$email = $_POST["email"];
 
+		if (!validateEmail($email) ){
+			die("<div class=\"notify-container bg-red\">
+				<p>$email non è un indirizzo valido</p>
+				<p class=\"bg-red notify-line bg-white\"></p>
+			</div>");
+		}
+
+		if( !clear($username) ){
+			die("<div class=\"notify-container bg-red\">
+				<p>Caratteri non validi nello username</p>
+				<p class=\"bg-red notify-line bg-white\"></p>
+			</div>");
+		}
+		
 		if(!$conn->connect()){
-			echo "<script>alert('Errore nel connettersi al db')</script>";
-			die(mysqli_connect_error());
+			echo "<script>console.log('Errore nel connettersi al db')</script>";
+			die();
 		}
 
 		$sql = "SELECT username FROM cliente WHERE username='$username'";
@@ -143,16 +178,17 @@ if(isset($_SESSION["user"])){
 
 		if(mysqli_num_rows($query) > 0)
 		{
-			echo "<script>alert('Attenzione, utente già registrato!');</script>";
-			die();
+			die("<div class=\"notify-container bg-red\">
+					<p>Utente già esistente</p>
+					<p class=\"bg-red notify-line bg-white\"></p>
+				</div>");
 		}
 
 		$sql = "INSERT INTO cliente (username, password, email) VALUES (\"$username\", \"$password\", \"$email\")";
 
-		echo "<script>console.log('before query')</script>";
 		$query = $conn->query($sql);
 		echo "<div class=\"notify-container bg-red\">
-				<p>Registrazione effettuata!</p>
+				<p>Registrazione effettuata $username!</p>
 				<p class=\"bg-red notify-line bg-white\"></p>
 			</div>";
 		
@@ -161,17 +197,30 @@ if(isset($_SESSION["user"])){
 	else if($_POST["sub"] == "Accedi")
 	{
 		if(empty($_POST["usrlog"]) || empty($_POST["pswlog"])){
-			echo "<script>alert('Compilare tutti i campi!'); history.back();</script>";
-			die();
+			die("<div class=\"notify-container bg-red\">
+					<p>Compila tutti i campi</p>
+					<p class=\"bg-red notify-line bg-white\"></p>
+				</div>");
 		}
 		if(!$conn->connect()){
-			echo "<script>alert('Errore nel connettersi al db')</script>";
-			die(mysqli_connect_error());
+			echo "<script>console.log('Errore nel connettersi al db')</script>";
+			die(/*mysqli_connect_error()*/);
 		}
-		$username = $_POST["usrlog"];
-		
+		$username = trim($_POST["usrlog"]);
 
 		$sql = "SELECT * FROM cliente WHERE username=\"$username\"";
+		if( validateEmail($username) ){
+			$sql = "SELECT * FROM cliente WHERE email=\"$username\"";
+		}
+		
+		if( !clear($username) ){
+			die("<div class=\"notify-container bg-red\">
+				<p>Utente inesistente</p>
+				<p class=\"bg-red notify-line bg-white\"></p>
+			</div>");
+		}
+
+		
 		$res = $conn->query($sql);
 		$res = $conn->fetch();
 
@@ -179,7 +228,7 @@ if(isset($_SESSION["user"])){
 
 		if( password_verify($_POST["pswlog"], $passw_hashed) ){
 			session_start();
-			$_SESSION["user"] = $username;
+			$_SESSION["user"] = $res["username"];
 			// header("Location: admin.php");
 			echo "<script>window.location.href='admin.php';</script>";
 			
