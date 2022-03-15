@@ -88,31 +88,43 @@
 		if(!empty($_POST["data"]))
 		{
 			$data = $_POST["data"];
-			$sql = "UPDATE prenotazione SET data=\"$data\" WHERE ID=\"$id\"";
-			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
-										<p>Errore nell'effettuare la modifica</p>
-										<p class=\"notify-line bg-white\"></p>
-									</div>");
-		}
-		if(!empty($_POST["auto"]))
-		{
-			$targa = $_POST["auto"];
-			$sql = "UPDATE prenotazione SET targa=\"$targa\" WHERE ID=\"$id\"";
-			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
-										<p>Errore nell'effettuare la modifica</p>
-										<p class=\"notify-line bg-white\"></p>
-									</div>");
 
+			$current_date = date("Y-m-d");
+			$user_date = strtotime("$data");
+
+			if($user_date <= $current_date){
+				echo "<div class=\"notify-container bg-red\">
+						<p>La data selezionata non è valida</p>
+						<p class=\"notify-line bg-white\"></p>
+					</div>";
+			}else{
+				$sql = "UPDATE prenotazione SET data=\"$data\" WHERE ID=\"$id\"";
+				$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+											<p>Errore nell'effettuare la modifica</p>
+											<p class=\"notify-line bg-white\"></p>
+										</div>");
+
+				if(!empty($_POST["auto"]))
+				{
+					$targa = $_POST["auto"];
+					$sql = "UPDATE prenotazione SET targa=\"$targa\" WHERE ID=\"$id\"";
+					$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+												<p>Errore nell'effettuare la modifica</p>
+												<p class=\"notify-line bg-white\"></p>
+											</div>");
+				}
+				if(!empty($_POST["ora"]))
+				{
+					$ora = $_POST["ora"];
+					$sql = "UPDATE prenotazione SET ora=\"$ora\" WHERE ID=\"$id\"";
+					$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+												<p>Errore nell'effettuare la modifica</p>
+												<p class=\"notify-line bg-white\"></p>
+											</div>");
+				}
+			}
 		}
-		if(!empty($_POST["ora"]))
-		{
-			$ora = $_POST["ora"];
-			$sql = "UPDATE prenotazione SET ora=\"$ora\" WHERE ID=\"$id\"";
-			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
-										<p>Errore nell'effettuare la modifica</p>
-										<p class=\"notify-line bg-white\"></p>
-									</div>");
-		}
+		
 	}
 	
 ?>
