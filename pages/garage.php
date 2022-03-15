@@ -86,8 +86,8 @@
 
   <div class="car-container">
     <div class="imgContainer">
-      <img class="garageCar" src="<?php echo $res["img"];?>" style="width: 576px">
-      <img class="garageCar" src="<?php echo $res["imgBack"];?>" style="width: 576px">
+      <img class="garageCar" src="<?php echo $res["img"];?>" style="width: 506px">
+      <img class="garageCar" src="<?php echo $res["imgBack"];?>" style="width: 506px">
     </div>
   
     <div class="container">
@@ -101,32 +101,32 @@
 
         <div class="content">
             <p id="info2">Potenza</p>
-            <p id="value2"><?php echo $res["potenza"]."cv" ?></p>  <!-- cavalli -->
+            <p id="value2"><?php echo $res["potenza"]." cv" ?></p>  <!-- cavalli -->
         </div>
 
         <div class="content">
             <p id="info3">Coppia</p>
-            <p id="value3"><?php echo $res["coppia"]."Nm" ?></p> <!-- Newton metro -->
+            <p id="value3"><?php echo $res["coppia"]." Nm" ?></p> <!-- Newton metro -->
         </div>
 
         <div class="content">
             <p id="info4">Freni</p>
-            <p id="value4"><?php echo $res["freni"]."m" ?></p> <!-- Metri. Calcolati andando a 100km/h -->
+            <p id="value4"><?php echo $res["freni"]." m" ?></p> <!-- Metri. Calcolati andando a 100km/h -->
         </div>
 
         <div class="content">
             <p id="info5">Cilindrata</p>
-            <p id="value5"><?php echo $res["cilindrata"]."cc" ?></p> <!-- Centimetri cubici -->
+            <p id="value5"><?php echo $res["cilindrata"]." cc" ?></p> <!-- Centimetri cubici -->
         </div>
 
         <div class="content">
             <p id="info5">Peso</p>
-            <p id="value5"><?php echo $res["peso"]."Kg" ?></p> <!-- Kilogrammi -->
+            <p id="value5"><?php echo $res["peso"]." Kg" ?></p> <!-- Kilogrammi -->
         </div>
 
         <div class="content">
-            <p id="info5">Colore</p>
-            <p id="value5"><?php echo $res["colore"] ?></p> 
+            <p id="info5">Passo</p>
+            <p id="value5"><?php echo $res["passo"]." mm" ?></p> 
         </div>
 
         <div class="container" style="width: 100%">
