@@ -177,9 +177,9 @@
 			$minutediff = date_diff($dateTime1, $dateTime2);
 			$minutediff = $minutediff->h * 60 + $minutediff->i;
 
-			// // echo "<script>console.log('ora: $ora')</script>";
-			// // echo "<script>console.log('oraFine: $oraFine')</script>";
-			// // echo "<script>console.log('minutediff: $minutediff')</script>";
+			echo "<script>console.log('ora: $ora')</script>";
+			echo "<script>console.log('oraFine: $oraFine')</script>";
+			echo "<script>console.log('minutediff: $minutediff')</script>";
 
 			if($minutediff < 50){
 				echo "<div class=\"notify-container bg-red\">
@@ -188,8 +188,15 @@
 					</div>";
 				$canUpdate = false;
 			}
+			elseif($dateTime1 > $dateTime2){
+				echo "<div class=\"notify-container bg-red\">
+						<p>La data di inizio non può essere maggiore di quella di fine</p>
+						<p class=\"notify-line bg-white\"></p>
+					</div>";
+				$canUpdate = false;
+			}
 			else{
-				$conn->query("UPDATE prenotazione SET durata=$minutediff");
+				$conn->query("UPDATE prenotazione SET durata=$minutediff WHERE id=$id");
 			}
 			// prendo tutte le prenotazioni in quella data e con quella auto tranne che la prenotazione che si vuole modificare
 			$sql = "SELECT * FROM prenotazione WHERE targa=\"$targa\" AND data=\"$data\" AND ID<>$id";
