@@ -68,8 +68,61 @@
 		die();
 	}
 ?>
+<!--
+	CAMBIARE STATO MANUTENZIONE
+ -->
+ <?php
+	
+	if(isset($_POST["mantSub"])){
+		$auto = array();
+		// if(!empty($_POST["auto"])){
+
+			foreach($_POST["auto"] as $targa)
+			{
+				array_push($auto, $targa);
+				$sql = "UPDATE 
+							auto 
+						SET 
+							manutenzione = true
+						WHERE
+							targa = \"$targa\"";
+				$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+											<p>Errore: modifica non effettuata</p>
+											<p class=\"notify-line bg-white\"></p>
+										</div>");
+			}
+
+		// }
+
+		$auto_query = $conn->query("SELECT * FROM auto");
+
+		while($res = $conn->fetch($auto_query))
+		{
+			$targa = $res["targa"];
+			if( !in_array($targa, $auto) )
+			{
+				$sql = "UPDATE 
+							auto 
+						SET 
+							manutenzione = false
+						WHERE
+							targa = \"$targa\"";
+				$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+											<p>Errore: modifica non effettuata</p>
+											<p class=\"notify-line bg-white\"></p>
+										</div>");
+			}
+		}
+		echo "<div class=\"notify-container bg-red\">
+				<p>Modifica effettuata!</p>
+				<p class=\"notify-line bg-white\"></p>
+			</div>";
+	}
+	
+?>
+
 <!-- 
-	GESTIRE PRENOTAZIONI
+	MODIFICARE/CANCELLARE PRENOTAZIONI
  -->
  <?php
 	if(isset($_POST["del"])){
@@ -84,51 +137,112 @@
 	if(isset($_POST["mod"]))
 	{
 		$id = $_POST["mod"];
+		$canUpdate = true;
 
-		if(!empty($_POST["data"]))
-		{
-			$data = $_POST["data"];
+		// controllo che tutto sia a norma
+		$sql = "SELECT * FROM prenotazione WHERE ID=$id";
+		$conn->query($sql);
+		$res = $conn->fetch();
+		
+		// controllo della data
+		if(!empty($_POST["data"])) $data = $_POST["data"];
+		else $data = $res["data"];
 
-			$current_date = date("Y-m-d");
-			$user_date = strtotime("$data");
+		$current_date = date("Y-m-d");
+		$user_date = ($data);
+		// // echo "<script>console.log('data before manipulation: $data')</script>";
+		// // echo "<script>console.log('current_date: $current_date')</script>";
+		// // echo "<script>console.log('user_date: $user_date')</script>";
+		if($user_date <= $current_date){
+			echo "<div class=\"notify-container bg-red\">
+					<p>Selezionare una data dopo oggi</p>
+					<p class=\"notify-line bg-white\"></p>
+				</div>";
+			$canUpdate = false;
+		}
+		// controllo altri parametri
+		if($canUpdate){
+			if(!empty($_POST["ora"])) $ora = $_POST["ora"];
+			else $ora = $res["ora"]; 
 
-			if($user_date <= $current_date){
+			if(!empty($_POST["oraFine"])) $oraFine = $_POST["oraFine"];
+			else $oraFine = $res["oraFine"];
+
+			if(!empty($_POST["auto"])) $targa = $_POST["auto"];
+			else $targa = $res["targa"];
+
+			// controllo se i minuti sono minimo 50
+			$dateTime1 = date_create($ora);
+			$dateTime2 = date_create($oraFine);
+			$minutediff = date_diff($dateTime1, $dateTime2);
+			$minutediff = $minutediff->h * 60 + $minutediff->i;
+
+			// // echo "<script>console.log('ora: $ora')</script>";
+			// // echo "<script>console.log('oraFine: $oraFine')</script>";
+			// // echo "<script>console.log('minutediff: $minutediff')</script>";
+
+			if($minutediff < 50){
 				echo "<div class=\"notify-container bg-red\">
-						<p>La data selezionata non è valida</p>
+						<p>Impossibile effettuare prenotazioni inferiori ai 50 minuti</p>
 						<p class=\"notify-line bg-white\"></p>
 					</div>";
-			}else{
-				$sql = "UPDATE prenotazione SET data=\"$data\" WHERE ID=\"$id\"";
-				$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+				$canUpdate = false;
+			}
+			else{
+				$conn->query("UPDATE prenotazione SET durata=$minutediff");
+			}
+			// prendo tutte le prenotazioni in quella data e con quella auto tranne che la prenotazione che si vuole modificare
+			$sql = "SELECT * FROM prenotazione WHERE targa=\"$targa\" AND data=\"$data\" AND ID<>$id";
+			$conn->query($sql);
+
+			// ciclo attraverso tutte le prenotazione e verifico che quella fascia oraria non sia già occupata
+			$dbStartTime = new DateTime($res["ora"]);
+			$dbEndTime = new DateTime($res["oraFine"]);
+
+			while($res = $conn->fetch() && $canUpdate)
+			{	
+				$usrStartTime = new DateTime($ora);
+				$usrEndTime = new DateTime($oraFine);
+
+				if( ($usrStartTime >= $dbStartTime && $usrStartTime <= $dbEndTime) || ($usrEndTime >= $dbStartTime && $usrEndTime <= $dbEndTime) ){
+					echo "<div class=\"notify-container bg-red\">
+							<p>Fascia oraria non disponibile</p>
+							<p class=\"notify-line bg-white\"></p>
+						</div>";
+					$canUpdate = false;
+				}
+			}
+		}
+
+		// effettuo gli aggiornamenti
+		if($canUpdate)
+		{
+			$sql = "UPDATE prenotazione SET ora=\"$ora\", oraFine=\"$oraFine\" WHERE ID=\"$id\"";
+			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
 											<p>Errore nell'effettuare la modifica</p>
 											<p class=\"notify-line bg-white\"></p>
 										</div>");
 
-				if(!empty($_POST["auto"]))
-				{
-					$targa = $_POST["auto"];
-					$sql = "UPDATE prenotazione SET targa=\"$targa\" WHERE ID=\"$id\"";
-					$conn->query($sql) or die("<div class=\"notify-container bg-red\">
-												<p>Errore nell'effettuare la modifica</p>
-												<p class=\"notify-line bg-white\"></p>
-											</div>");
-				}
-				if(!empty($_POST["ora"]))
-				{
-					$ora = $_POST["ora"];
-					$sql = "UPDATE prenotazione SET ora=\"$ora\" WHERE ID=\"$id\"";
-					$conn->query($sql) or die("<div class=\"notify-container bg-red\">
-												<p>Errore nell'effettuare la modifica</p>
-												<p class=\"notify-line bg-white\"></p>
-											</div>");
-				}
-			}
-		}
-		
+			$sql = "UPDATE prenotazione SET data=\"$data\" WHERE ID=\"$id\"";
+			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+										<p>Errore nell'effettuare la modifica</p>
+										<p class=\"notify-line bg-white\"></p>
+									</div>");
+
+			$sql = "UPDATE prenotazione SET targa=\"$targa\" WHERE ID=\"$id\"";
+			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
+										<p>Errore nell'effettuare la modifica</p>
+										<p class=\"notify-line bg-white\"></p>
+									</div>");
+		}	
 	}
 	
 ?>
-<?php
+
+<!-- 
+	SELEZIONE DELLE PRENOTAZIONI
+ -->
+ <?php
 	$user = $_SESSION["user"];
 	
 	if($user == "admin")
@@ -186,7 +300,7 @@
 				<i class="fas fa-clock icon"></i>
 			</div>
 			<div class="content">
-				<p id="topRight"><?php echo $res["ora"]; ?></p>
+				<p id="topRight"><?php echo $res["ora"]." - ".$res["oraFine"]; ?></p>
 				<p id="mainContent"><?php echo $res["data"]; ?></p>
 				<p>Data e Ora</p>
 			</div>
@@ -219,7 +333,7 @@
 				<i class="fas fa-euro-sign icon"></i>
 			</div>
 			<div class="content">
-				<p id="mainContent"><?php echo $res["costo"]."€"; ?></p>
+				<p id="mainContent"><?php echo round( intval($res["prezzo"])*intval($res["durata"]),2)."€"; ?></p>
 				<p>Prezzo</p>
 			</div>
 		</div>
@@ -230,15 +344,21 @@
 		</form>
 
 		<?php
-			$sql = "SELECT modello, targa FROM auto";
+			$sql = "SELECT modello, targa FROM auto WHERE manutenzione = false";
 			$auto = $conn->query($sql);
 		?>
+		<!--
+		//*	FORM MODIFICA PRENOTAZIONE
+		 -->
 		<form method="POST" action="admin.php" class="modify-form" id="<?php echo "modify-form".$i ?>">
 			<label for="data">Data</label>
 			<input type="date" name="data">
 			
-			<label for="ora">Ora</label>
+			<label for="ora">Ora inizio</label>
 			<input type="time" name="ora">
+
+			<label for="oraFine">Ora fine</label>
+			<input type="time" name="oraFine">
 
 			<label for="auto">Auto</label>
 			<select name="auto">
@@ -258,7 +378,7 @@
 </header>
 
 <!--
-	MODIFICARE STATO MANUTENZIONE AUTO
+//*	PULSANTE CHE MOSTRA PANNELLO PER MODIFICARE STATO MANUTENZIONE AUTO
 -->
 <div class="control-btn-low">
 	<?php if($user == "admin"){ ?>
@@ -266,59 +386,6 @@
 	<?php } ?>
 	<button type="button" onclick="window.location.href='logout.php'" class="a">Logout</a>
 </div>
-
-<!--
-	CAMBIARE STATO MANUTENZIONE
- -->
- <?php
-	$auto = array();
-	if(isset($_POST["mantSub"])){
-		
-		// if(!empty($_POST["auto"])){
-
-			foreach($_POST["auto"] as $targa)
-			{
-				array_push($auto, $targa);
-				$sql = "UPDATE 
-							auto 
-						SET 
-							manutenzione = true
-						WHERE
-							targa = \"$targa\"";
-				$conn->query($sql) or die("<div class=\"notify-container bg-red\">
-											<p>Errore: modifica non effettuata</p>
-											<p class=\"notify-line bg-white\"></p>
-										</div>");
-			}
-
-		// }
-
-		$auto_query = $conn->query("SELECT * FROM auto");
-
-		while($res = $conn->fetch($auto_query))
-		{
-			$targa = $res["targa"];
-			if( !in_array($targa, $auto) )
-			{
-				$sql = "UPDATE 
-							auto 
-						SET 
-							manutenzione = false
-						WHERE
-							targa = \"$targa\"";
-				$conn->query($sql) or die("<div class=\"notify-container bg-red\">
-											<p>Errore: modifica non effettuata</p>
-											<p class=\"notify-line bg-white\"></p>
-										</div>");
-			}
-		}
-		echo "<div class=\"notify-container bg-red\">
-				<p>Modifica effettuata!</p>
-				<p class=\"notify-line bg-white\"></p>
-			</div>";
-	}
-	
-?>
 
 <?php
 	if($user == "admin"){
