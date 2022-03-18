@@ -150,9 +150,10 @@
 
 		$current_date = date("Y-m-d");
 		$user_date = ($data);
-		// // echo "<script>console.log('data before manipulation: $data')</script>";
+
 		// // echo "<script>console.log('current_date: $current_date')</script>";
 		// // echo "<script>console.log('user_date: $user_date')</script>";
+
 		if($user_date <= $current_date){
 			echo "<div class=\"notify-container bg-red\">
 					<p>Selezionare una data dopo oggi</p>
@@ -177,9 +178,9 @@
 			$minutediff = date_diff($dateTime1, $dateTime2);
 			$minutediff = $minutediff->h * 60 + $minutediff->i;
 
-			echo "<script>console.log('ora: $ora')</script>";
-			echo "<script>console.log('oraFine: $oraFine')</script>";
-			echo "<script>console.log('minutediff: $minutediff')</script>";
+			// // echo "<script>console.log('ora: $ora')</script>";
+			// // echo "<script>console.log('oraFine: $oraFine')</script>";
+			// // echo "<script>console.log('minutediff: $minutediff')</script>";
 
 			if($minutediff < 50){
 				echo "<div class=\"notify-container bg-red\">
@@ -203,13 +204,13 @@
 			$conn->query($sql);
 
 			// ciclo attraverso tutte le prenotazione e verifico che quella fascia oraria non sia già occupata
-			$dbStartTime = new DateTime($res["ora"]);
-			$dbEndTime = new DateTime($res["oraFine"]);
+			$usrStartTime = new DateTime($ora);
+			$usrEndTime = new DateTime($oraFine);
 
 			while($res = $conn->fetch() && $canUpdate)
-			{	
-				$usrStartTime = new DateTime($ora);
-				$usrEndTime = new DateTime($oraFine);
+			{
+				$dbStartTime = new DateTime($res["ora"]);
+				$dbEndTime = new DateTime($res["oraFine"]);
 
 				if($usrStartTime > $dbEndTime && $usrEndTime > $dbEndTime){
 					// ok
@@ -222,6 +223,7 @@
 							<p>Fascia oraria non disponibile</p>
 							<p class=\"notify-line bg-white\"></p>
 						</div>";
+					break;
 				}
 			}
 		}
