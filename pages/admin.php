@@ -211,12 +211,17 @@
 				$usrStartTime = new DateTime($ora);
 				$usrEndTime = new DateTime($oraFine);
 
-				if( ($usrStartTime >= $dbStartTime && $usrStartTime <= $dbEndTime) || ($usrEndTime >= $dbStartTime && $usrEndTime <= $dbEndTime) ){
+				if($usrStartTime > $dbEndTime && $usrEndTime > $dbEndTime){
+					// ok
+				}
+				elseif($usrStartTime < $dbStartTime && $usrEndTime < $dbStartTime){
+					// ok
+				}else{
+					$canUpdate = false;
 					echo "<div class=\"notify-container bg-red\">
 							<p>Fascia oraria non disponibile</p>
 							<p class=\"notify-line bg-white\"></p>
 						</div>";
-					$canUpdate = false;
 				}
 			}
 		}
