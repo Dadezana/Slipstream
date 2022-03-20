@@ -347,7 +347,7 @@
 				<i class="fas fa-euro-sign icon"></i>
 			</div>
 			<div class="content">
-				<p id="mainContent"><?php echo round( intval($res["prezzo"])*intval($res["durata"]),2)."€"; ?></p>
+				<p id="mainContent"><?php echo round( floatval($res["prezzo"])*intval($res["durata"]),2)."€"; ?></p>
 				<p>Prezzo</p>
 			</div>
 		</div>
