@@ -134,23 +134,31 @@
 	}
 
 	function checkEnd($usrEnd, $dbEnd){
-		if($usrEnd->h > $dbEnd->h) return 1;
-		if($usrEnd->h < $dbEnd->h) return -1;
-		if($usrEnd->h == $dbEnd->h)
+		$usrEnd = new DateTime($usrEnd);
+		$dbEnd = new DateTime($dbEnd);
+		// // echo "<script>console.log('usrEnd->h: $usrEnd->h')</script>";
+		// // echo "<script>console.log('dbEnd->h: $dbEnd->h')</script>";
+		if($usrEnd->format("H") > $dbEnd->format("H")) return 1;
+		if($usrEnd->format("H") < $dbEnd->format("H")) return -1;
+		if($usrEnd->format("H") == $dbEnd->format("H"))
 		{
-			if($usrEnd->m > $dbEnd->m) return 1;
-			if($usrEnd->m < $dbEnd->m) return -1;
+			if($usrEnd->format("i") > $dbEnd->format("i")) return 1;
+			if($usrEnd->format("i") < $dbEnd->format("i")) return -1;
 			else return 0;
 		}
 	}
 
 	function checkStart($usrStart, $dbStart){
-		if($usrStart->h > $dbStart->h) return 1;
-		if($usrStart->h < $dbStart->h) return -1;
-		if($usrStart->h == $dbStart->h)
+		$usrStart = new DateTime($usrStart);
+		$dbStart = new DateTime($dbStart);
+		// // echo "<script>console.log('usrEnd->h: $usrEnd->h')</script>";
+		// // echo "<script>console.log('dbEnd->h: $dbEnd->h')</script>";
+		if($usrStart->format("H") > $dbStart->format("H")) return 1;
+		if($usrStart->format("H") < $dbStart->format("H")) return -1;
+		if($usrStart->format("H") == $dbStart->format("H"))
 		{
-			if($usrStart->m > $dbStart->m) return 1;
-			if($usrStart->m < $dbStart->m) return -1;
+			if($usrStart->format("i") > $dbStart->format("i")) return 1;
+			if($usrStart->format("i") < $dbStart->format("i")) return -1;
 			else return 0;
 		}
 	}
@@ -213,17 +221,11 @@
 			// // echo "<script>console.log('minutediff: $minutediff')</script>";
 
 			if($minutediff < 50){
-				echo "<div class=\"notify-container bg-red\">
-						<p>Impossibile effettuare prenotazioni inferiori ai 50 minuti</p>
-						<p class=\"notify-line bg-white\"></p>
-					</div>";
+				notify_error("Impossibile effettuare prenotazioni inferiori ai 50 minuti");
 				$canUpdate = false;
 			}
 			elseif($dateTime1 > $dateTime2){
-				echo "<div class=\"notify-container bg-red\">
-						<p>La data di inizio non può essere maggiore di quella di fine</p>
-						<p class=\"notify-line bg-white\"></p>
-					</div>";
+				notify_error("La data di inizio non può essere maggiore di quella di fine");
 				$canUpdate = false;
 			}
 			// prendo tutte le prenotazioni in quella data e con quella auto tranne che la prenotazione che si vuole modificare
@@ -231,17 +233,21 @@
 			$conn->query($sql);
 
 			// ciclo attraverso tutte le prenotazione e verifico che quella fascia oraria non sia già occupata
-			$usrStart = new DateTime($ora);
-			$usrEnd = new DateTime($oraFine);
+			$usrStart = $ora;
+			$usrEnd = $oraFine;
 
 			while($res = $conn->fetch() && $canUpdate)
 			{
-				$dbStart = new DateTime($res["ora"]);
-				$dbEnd = new DateTime($res["oraFine"]);
+				// // $dbStart = new DateTime($res["ora"]);
+				// // $dbEnd = new DateTime($res["oraFine"]);
+				$dbStart = $res["ora"];
+				$dbEnd = $res["oraFine"];
 
-				if(checkStart($usrStart, $dbStart) > 0 && checkEnd($usrEnd, $dbEnd) > 0){
+				echo "<script>console.log('checkStart(usrStart, dbEnd): ".checkStart($usrStart, $dbEnd)."checkEnd(usrEnd, dbEnd): ".checkEnd($usrEnd, $dbEnd)."checkStart(usrStart, dbStart): ".checkStart($usrStart, $dbStart)."checkEnd(usrEnd, dbStart): ".checkEnd($usrEnd, $dbStart)."')</script>";
+
+				if(checkStart($usrStart, $dbEnd) > 0 && checkEnd($usrEnd, $dbEnd) > 0){
 					// ok
-				}elseif(checkStart($usrStart, $dbStart) < 0 && checkEnd($usrEnd, $dbEnd) < 0){
+				}elseif(checkStart($usrStart, $dbStart) < 0 && checkEnd($usrEnd, $dbStart) < 0){
 					//ok
 				}else{
 					$canUpdate = false;
@@ -302,10 +308,7 @@
 		ON pista.nome=auto.pista
 		WHERE cliente=\"$user\"";
 
-	$reserv_query = $conn->query($sql) or die("<div class=\"notify-container bg-red\">
-												<p>Errore nel caricare le prenotazioni</p>
-												<p class=\"notify-line bg-white\"></p>
-											</div>");
+	$reserv_query = $conn->query($sql) or die(notify_error("Errore nel caricare le prenotazioni"));
 ?>
 
 <header class="display-container" id="home">
