@@ -125,6 +125,36 @@
 	MODIFICARE/CANCELLARE PRENOTAZIONI
  -->
  <?php
+
+	function notify_error($msg="Errore"){
+		echo "<div class=\"notify-container bg-red\">
+				<p>$msg</p>
+				<p class=\"notify-line bg-white\"></p>
+			</div>";
+	}
+
+	function checkEnd($usrEnd, $dbEnd){
+		if($usrEnd->h > $dbEnd->h) return 1;
+		if($usrEnd->h < $dbEnd->h) return -1;
+		if($usrEnd->h == $dbEnd->h)
+		{
+			if($usrEnd->m > $dbEnd->m) return 1;
+			if($usrEnd->m < $dbEnd->m) return -1;
+			else return 0;
+		}
+	}
+
+	function checkStart($usrStart, $dbStart){
+		if($usrStart->h > $dbStart->h) return 1;
+		if($usrStart->h < $dbStart->h) return -1;
+		if($usrStart->h == $dbStart->h)
+		{
+			if($usrStart->m > $dbStart->m) return 1;
+			if($usrStart->m < $dbStart->m) return -1;
+			else return 0;
+		}
+	}
+
 	if(isset($_POST["del"])){
 		$id = $_POST["del"];
 		$sql = "DELETE FROM prenotazione WHERE ID=$id";
@@ -196,33 +226,26 @@
 					</div>";
 				$canUpdate = false;
 			}
-			else{
-				$conn->query("UPDATE prenotazione SET durata=$minutediff WHERE id=$id");
-			}
 			// prendo tutte le prenotazioni in quella data e con quella auto tranne che la prenotazione che si vuole modificare
 			$sql = "SELECT * FROM prenotazione WHERE targa=\"$targa\" AND data=\"$data\" AND ID<>$id";
 			$conn->query($sql);
 
 			// ciclo attraverso tutte le prenotazione e verifico che quella fascia oraria non sia già occupata
-			$usrStartTime = new DateTime($ora);
-			$usrEndTime = new DateTime($oraFine);
+			$usrStart = new DateTime($ora);
+			$usrEnd = new DateTime($oraFine);
 
 			while($res = $conn->fetch() && $canUpdate)
 			{
-				$dbStartTime = new DateTime($res["ora"]);
-				$dbEndTime = new DateTime($res["oraFine"]);
+				$dbStart = new DateTime($res["ora"]);
+				$dbEnd = new DateTime($res["oraFine"]);
 
-				if($usrStartTime > $dbEndTime && $usrEndTime > $dbEndTime){
+				if(checkStart($usrStart, $dbStart) > 0 && checkEnd($usrEnd, $dbEnd) > 0){
 					// ok
-				}
-				elseif($usrStartTime < $dbStartTime && $usrEndTime < $dbStartTime){
-					// ok
+				}elseif(checkStart($usrStart, $dbStart) < 0 && checkEnd($usrEnd, $dbEnd) < 0){
+					//ok
 				}else{
 					$canUpdate = false;
-					echo "<div class=\"notify-container bg-red\">
-							<p>Fascia oraria non disponibile</p>
-							<p class=\"notify-line bg-white\"></p>
-						</div>";
+					notify_error("Fascia oraria non disponibile");
 					break;
 				}
 			}
@@ -232,22 +255,16 @@
 		if($canUpdate)
 		{
 			$sql = "UPDATE prenotazione SET ora=\"$ora\", oraFine=\"$oraFine\" WHERE ID=\"$id\"";
-			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
-											<p>Errore nell'effettuare la modifica</p>
-											<p class=\"notify-line bg-white\"></p>
-										</div>");
+			$conn->query($sql) or die(notify_error("Errore nell'effettuare la modifica"));
 
 			$sql = "UPDATE prenotazione SET data=\"$data\" WHERE ID=\"$id\"";
-			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
-										<p>Errore nell'effettuare la modifica</p>
-										<p class=\"notify-line bg-white\"></p>
-									</div>");
+			$conn->query($sql) or die(notify_error("Errore nell'effettuare la modifica"));
 
 			$sql = "UPDATE prenotazione SET targa=\"$targa\" WHERE ID=\"$id\"";
-			$conn->query($sql) or die("<div class=\"notify-container bg-red\">
-										<p>Errore nell'effettuare la modifica</p>
-										<p class=\"notify-line bg-white\"></p>
-									</div>");
+			$conn->query($sql) or die(notify_error("Errore nell'effettuare la modifica"));
+			
+			$sql = "UPDATE prenotazione SET durata=$minutediff WHERE id=$id";
+			$conn->query($sql) or die(notify_error("Errore nell'effettuare la modifica"));
 		}	
 	}
 	
