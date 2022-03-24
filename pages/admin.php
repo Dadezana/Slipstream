@@ -133,32 +133,16 @@
 			</div>";
 	}
 
-	function checkEnd($usrEnd, $dbEnd){
-		$usrEnd = new DateTime($usrEnd);
-		$dbEnd = new DateTime($dbEnd);
-		// // echo "<script>console.log('usrEnd->h: $usrEnd->h')</script>";
-		// // echo "<script>console.log('dbEnd->h: $dbEnd->h')</script>";
-		if($usrEnd->format("H") > $dbEnd->format("H")) return 1;
-		if($usrEnd->format("H") < $dbEnd->format("H")) return -1;
-		if($usrEnd->format("H") == $dbEnd->format("H"))
-		{
-			if($usrEnd->format("i") > $dbEnd->format("i")) return 1;
-			if($usrEnd->format("i") < $dbEnd->format("i")) return -1;
-			else return 0;
-		}
-	}
+	function check($usr, $db){
+		$usr = new DateTime($usr);
+		$db = new DateTime($db);
 
-	function checkStart($usrStart, $dbStart){
-		$usrStart = new DateTime($usrStart);
-		$dbStart = new DateTime($dbStart);
-		// // echo "<script>console.log('usrEnd->h: $usrEnd->h')</script>";
-		// // echo "<script>console.log('dbEnd->h: $dbEnd->h')</script>";
-		if($usrStart->format("H") > $dbStart->format("H")) return 1;
-		if($usrStart->format("H") < $dbStart->format("H")) return -1;
-		if($usrStart->format("H") == $dbStart->format("H"))
+		if( $usr->format("H") > $db->format("H") ) return 1;
+		if( ($usr->format("H")) < $db->format("H") ) return -1;
+		if( $usr->format("H") == $db->format("H") )
 		{
-			if($usrStart->format("i") > $dbStart->format("i")) return 1;
-			if($usrStart->format("i") < $dbStart->format("i")) return -1;
+			if( $usr->format("i") > $db->format("i") ) return 1;
+			if( $usr->format("i") < $db->format("i") ) return -1;
 			else return 0;
 		}
 	}
@@ -166,10 +150,7 @@
 	if(isset($_POST["del"])){
 		$id = $_POST["del"];
 		$sql = "DELETE FROM prenotazione WHERE ID=$id";
-		$conn->query($sql) or die("<div class=\"notify-container bg-red\">
-									<p>Errore nel cancellare la prenotazione</p>
-									<p class=\"notify-line bg-white\"></p>
-								</div>");
+		$conn->query($sql) or die(notify_error("Errore nel cancellare la prenotazione"));
 	}
 
 	if(isset($_POST["mod"]))
@@ -178,7 +159,7 @@
 		$canUpdate = true;
 
 		// controllo che tutto sia a norma
-		$sql = "SELECT * FROM prenotazione WHERE ID=$id";
+		$sql = "SELECT * FROM prenotazione WHERE ID=\"$id\"";
 		$conn->query($sql);
 		$res = $conn->fetch();
 		
@@ -189,14 +170,8 @@
 		$current_date = date("Y-m-d");
 		$user_date = ($data);
 
-		// // echo "<script>console.log('current_date: $current_date')</script>";
-		// // echo "<script>console.log('user_date: $user_date')</script>";
-
 		if($user_date <= $current_date){
-			echo "<div class=\"notify-container bg-red\">
-					<p>Selezionare una data dopo oggi</p>
-					<p class=\"notify-line bg-white\"></p>
-				</div>";
+			notify_error("Selezionare una data dopo oggi");
 			$canUpdate = false;
 		}
 		// controllo altri parametri
@@ -216,10 +191,6 @@
 			$minutediff = date_diff($dateTime1, $dateTime2);
 			$minutediff = $minutediff->h * 60 + $minutediff->i;
 
-			// // echo "<script>console.log('ora: $ora')</script>";
-			// // echo "<script>console.log('oraFine: $oraFine')</script>";
-			// // echo "<script>console.log('minutediff: $minutediff')</script>";
-
 			if($minutediff < 50){
 				notify_error("Impossibile effettuare prenotazioni inferiori ai 50 minuti");
 				$canUpdate = false;
@@ -230,25 +201,22 @@
 			}
 			// prendo tutte le prenotazioni in quella data e con quella auto tranne che la prenotazione che si vuole modificare
 			$sql = "SELECT * FROM prenotazione WHERE targa=\"$targa\" AND data=\"$data\" AND ID<>$id";
-			$conn->query($sql);
+			$duplicate_query = $conn->query($sql);
 
 			// ciclo attraverso tutte le prenotazione e verifico che quella fascia oraria non sia già occupata
 			$usrStart = $ora;
 			$usrEnd = $oraFine;
 
-			while($res = $conn->fetch() && $canUpdate)
+			if($canUpdate)
+			while($res = $conn->fetch($duplicate_query))
 			{
-				// // $dbStart = new DateTime($res["ora"]);
-				// // $dbEnd = new DateTime($res["oraFine"]);
 				$dbStart = $res["ora"];
 				$dbEnd = $res["oraFine"];
 
-				echo "<script>console.log('checkStart(usrStart, dbEnd): ".checkStart($usrStart, $dbEnd)."checkEnd(usrEnd, dbEnd): ".checkEnd($usrEnd, $dbEnd)."checkStart(usrStart, dbStart): ".checkStart($usrStart, $dbStart)."checkEnd(usrEnd, dbStart): ".checkEnd($usrEnd, $dbStart)."')</script>";
-
-				if(checkStart($usrStart, $dbEnd) > 0 && checkEnd($usrEnd, $dbEnd) > 0){
+				if( check($usrEnd, $dbStart) < 0 ){
 					// ok
-				}elseif(checkStart($usrStart, $dbStart) < 0 && checkEnd($usrEnd, $dbStart) < 0){
-					//ok
+				}elseif( check($usrStart, $dbEnd) > 0 ){
+					// ok
 				}else{
 					$canUpdate = false;
 					notify_error("Fascia oraria non disponibile");
