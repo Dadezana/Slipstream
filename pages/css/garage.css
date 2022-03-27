@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 :root{
-    --info-width: 440px;
+    --info-width: 420px;
     --info-height: 50px;
     --main-color: rgb(228, 6, 6);
 }
@@ -157,7 +157,7 @@ hr{
 .button{
     border:none;
     display:inline-block;
-    padding:8px 16px;
+    padding: 4px 16px;
     vertical-align:middle;
     overflow:hidden;
     text-decoration:none;
@@ -357,11 +357,18 @@ hr{
     color:#000!important;
     background-color:#fff!important
 }
+.bg-white{
+    background-color: white!important;
+}
  
 .black,.hover-black:hover{
     color:#fff!important;background-color:#000!important
 }
- 
+
+.border-black{
+    border: 2px solid black;
+}
+
 .text-white,.hover-text-white:hover{
     color:#fff!important
 }
@@ -371,28 +378,13 @@ hr{
 }
 
 .bg-red, .hover-red:hover{
-    background-color: var(--main-color);
-    border-color: var(--main-color);
+    background-color: var(--main-color)!important;
+    border-color: var(--main-color)!important;
 }
 
 .border-white{
     border: 2px solid white;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .bgimage{
     /* background-image: url("img/lambobg.jpg")!important; */
@@ -412,9 +404,8 @@ hr{
     align-items: center;   
     flex-wrap: wrap; 
     max-width: 1200px;
-    margin: 0;
-    width: 50%;
-    min-width: 440px;
+    margin: 0 auto;
+    min-width: 380px;
     /* border: 1px solid red; */
 }
 
@@ -433,7 +424,7 @@ hr{
 
 .container .card h2,
 .container .card h5{
-    margin: 0px;
+    margin: 0px 15px;
 }
 
 .container .card .content{
@@ -489,4 +480,122 @@ hr{
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    position: relative;
+}
+
+.notify-container{
+    position: fixed;
+    color: black;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 340px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    top: 80px;
+    right: -300px;
+    box-shadow: 3px 3px 8px black;
+    padding: 0;
+    border-top: 1px solid rgb(255, 255, 255);
+    border-left: 1px solid rgb(255, 255, 255);
+    animation: notify 7s linear;
+    max-width: 250px;
+    min-width: 250px;
+    z-index: 8;
+}
+@keyframes notify {
+    0%, 100%{
+        right: -300px;
+    }
+
+    7%, 90%{
+        right: 55px;
+    }
+
+    10%, 85%{
+        right: 30px;
+    }
+}
+
+.notify-line{
+    animation: expand 7s linear;
+    height: 7px !important;
+    margin: 0 !important;
+    padding:0 !important;
+}
+
+@keyframes expand {
+    0%, 9%{
+        width: 0.1%;
+        opacity: 0;
+    }
+    10%{
+        opacity: 1;
+    }
+    85%{
+        width: 100%;
+        opacity: 1;
+    }
+    86%, 100%{
+        opacity: 0;
+    }
+}
+
+.notify-container p{
+    font-size: 18px;
+    color: white;
+    width: 100%;
+    text-align: center;
+    margin: 9px 2px;
+}
+
+.modify-form{
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    max-width: 340px;
+    background-color: rgba(123, 123, 123, 0.5);
+    border: 4px solid var(--main-color);
+    border-radius: 5px;
+    display: none;
+    z-index: 2;
+    min-width: 320px;
+}
+
+.modify-form label{
+    width:100%;
+    text-align: center;
+    margin: 10px 0 2px;
+}
+.modify-form input{
+    margin: auto;
+}
+.modify-form .button{
+    margin: 30px 10px 10px;
+    /* width: 70%; */
+    background-color: transparent;
+}
+.modify-form .button:hover{
+    color:white;
+    border-color: var(--main-color);
+}
+
+.modify-form #closeBtn{
+    position: absolute;
+    top: 2px;
+    right:5px;
+    margin: 0;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: transparent;
+}
+.modify-form #closeBtn:hover{
+    color: var(--main-color);
 }
