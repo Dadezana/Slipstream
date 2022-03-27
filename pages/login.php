@@ -98,10 +98,10 @@ function clear($val){
 							<label for="pass" class="label">Password</label>
 							<input id="pswlog" name="pswlog" type="password" class="input" data-type="password">
 						</div>
-						<div class="group">
+						<!-- <div class="group">
 							<input id="check" type="checkbox" class="check" unchecked>
 							<label for="check"><span class="icon"></span> Ricorda le mie credenziali</label>
-						</div>
+						</div> -->
 						<div class="group">
 							<input type="submit" id="sublog" name="sub" class="button text-white border-white hover-red" value="Accedi">
 						</div>
@@ -136,17 +136,21 @@ function clear($val){
 		</div>
   	</form>
 </header>
-
-
 	
 <?php
+function notify_error($msg="Errore"){
+	echo "<div class=\"notify-container bg-red\">
+		<p>$msg</p>
+		<p class=\"notify-line bg-white\"></p>
+	  </div>";
+  }
 	require "../db.php";
 	$conn = new DB;
 
 	if($_POST["sub"] == "Registrati")
 	{
 		if(empty($_POST["usrreg"]) || empty($_POST["pswreg"]) || empty($_POST["email"])){
-			echo "<script>alert('Compilare tutti i campi!'); history.back();</script>";
+			notify_error('Compilare tutti i campi!');
 			die();
 		}
 
@@ -155,21 +159,15 @@ function clear($val){
 		$email = $_POST["email"];
 
 		if (!validateEmail($email) ){
-			die("<div class=\"notify-container bg-red\">
-				<p>$email non è un indirizzo valido</p>
-				<p class=\"bg-red notify-line bg-white\"></p>
-			</div>");
+			die( notify_error("$email non è un indirizzo valido") );
 		}
 
 		if( !clear($username) ){
-			die("<div class=\"notify-container bg-red\">
-				<p>Caratteri non validi nello username</p>
-				<p class=\"bg-red notify-line bg-white\"></p>
-			</div>");
+			die( notify_error("Caratteri non validi nello username") );
 		}
 		
 		if(!$conn->connect()){
-			echo "<script>console.log('Errore nel connettersi al db')</script>";
+			notify_error("Errore inaspettato nel connettersi al db");
 			die();
 		}
 
@@ -178,33 +176,24 @@ function clear($val){
 
 		if(mysqli_num_rows($query) > 0)
 		{
-			die("<div class=\"notify-container bg-red\">
-					<p>Utente già esistente</p>
-					<p class=\"bg-red notify-line bg-white\"></p>
-				</div>");
+			die( notify_error("Utente già esistente") );
 		}
 
 		$sql = "INSERT INTO cliente (username, password, email) VALUES (\"$username\", \"$password\", \"$email\")";
 
 		$query = $conn->query($sql);
-		echo "<div class=\"notify-container bg-red\">
-				<p>Registrazione effettuata $username!</p>
-				<p class=\"bg-red notify-line bg-white\"></p>
-			</div>";
+		notify_error("Registrazione effettuata $username!");
 		
 
 	}
 	else if($_POST["sub"] == "Accedi")
 	{
 		if(empty($_POST["usrlog"]) || empty($_POST["pswlog"])){
-			die("<div class=\"notify-container bg-red\">
-					<p>Compila tutti i campi</p>
-					<p class=\"bg-red notify-line bg-white\"></p>
-				</div>");
+			notify_error("Compila tutti i campi!");
 		}
 		if(!$conn->connect()){
-			echo "<script>console.log('Errore nel connettersi al db')</script>";
-			die(/*mysqli_connect_error()*/);
+			notify_error("Errore inaspettato nel connettersi al db");
+			die();
 		}
 		$username = trim($_POST["usrlog"]);
 
@@ -214,10 +203,7 @@ function clear($val){
 		}
 		
 		if( !clear($username) ){
-			die("<div class=\"notify-container bg-red\">
-				<p>Utente inesistente</p>
-				<p class=\"bg-red notify-line bg-white\"></p>
-			</div>");
+			die( notify_error("Credenziali errate!") );
 		}
 
 		
@@ -232,12 +218,9 @@ function clear($val){
 			// header("Location: admin.php");
 			echo "<script>window.location.href='admin.php';</script>";
 			
-		}else{ ?>
-			<div class="notify-container bg-red">
-				<p>Credenziali errate</p>
-				<p class="notify-line bg-white"></p>
-			</div>
-	<?php }
+		}else{
+			notify_error("Credenziali errate!");	
+		}
 	}
 	$conn->disconnect();
 ?>
