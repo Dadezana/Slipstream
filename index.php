@@ -65,11 +65,11 @@
 <!-- Header with full-height image -->
 <header class="bgimage display-container" id="home">
   <div class="display-left text-white" style="padding:48px">
-    <span class="jumbo hide-small">Start something that matters</span><br>
+    <span class="jumbo hide-small">La migliore esperienza di guida</span><br>
     <span class="xxlarge hide-large hide-medium">Start something that matters</span><br>
-    <span class="large">Stop wasting valuable time with projects that just isn't you.</span>
+    <span class="large">Guida una supercar in pista e diventa un vero pilota per un giorno!</span>
     
-    <p><a href="pages/garage.php" class="button padding-large large margin-top hover-red border-white">Learn more and start today</a></p>
+    <p><a href="pages/garage.php" class="button padding-large large margin-top hover-red border-white">Scendi in pista</a></p>
   </div> 
   <div class="display-bottomleft text-grey large" style="padding:24px 48px">
     <i class="fa fa-facebook-official hover-opacity"></i>
