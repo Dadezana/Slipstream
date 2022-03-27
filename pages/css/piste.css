@@ -28,13 +28,16 @@ body, html {
 
 body{
     background-color: #111;
+    margin:0;
 }
 
 /* Full height image header */
 .bgimage {
+    position: absolute;
   background-position: center;
   background-size: cover;
-  background-image: url("img/imolaBG.jpg");
+  background-attachment: fixed;
+  background-image: url("../img/mclarenbg.jpg");
   min-height: 100%;
   filter: opacity(87%);
 }
@@ -49,9 +52,6 @@ body{
 
 html{
     -ms-text-size-adjust:100%;-webkit-text-size-adjust:100%
-}
- body{
-    margin:0
 }
  
 footer,header,nav{
@@ -158,7 +158,7 @@ hr{
 .button{
     border:none;
     display:inline-block;
-    padding:8px 16px;
+    padding:4px 16px;
     vertical-align:middle;
     overflow:hidden;
     text-decoration:none;
@@ -395,32 +395,19 @@ hr{
 
 /* Custom CSS */
 
-.bgimage{
-    /* background-image: url("../img/piste/mugellobg.jpg")!important; */
-    background-image: url("../img/mclarenbg.jpg")!important;
-    background-attachment: fixed;
-    filter: opacity(80%);
-}
-
 .container{
     position: relative;
     display: flex;
     justify-content:space-around;
     align-items: center;   
     flex-wrap: wrap;
-    /* max-width: 1200px; */
-    
-    margin: 0;
-    /* border: 1px solid red; */
+    max-width: 75%;
+    margin: 0 auto;
 }
 
 .container .card{
-    background: rgba(50, 50 ,50, 0.3);
+    background: rgba(50, 50 ,50, 0.4);
     position: relative;
-    /* position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(75%, -50%); */
     width: var(--info-width);
     height: auto;
     border-top: 1px solid rgba(255, 255, 255, 0.5);
@@ -441,12 +428,12 @@ hr{
 }
 
 .container .card .content p{
-    font-size: 1.2em;
+    font-size: 1.1em;
     font-weight: 400;
-    margin: 9px 20px;
+    margin: 9px 35px;
 }
 
 .container .track{
-    width: 300px;
+    width: 250px;
     margin-top: 20px
 }
