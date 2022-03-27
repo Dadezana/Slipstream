@@ -1,5 +1,12 @@
+<?php
+
+	if(isset($_POST["subT"])){$pista='"'.$_POST["subT"].'"';}
+  else($pista="1 OR 1=1");
+
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +32,7 @@
     <div class="right hide-small">
     <a href="../index.php" class="bar-item button">HOME</a>
       <a href="#team" class="bar-item button">TEAM</a>
-      <a href="pages/garage.php" class="bar-item button" style="color: var(--main-color);">GARAGE</a>
+      <a href="garage.php" class="bar-item button" style="color: var(--main-color);">GARAGE</a>
       <a href="piste.php" class="bar-item button">PISTE</a>
       <?php
         session_start();
@@ -74,34 +81,31 @@
 ?>
 
 <?php
-		$sql = "SELECT * FROM auto WHERE 1";
+		$sql = "SELECT * FROM auto INNER JOIN pista ON auto.pista=pista.nome WHERE nome=$pista";
     $reserv_query = $conn->query($sql);
 ?>
 
 
 
 <header class="bgimage display-container margin-top-50" id="home">
-  <?php while($res = $conn->fetch($reserv_query)){ ?>
-<form method="POST" action="garage.php">
-
-  <div class="car-container">
+  <?php $i=0; while($res = $conn->fetch($reserv_query)){ ?>
+   <div class="car-container">
     <div class="imgContainer">
-      <img class="garageCar" src="<?php echo $res["img"];?>" style="width: 506px">
-      <img class="garageCar" src="<?php echo $res["imgBack"];?>" style="width: 506px">
+      <img class="garageCar" src="<?php echo $res["img"];?>" style="width: 450px">
+      <img class="garageCar" src="<?php echo $res["imgBack"];?>" style="width: 450px">
     </div>
   
     <div class="container">
       <div class="card">
       
-      <div class="container" style="width: 100%">
-        <h2 class="text-white" style="margin-left: 10px; margin-right: 10px;"><?php echo $res["modello"]; ?></h2>
-        <h5 class="text-white margin-bottom"><?php echo $res["pista"]; ?></h4>
-      </div>
-      
+        <div class="container" style="width: 100%">
+          <h3 class="text-white" style="margin-left: 10px; margin-right: 10px;"><?php echo $res["modello"]; ?></h3>
+          <h5 class="text-white margin-bottom"><?php echo $res["pista"]; ?></h4>
+        </div>
 
         <div class="content">
             <p id="info2">Potenza</p>
-            <p id="value2"><?php echo $res["potenza"]." cv" ?></p>  <!-- cavalli -->
+            <p id="value2"><?php echo $res["potenza"]." Cv" ?></p>  <!-- cavalli -->
         </div>
 
         <div class="content">
@@ -113,7 +117,7 @@
             <p id="info4">Freni</p>
             <p id="value4"><?php echo $res["freni"]." m" ?></p> <!-- Metri. Calcolati andando a 100km/h -->
         </div>
-
+        
         <div class="content">
             <p id="info5">Cilindrata</p>
             <p id="value5"><?php echo $res["cilindrata"]." cc" ?></p> <!-- Centimetri cubici -->
@@ -130,67 +134,180 @@
         </div>
 
         <div class="container" style="width: 100%">
-
-          <button type="submit" value="<?php echo $res["targa"]?>" name="sub"
-              class="button hover-red border-white text-white margin-bottom margin-top-50" 
-              style="width:70%; font-size: 19px;">Gareggia
-          </button>  
-        </div>
         
+          <?php
+            if($res["manutenzione"]){?>
+              <button 
+                disabled 
+                class="button hover-grey border-white text-grey margin-bottom margin-top-50" 
+                style="width:70%; font-size: 19px; cursor: not-allowed;margin-left: 20px; font-size:20px; color: grey;">
+                In manutenzione <i class="fas fa-tools"></i>
+              </button>
+            </div>
+          <?php   
+            }else{?>
+                <button 
+                  type="button" onclick="showForm(<?php echo $i?>)"
+                  class="button hover-red border-white text-white margin-bottom margin-top-50"
+                  style="width:70%; font-size: 19px;">
+                  Gareggia
+                </button>
+            </div>
+            <form method="POST" action="garage.php" class="modify-form" id="<?php echo "modify-form".$i?>">                
+              <label for="data">Data</label>
+              <input type="date" name="data" required>
+          
+              <label for="ora">Ora inizio</label>
+              <input type="time" name="ora" required>
+
+              <label for="oraFine">Ora fine</label>
+              <input type="time" name="oraFine" required>
+            
+              <button type="osubmit" name="subC" value="<?php echo $res["targa"];?>" style="width: 70%;" class="button hover-red border-white text-white margin-bottom margin-top-20">Prenota</button>
+              <button type="button" id="closeBtn" class="button" onclick="hideForm(<?php echo $i?>)"><i class="fas fa-times"></i></button>
+          </form>
+          <?php }?>     
+
       </div>
     </div>
+    
+
+   
   </div>
-
-</form> <!-- Deve contenere tutte le auto -->
-
-<?php } ?>
-
+  <?php $i++; } ?>
 </header>
 
 <?php 
-  if(isset($_POST["sub"])){
-    session_start();
 
-    if(!isset($_SESSION["user"])){
-      echo "<script>window.location.href='admin.php';</script>";
-    }
-    $targa = $_POST["sub"];
-    $sql = "SELECT * FROM auto WHERE targa=\"$targa\"";
-    $result = $conn->query($sql);
-    $result = $conn->fetch();
-    $costo = 200;
-    $durata = 2;
-    $data = '2020-01-01';
-    $ora = '12:00';
-    // $targa = $result["targa"];
-    $cliente = $_SESSION["user"];
+function notify_error($msg="Errore"){
+  echo "<div class=\"notify-container bg-red\">
+      <p>$msg</p>
+      <p class=\"notify-line bg-white\"></p>
+    </div>";
+}
 
-    $sql = "INSERT INTO prenotazione (costo, durata, data, ora, targa, cliente) VALUES (\"$costo\", \"$durata\", \"$data\", \"$ora\", \"$targa\", \"$cliente\")";
-    //mysqli_query($conn, $sql) or die( "Error: ".mysqli_errno($conn) );
-    $query = $conn->query($sql);
+function check($usr, $db){
+  $usr = new DateTime($usr);
+  $db = new DateTime($db);
+
+  if( $usr->format("H") > $db->format("H") ) return 1;
+  if( ($usr->format("H")) < $db->format("H") ) return -1;
+  if( $usr->format("H") == $db->format("H") )
+  {
+    if( $usr->format("i") > $db->format("i") ) return 1;
+    if( $usr->format("i") < $db->format("i") ) return -1;
+    else return 0;
   }
+}
+
+if(isset($_POST["subC"]))
+  if(!empty($_POST["data"]) && !empty($_POST["ora"])){
+
+    $targa = $_POST["subC"];
+    $data = $_POST["data"];
+    $ora = $_POST["ora"];
+    $oraFine = $_POST["oraFine"];
+    $cliente = $_SESSION["user"];
   
+		$canUpdate = true;
+
+    $sql = "SELECT manutenzione FROM auto WHERE targa=\"$targa\"";
+    $conn->query($sql);
+    $res = $conn->fetch();
+
+    if($res["manutenzione"]){
+      $canUpdate = false;
+    }
+
+		$current_date = date("Y-m-d");
+		$user_date = ($data);
+		// //  echo "<script>console.log('data before manipulation: $data')</script>";
+		// //  echo "<script>console.log('current_date: $current_date')</script>";
+		// //  echo "<script>console.log('user_date: $user_date')</script>";
+		if($user_date <= $current_date){
+			notify_error("Selezionare una data dopo oggi");
+			$canUpdate = false;
+		}
+    if($canUpdate){
+				// controllo se i minuti sono minimo 50
+        $dateTime1 = date_create($ora);
+        $dateTime2 = date_create($oraFine);
+        $minutediff = date_diff($dateTime1, $dateTime2);
+        $minutediff = $minutediff->h * 60 + $minutediff->i;
+  
+        if($minutediff < 50){
+          notify_error("Impossibile effettuare prenotazioni inferiori ai 50 minuti");
+          $canUpdate = false;
+        }
+        elseif($dateTime1 > $dateTime2){
+          notify_error("La data di inizio non può essere maggiore di quella di fine");
+          $canUpdate = false;
+        }
+        $durata = $minutediff;
+        // prendo tutte le prenotazioni in quella data e con quella auto
+        $sql = "SELECT * FROM prenotazione WHERE targa=\"$targa\" AND data=\"$data\"";
+        $duplicate_query = $conn->query($sql);
+  
+        // ciclo attraverso tutte le prenotazione e verifico che quella fascia oraria non sia già occupata
+        $usrStart = $ora;
+        $usrEnd = $oraFine;
+  
+        if($canUpdate)
+        while($res = $conn->fetch($duplicate_query))
+        {
+          $dbStart = $res["ora"];
+          $dbEnd = $res["oraFine"];
+  
+          if( check($usrEnd, $dbStart) < 0 ){
+            // ok
+          }elseif( check($usrStart, $dbEnd) > 0 ){
+            // ok
+          }else{
+            $canUpdate = false;
+            notify_error("Fascia oraria non disponibile");
+            break;
+          }
+        }
+      }
+    if($canUpdate){
+      $sql = "INSERT INTO prenotazione (durata, data, ora, oraFine, targa, cliente) VALUES (\"$durata\", \"$data\", \"$ora\", \"$oraFine\", \"$targa\", \"$cliente\")";
+      $conn->query($sql);
+    }   
+  }else{
+    notify_error("Compilare tutti i campi");
+  }
 ?>
 
 <?php
   $conn->disconnect();
 ?>
+
 <script>
 // Toggle between showing and hiding the sidebar when clicking the menu icon
-var mySidebar = document.getElementById("mySidebar");
+  var mySidebar = document.getElementById("mySidebar");
 
-function openSidebar() {
-  if (mySidebar.style.display === 'block') {
-    mySidebar.style.display = 'none';
-  } else {
-    mySidebar.style.display = 'block';
+  function openSidebar() {
+    if (mySidebar.style.display === 'block') {
+      mySidebar.style.display = 'none';
+    } else {
+      mySidebar.style.display = 'block';
+    }
   }
-}
 
 // Close the sidebar with the close button
-function closeSidebar() {
-    mySidebar.style.display = "none";
-}
+  function closeSidebar() {
+      mySidebar.style.display = "none";
+  }
+
+  function showForm(index){
+		let modifyForm = document.getElementById("modify-form"+index);
+		modifyForm.style.display = 'flex';
+		modifyForm.classList.add('');
+	}
+	function hideForm(index){
+		let modifyForm = document.getElementById("modify-form"+index);
+		modifyForm.style.display = 'none';
+	}
 </script>
 
 </body>

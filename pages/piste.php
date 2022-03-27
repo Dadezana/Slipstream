@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
 <script src="https://kit.fontawesome.com/99e3b4866c.js" crossorigin="anonymous"></script>
 
 
-    <title>Piste</title>
+    <title>Piste | Slipstream</title>
     <link rel="icon" href="../img/logoIcon.png" type="image/x-icon">
 </head>
 <body>
@@ -38,7 +38,6 @@
           echo "<a href=\"admin.php\" class=\"bar-item button\">$user</a>";
         }
       ?>
-    
     </div>
    
  <!-- Hide right-floated links on small screens and replace them with a menu icon -->
@@ -73,21 +72,29 @@
     echo "<script>console.log('Failed to connect to db')</script>";
   }
 ?>
+
+<?php
+		$sql = "SELECT * FROM pista";
+    $reserv_query = $conn->query($sql);
+?>
+
 <header class="bgimage display-container" id="home">
-    
+
+
+<form method="POST" action="garage.php" style="margin-top: 80px;">
   <div class="container">
-    <?php $result = $conn->fetch( $conn->query("select * from pista where nome like '%Mugello%'") )?>
-    <!-- <img src="img/piste/mugellobg1.png" width="45%" class="margin-top-120"> -->
+<?php while($res = $conn->fetch($reserv_query)){ ?>     
+
     
     <div class="card">
       <div class="content">
-        <img src="img/piste/mugello1.png" class="track">
-        <p><?php echo $result["nome"] ?></p>
-        <p style="position:absolute; top: 2px; right: 5px;"><?php echo $result["citta"] ?></p>
-        <p><?php echo $result["km"]."Km" ?></p>
+      <img class="track" src="<?php echo $res["imgT"];?>">
+        <p><?php echo $res["nome"] ?></p>
+        <p style="position:absolute; top: 2px; right: 5px;"><?php echo $res["citta"] ?></p>
+        <p><?php echo $res["km"]."Km" ?></p>
 
         <div class="container" style="width: 100%">
-          <button type="submit" value="monza" name="monza"
+          <button type="submit" value="<?php echo $res["nome"];?>" name="subT" onclick="window.location.href='garage.php';"
               class="button hover-red border-white text-white margin-bottom margin-top-40" 
               style="width:70%; font-size: 19px;">
               Gareggia
@@ -98,77 +105,13 @@
       
     </div>
     
+
+
+<?php } ?>
   </div>
-
-
-  <div class="container">
-    <?php $result = $conn->fetch( $conn->query("select * from pista where nome like '%Monza%'") )?>
-    
-    <div class="card">
-      <div class="content">
-        <img src="img/piste/monza.png" class="track">
-        <p><?php echo $result["nome"] ?></p>
-        <p style="position:absolute; top: 2px; right: 5px;"><?php echo $result["citta"] ?></p>
-        <p><?php echo $result["km"]."Km" ?></p>
-
-        <div class="container" style="width: 100%">
-          <button type="submit" value="monza" name="monza"
-              class="button hover-red border-white text-white margin-bottom margin-top-40" 
-              style="width:70%; font-size: 19px;">
-              Gareggia
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- <img src="img/piste/mugellobg1.png" width="45%" class="margin-top-120"> -->
-  </div>
-
-<div class="container">
-    <?php $result = $conn->fetch( $conn->query("select * from pista where nome like '%Vallelunga%'") )?>
-    <!-- <img src="img/piste/vallelunga.jpg" width="40%" class="margin-top-100"> -->
-    
-    <div class="card">
-      <div class="content">
-      <img src="img/piste/circuitoVallelunga.png" class="track">
-        <p><?php echo $result["nome"] ?></p>
-        <p style="position:absolute; top: 2px; right: 5px;"><?php echo $result["citta"] ?></p>
-        <p><?php echo $result["km"]."Km" ?></p>
-
-        <div class="container" style="width: 100%">
-          <button type="submit" value="Vallelunga" name="Vallelunga"
-              class="button hover-red border-white text-white margin-bottom margin-top-40" 
-              style="width:70%; font-size: 19px;">
-              Gareggia
-          </button>
-        </div>
-      </div>
-    </div>
-</div>
-
-  
-  <div class="container">
-    <?php $result = $conn->fetch( $conn->query("select * from pista where nome like '%Autodromo Enzo e Dino Ferrari%'") )?>    
-    <div class="card">
-      <div class="content">
-      <img src="img/piste/planimetraImola.png" class="track">
-        <p><?php echo $result["nome"] ?></p>
-        <p style="position:absolute; top: 2px; right: 5px;"><?php echo $result["citta"] ?></p>
-        <p><?php echo $result["km"]."Km" ?></p>
-
-        <div class="container" style="width: 100%">
-          <button type="submit" value="Vallelunga" name="Vallelunga"
-              class="button hover-red border-white text-white margin-bottom margin-top-40" 
-              style="width:70%; font-size: 19px;">
-              Gareggia
-          </button>
-        </div>
-      </div>
-       
-    </div>
-    <!-- <img src="img/piste/autodromoimola.jpg" width="40%" class="margin-top-100"> -->
-  </div>
+</form>
 </header>
+
 <?php
   $conn->disconnect();
 ?>
