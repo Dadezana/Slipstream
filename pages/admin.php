@@ -35,7 +35,7 @@
     <!-- Right-sided navbar links -->
     <div class="right hide-small">
     <a href="../index.php" class="bar-item button">HOME</a>
-      <a href="#team" class="bar-item button">TEAM</a>
+      
       <a href="garage.php" class="bar-item button">GARAGE</a>
       <a href="piste.php" class="bar-item button">PISTE</a>
       <a href="admin.php" class="bar-item button" style="color: var(--main-color);"><?php echo $_SESSION["user"];?></a>

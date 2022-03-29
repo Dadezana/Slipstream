@@ -31,7 +31,6 @@
     <!-- Right-sided navbar links -->
     <div class="right hide-small">
     <a href="../index.php" class="bar-item button">HOME</a>
-      <a href="#team" class="bar-item button">TEAM</a>
       <a href="garage.php" class="bar-item button" style="color: var(--main-color);">GARAGE</a>
       <a href="piste.php" class="bar-item button">PISTE</a>
       <?php
@@ -55,7 +54,6 @@
 <!-- Sidebar on small screens when clicking the menu icon -->
 <nav class="sidebar bar-block black card1 animate-left hide-medium hide-large" style="display:none" id="mySidebar">
   <a href="../index.php"     onclick="closeSidebar()" class="bar-item button">HOME</a>
-  <a href="#team"            onclick="closeSidebar()" class="bar-item button">TEAM</a>
   <a href="garage.php" onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">GARAGE</a>
   <a href="#pricing"         onclick="closeSidebar()" class="bar-item button">PISTE</a>
   <?php
