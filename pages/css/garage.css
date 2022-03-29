@@ -401,7 +401,7 @@ hr{
 .container{
     position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
@@ -625,17 +625,16 @@ img {
     max-width: 1000px;
     position: relative;
     margin: auto;
+    border: 2px solid red;
 }
 /* Next & previous buttons */
 .prev,
 .next {
     cursor: pointer;
     position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
+    top: 0;
     width: auto;
-    padding: 250px 18px;
-    margin-top: -22px;
+    padding: 260px 18px;
     color: white;
     font-weight: bold;
     font-size: 18px;
@@ -720,4 +719,19 @@ img {
     .text {
         font-size: 11px
     }
+}
+
+#carName{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 535px;
+}
+
+#carName h2,
+#carName h5{
+    margin: 0 50px
 }

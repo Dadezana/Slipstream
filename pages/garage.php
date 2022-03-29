@@ -76,7 +76,7 @@
   $conn = new DB;
 
   if(!$conn->connect()){
-    echo "<script>console.log('Failed to connect to db')</script>";
+    // echo "<script>console.log('Failed to connect to db')</script>";
   }
 ?>
 
@@ -85,7 +85,7 @@
     $reserv_query = $conn->query($sql);
 ?>
 
-<div style="position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.2)"></div>
+<div style="position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5)"></div>
 
 <header class="bgimage display-container margin-top-50" id="home" style="transform: translate(0, 9%);">
 
@@ -94,13 +94,18 @@
 <?php $i=0; while($res = $conn->fetch($reserv_query)){ ?>
       <div class="mySlides fade">
         
-        <div class="container"><img src="<?php echo $res["img"]?>" style="width:600px;">
+        <div class="container">
+          <div id="carName">
+            <h2 class="text-white" style="margin-left: 10px; margin-right: 10px;"><?php echo $res["modello"]; ?></h2>
+            <h5 class="text-white margin-bottom"><?php echo $res["pista"]; ?></h4>
+          </div>
+          <img src="<?php echo $res["img"]?>" style="width:600px;margin-top:70px">
           <div class="card">
-            <div class="container" style="text-align: center">
-              <h3 class="text-white" style="margin-left: 10px; margin-right: 10px;"><?php echo $res["modello"]; ?></h3>
-              <h5 class="text-white margin-bottom"><?php echo $res["pista"]; ?></h4>
+            <div class="container" style="margin-top:80px">
+              <!-- <h3 class="text-white"> -->
+                <img src="<?php echo $res["logo"] ?>" style="height: 90px;margin-top: 25px;position: absolute;top: -90px;">
+              <!-- </h3> -->
             </div>
-
             <div class="content">
                 <p id="info2">Potenza</p>
                 <p id="value2"><?php echo $res["potenza"]." Cv" ?></p>  <!-- cavalli -->
@@ -145,13 +150,11 @@
               
           <?php   
             }else{?>
+              
             <div class="container">
-              <button 
-                  type="button" onclick="showForm(<?php echo $i?>)"
-                  class="button hover-red border-white text-white margin-bottom margin-top-50"
-                  style="width:70%; font-size: 19px;">
-                  Gareggia
-                </button>
+              <?php if(isset($_SESSION["user"])){echo "<button type=\"button\" onclick=\"showForm("?><?php echo $i?><?php echo")\" class=\"button hover-red border-white text-white margin-bottom margin-top-50\" style=\"width:70%; font-size: 19px;\">Gareggia</button>";}
+                    else{echo "<button type=\"button\" onclick=\"window.location.href='admin.php'\" class=\"button hover-red border-white text-white margin-bottom margin-top-50\" style=\"width:70%; font-size: 19px;\">Gareggia</button>";}
+                ?>
             </div>
             <form method="POST" action="garage.php" class="modify-form" id="<?php echo "modify-form".$i?>">                
                   <label for="data">Data</label>
