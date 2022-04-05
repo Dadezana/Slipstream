@@ -385,9 +385,8 @@
 -->
 <div class="control-btn-low">
 	<?php if($user == "admin"){ ?>
-		<div id="container_user_searched">
-			<input type="text" id="user_searched" onkeyup="searchUser()"><!--<button type="button"  onclick="searchUser()">Cerca</button>-->
-		</div>
+		
+		<input type="text" id="user_searched" onkeyup="searchUser()">
 		<button type="button" class="a" id="searchButton" onclick="displaySearchBar()"><i class="fas fa-search"></i></button>
 		<button type="submit" class="a" name="old_res" id="show_old_res" onclick="showOld(false)"><i id="res_eye" class="fas fa-eye-slash"></i></button>
 		<button type="button" class="a" onclick="showMantainance()"><i class="fas fa-tools"></i></button>
@@ -516,17 +515,17 @@
 	}
 
 	function displaySearchBar(){
-		let searchBar = document.getElementById('container_user_searched');
+		let searchBar = document.getElementById('user_searched');
 		let searchButton = document.getElementById("searchButton");
 		let status = searchBar.className;
 		if(status == "expand-search"){
 			searchBar.classList.remove("expand-search");
 			searchBar.classList.add("expand-search-reverse");
-			// searchBar.style.display = 'none';
+			searchBar.disabled = true;
 			searchButton.style.color = "white";
 		}else{
 			searchBar.classList.remove("expand-search-reverse");
-			// searchBar.style.display = 'block';
+			searchBar.disabled = false;
 			searchBar.classList.add("expand-search");
 			searchButton.style.color = "var(--main-color)";
 		}
