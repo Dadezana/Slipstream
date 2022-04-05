@@ -385,8 +385,8 @@
 -->
 <div class="control-btn-low">
 	<?php if($user == "admin"){ ?>
-		<div style="display:none" id="container_user_searched">
-			<input type="text" id="user_searched"><button type="button"  onclick="searchUser()">Cerca</button>
+		<div id="container_user_searched">
+			<input type="text" id="user_searched" onkeyup="searchUser()"><!--<button type="button"  onclick="searchUser()">Cerca</button>-->
 		</div>
 		<button type="button" class="a" id="searchButton" onclick="displaySearchBar()"><i class="fas fa-search"></i></button>
 		<button type="submit" class="a" name="old_res" id="show_old_res" onclick="showOld(false)"><i id="res_eye" class="fas fa-eye-slash"></i></button>
@@ -449,7 +449,7 @@
 	function showForm(index){
 		let modifyForm = document.getElementById("modify-form" + index);
 		modifyForm.style.display = 'flex';
-		modifyForm.classList.add('');
+		// modifyForm.classList.add('');
 	}
 	function hideForm(index){
 		let modifyForm = document.getElementById("modify-form" + index);
@@ -459,6 +459,7 @@
 
 <?php if($user == "admin"){ ?>
 <script>
+	var canShowOld = false;		// if it's possible to show old reservations
 	function showMantainance(){
 		officina = document.getElementById("officina");
 		officina.style.display = 'flex';
@@ -488,18 +489,26 @@
 			}
 			icon.className = "fas fa-eye";
 		}
+		canShowOld = !canShowOld;
 	}
 
 	function searchUser(){
 		let user = document.getElementById("user_searched").value;
 		let names = document.getElementsByName("usernames");
 		let forms = document.getElementsByClassName("container reservation");
-		console.log("user: " + user);
-		console.log(names);
-		console.log(forms);
+
 		for(let i = 0; i < names.length; i++){
-			if(names[i].textContent === user){
-				forms[i].style.display = "flex";
+			if(names[i].textContent.includes(user)){
+				if(forms[i].getAttribute("name") == "old_reservation")
+				{
+					if(canShowOld){
+						forms[i].style.display = "flex";
+					}else{
+						forms[i].style.display = "none";
+					}
+				}else{
+					forms[i].style.display = "flex";
+				}
 			}else{
 				forms[i].style.display = "none";
 			}
@@ -509,12 +518,16 @@
 	function displaySearchBar(){
 		let searchBar = document.getElementById('container_user_searched');
 		let searchButton = document.getElementById("searchButton");
-		let status = searchBar.style.display;
-		if(status === 'block'){
-			searchBar.style.display = 'none';
+		let status = searchBar.className;
+		if(status == "expand-search"){
+			searchBar.classList.remove("expand-search");
+			searchBar.classList.add("expand-search-reverse");
+			// searchBar.style.display = 'none';
 			searchButton.style.color = "white";
 		}else{
-			searchBar.style.display = 'block';
+			searchBar.classList.remove("expand-search-reverse");
+			// searchBar.style.display = 'block';
+			searchBar.classList.add("expand-search");
 			searchButton.style.color = "var(--main-color)";
 		}
 	}
