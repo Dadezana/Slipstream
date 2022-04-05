@@ -38,7 +38,7 @@
       
       <a href="garage.php" class="bar-item button">GARAGE</a>
       <a href="piste.php" class="bar-item button">PISTE</a>
-      <a href="admin.php" class="bar-item button" style="color: var(--main-color);"><?php echo $_SESSION["user"];?></a>
+      <a href="admin.php" class="bar-item button" style="color: var(--main-color);"><?php echo $_SESSION["user"];?><i style="margin-left: 5px" class="fas fa-user-circle"></i></a>
     </div>
     
   <!-- Hide right-floated links on small screens and replace them with a menu icon -->
@@ -249,7 +249,7 @@
  -->
  <?php
 	$user = $_SESSION["user"];
-	
+	$current_date = date("Y-m-d");
 	if($user == "admin")
 		$sql = "SELECT * FROM 
 				pista INNER JOIN
@@ -261,7 +261,8 @@
 					) 
 					ON prenotazione.cliente=cliente.username
 				)
-				ON pista.nome=auto.pista";
+				ON pista.nome=auto.pista
+				ORDER BY data DESC";
 	else
 		$sql = "SELECT * FROM 
 		pista INNER JOIN
@@ -289,11 +290,11 @@
 
 <?php $i = 0; while($res = $conn->fetch($reserv_query)){ ?> <!-- Per mostrare più risultati della query -->
 
-	<div class="container reservation" id="">
+	<div class="container reservation" <?php if($res["data"] < $current_date){ echo "name=\"old_reservation\""; echo "style=\"display: none\"";}?>>
 
 		<?php if($user == "admin"){?>
 			<div id="username-title">
-				<h3><?php echo $res["cliente"] ?></h3>
+				<h3 name="usernames"><?php echo $res["cliente"] ?></h3>
 			</div>
 		<?php } ?>
 
@@ -384,9 +385,14 @@
 -->
 <div class="control-btn-low">
 	<?php if($user == "admin"){ ?>
-		<button type="button" class="a" onclick="showMantainance()">Officina</button>
+		<div style="display:none" id="container_user_searched">
+			<input type="text" id="user_searched"><button type="button"  onclick="searchUser()">Cerca</button>
+		</div>
+		<button type="button" class="a" id="searchButton" onclick="displaySearchBar()"><i class="fas fa-search"></i></button>
+		<button type="submit" class="a" name="old_res" id="show_old_res" onclick="showOld(false)"><i id="res_eye" class="fas fa-eye-slash"></i></button>
+		<button type="button" class="a" onclick="showMantainance()"><i class="fas fa-tools"></i></button>
 	<?php } ?>
-	<button type="button" onclick="window.location.href='logout.php'" class="a">Logout</a>
+	<button type="button" onclick="window.location.href='logout.php'" class="a"><i class="fas fa-sign-out-alt"></i></a>
 </div>
 
 <?php
@@ -461,6 +467,56 @@
 	function hideMantainance(){
 		officina = document.getElementById("officina");
 		officina.style.display = 'none';
+	}
+
+	function showOld(showNew){
+		
+		let btn = document.getElementById("show_old_res");
+		let icon = document.getElementById("res_eye");
+		let older_reserv = document.getElementsByName("old_reservation");
+		if(showNew){
+			btn.setAttribute('onclick', 'showOld(false)');
+			for(let i = 0; i < older_reserv.length; i++){
+				older_reserv[i].style.display = 'none';
+			}
+			icon.className = "fas fa-eye-slash";
+		}
+		else{
+			btn.setAttribute('onclick', 'showOld(true)');
+			for(let i = 0; i < older_reserv.length; i++){
+				older_reserv[i].style.display = 'flex';
+			}
+			icon.className = "fas fa-eye";
+		}
+	}
+
+	function searchUser(){
+		let user = document.getElementById("user_searched").value;
+		let names = document.getElementsByName("usernames");
+		let forms = document.getElementsByClassName("container reservation");
+		console.log("user: " + user);
+		console.log(names);
+		console.log(forms);
+		for(let i = 0; i < names.length; i++){
+			if(names[i].textContent === user){
+				forms[i].style.display = "flex";
+			}else{
+				forms[i].style.display = "none";
+			}
+		}
+	}
+
+	function displaySearchBar(){
+		let searchBar = document.getElementById('container_user_searched');
+		let searchButton = document.getElementById("searchButton");
+		let status = searchBar.style.display;
+		if(status === 'block'){
+			searchBar.style.display = 'none';
+			searchButton.style.color = "white";
+		}else{
+			searchBar.style.display = 'block';
+			searchButton.style.color = "var(--main-color)";
+		}
 	}
 </script>
 <?php } ?>
