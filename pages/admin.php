@@ -207,6 +207,12 @@
 			$usrStart = $ora;
 			$usrEnd = $oraFine;
 
+			if(check($usrEnd, "20:00") > 0){
+				notify_error("La pista chiude alle ore 20:00");
+			}elseif(check($usrStart, "8:00") < 0){
+				notify_error("La pista apre alle ore 8:00");
+			}
+
 			if($canUpdate)
 			while($res = $conn->fetch($duplicate_query))
 			{
@@ -426,7 +432,7 @@
 			</form>
 		</div>
 <?php } ?>
-
+// TODO: aggiungere tooltip
 
 <script>
 	// Toggle between showing and hiding the sidebar when clicking the menu icon
