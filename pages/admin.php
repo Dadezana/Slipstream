@@ -209,8 +209,10 @@
 
 			if(check($usrEnd, "20:00") > 0){
 				notify_error("La pista chiude alle ore 20:00");
+				$canUpdate = false;
 			}elseif(check($usrStart, "8:00") < 0){
 				notify_error("La pista apre alle ore 8:00");
+				$canUpdate = false;
 			}
 
 			if($canUpdate)
