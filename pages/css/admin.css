@@ -161,21 +161,23 @@ html{
 */
 .control-btn-low{
     position: fixed;
-    bottom: 8px;
-    right: 10px;
+    bottom: 0px;
+    right: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .control-btn-low .a{
     text-decoration: none;
     color: white;
     font-size: 25px;
-    margin: auto 12px;
+    margin: auto 2px;
     background-color: transparent;
     border: none;
     outline: none;
+    padding: 0 20px;
 }
 .control-btn-low .a:hover{
     color: var(--main-color)!important;
