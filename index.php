@@ -5,7 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/99e3b4866c.js" crossorigin="anonymous"></script>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 <link rel="stylesheet" href="index.css">
 <body>
 
@@ -31,7 +32,7 @@
           echo "<a href=\"pages/login.php\" class=\"bar-item button\">LOGIN</a>";
         }else{
           $user = $_SESSION["user"];
-          echo "<a href=\"pages/admin.php\" class=\"bar-item button\">$user</a>";
+          echo "<a href=\"pages/admin.php\" class=\"bar-item button\">$user<i style=\"margin-left: 5px\" class=\"fas fa-user-circle\"></i></a>";
         }
       ?>
       

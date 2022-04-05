@@ -34,7 +34,7 @@
           echo "<a href=\"login.php\" class=\"bar-item button\">LOGIN</a>";
         }else{
           $user = $_SESSION["user"];
-          echo "<a href=\"admin.php\" class=\"bar-item button\">$user</a>";
+          echo "<a href=\"admin.php\" class=\"bar-item button\">$user<i style=\"margin-left: 5px\" class=\"fas fa-user-circle\"></i></a>";
         }
       ?>
     </div>

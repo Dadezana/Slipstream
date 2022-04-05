@@ -31,6 +31,7 @@
     <!-- Right-sided navbar links -->
     <div class="right hide-small">
     <a href="../index.php" class="bar-item button">HOME</a>
+      
       <a href="garage.php" class="bar-item button" style="color: var(--main-color);">GARAGE</a>
       <a href="piste.php" class="bar-item button">PISTE</a>
       <?php
@@ -39,7 +40,7 @@
           echo "<a href=\"login.php\" class=\"bar-item button\">LOGIN</a>";
         }else{
           $user = $_SESSION["user"];
-          echo "<a href=\"admin.php\" class=\"bar-item button\">$user<i style=\"margin-left: 5px\" class=\"fas fa-user-circle\"></i></a>";
+          echo "<a href=\"admin.php\" class=\"bar-item button\">$user</a>";
         }
       ?>
     </div>
@@ -54,6 +55,7 @@
 <!-- Sidebar on small screens when clicking the menu icon -->
 <nav class="sidebar bar-block black card1 animate-left hide-medium hide-large" style="display:none" id="mySidebar">
   <a href="../index.php"     onclick="closeSidebar()" class="bar-item button">HOME</a>
+  
   <a href="garage.php" onclick="closeSidebar()" class="bar-item button" style="color: var(--main-color);">GARAGE</a>
   <a href="#pricing"         onclick="closeSidebar()" class="bar-item button">PISTE</a>
   <?php
@@ -74,7 +76,7 @@
   $conn = new DB;
 
   if(!$conn->connect()){
-    // echo "<script>console.log('Failed to connect to db')</script>";
+    echo "<script>console.log('Failed to connect to db')</script>";
   }
 ?>
 
@@ -83,137 +85,96 @@
     $reserv_query = $conn->query($sql);
 ?>
 
-<div style="position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5)"></div>
 
-<header class="bgimage display-container margin-top-50" id="home" style="transform: translate(0, 9%);">
 
-<div class="slideshow-container" style="height: 550px; min-width: 90%">
+<header class="bgimage display-container margin-top-50" id="home">
+  <?php $i=0; while($res = $conn->fetch($reserv_query)){ ?>
+   <div class="car-container">
+    <div class="imgContainer">
+      <img class="garageCar" src="<?php echo $res["img"];?>" style="width: 450px">
+      <img class="garageCar" src="<?php echo $res["imgBack"];?>" style="width: 450px">
+    </div>
+  
+    <div class="container">
+      <div class="card">
+      
+        <div class="container" style="width: 100%">
+          <h3 class="text-white" style="margin-left: 10px; margin-right: 10px;"><?php echo $res["modello"]; ?></h3>
+          <h5 class="text-white margin-bottom"><?php echo $res["pista"]; ?></h4>
+        </div>
 
-<?php $i=0; while($res = $conn->fetch($reserv_query)){ ?>
-      <div class="mySlides fade">
+        <div class="content">
+            <p id="info2">Potenza</p>
+            <p id="value2"><?php echo $res["potenza"]." Cv" ?></p>  <!-- cavalli -->
+        </div>
+
+        <div class="content">
+            <p id="info3">Coppia</p>
+            <p id="value3"><?php echo $res["coppia"]." Nm" ?></p> <!-- Newton metro -->
+        </div>
+
+        <div class="content">
+            <p id="info4">Freni</p>
+            <p id="value4"><?php echo $res["freni"]." m" ?></p> <!-- Metri. Calcolati andando a 100km/h -->
+        </div>
         
-        <div class="container">
-          <div id="carName">
-            <h2 class="text-white" style="margin-left: 10px; margin-right: 10px;"><?php echo $res["modello"]; ?></h2>
-            <h5 class="text-white margin-bottom"><?php echo $res["pista"]; ?></h4>
-          </div>
-          <img src="<?php echo $res["img"]?>" style="width:600px;margin-top:70px">
-          <div class="card">
-            <div class="container" style="margin-top:80px">
-              <!-- <h3 class="text-white"> -->
-                <img src="<?php echo $res["logo"] ?>" style="height: 90px;margin-top: 25px;position: absolute;top: -90px;">
-              <!-- </h3> -->
-            </div>
-            <div class="content">
-                <p id="info2">Potenza</p>
-                <p id="value2"><?php echo $res["potenza"]." Cv" ?></p>  <!-- cavalli -->
-            </div>
+        <div class="content">
+            <p id="info5">Cilindrata</p>
+            <p id="value5"><?php echo $res["cilindrata"]." cc" ?></p> <!-- Centimetri cubici -->
+        </div>
 
-            <div class="content">
-                <p id="info3">Coppia</p>
-                <p id="value3"><?php echo $res["coppia"]." Nm" ?></p> <!-- Newton metro -->
-            </div>
+        <div class="content">
+            <p id="info5">Peso</p>
+            <p id="value5"><?php echo $res["peso"]." Kg" ?></p> <!-- Kilogrammi -->
+        </div>
 
-            <div class="content">
-                <p id="info4">Freni</p>
-                <p id="value4"><?php echo $res["freni"]." m" ?></p> <!-- Metri. Calcolati andando a 100km/h -->
-            </div>
-            
-            <div class="content">
-                <p id="info5">Cilindrata</p>
-                <p id="value5"><?php echo $res["cilindrata"]." cc" ?></p> <!-- Centimetri cubici -->
-            </div>
+        <div class="content">
+            <p id="info5">Passo</p>
+            <p id="value5"><?php echo $res["passo"]." mm" ?></p> 
+        </div>
 
-            <div class="content">
-                <p id="info5">Peso</p>
-                <p id="value5"><?php echo $res["peso"]." Kg" ?></p> <!-- Kilogrammi -->
-            </div>
-
-            <div class="content">
-                <p id="info5">Passo</p>
-                <p id="value5"><?php echo $res["passo"]." mm" ?></p> 
-            </div>
-        <!-- <div class="container" style="width: 100%"> -->
+        <div class="container" style="width: 100%">
         
           <?php
             if($res["manutenzione"]){?>
-            <div class="container">
               <button 
                 disabled 
-                class="button hover-grey border-white text-white margin-bottom margin-top-50" 
-                style="width:70%; font-size: 19px; cursor: not-allowed;margin-left: 20px; font-size:20px;">
+                class="button hover-grey border-white text-grey margin-bottom margin-top-50" 
+                style="width:70%; font-size: 19px; cursor: not-allowed;margin-left: 20px; font-size:20px; color: grey;">
                 In manutenzione <i class="fas fa-tools"></i>
               </button>
             </div>
-              
           <?php   
             }else{?>
-              
-            <div class="container">
-              <?php if(isset($_SESSION["user"])){echo "<button type=\"button\" onclick=\"showForm("?><?php echo $i?><?php echo")\" class=\"button hover-red border-white text-white margin-bottom margin-top-50\" style=\"width:70%; font-size: 19px;\">Gareggia</button>";}
-                    else{echo "<button type=\"button\" onclick=\"window.location.href='admin.php'\" class=\"button hover-red border-white text-white margin-bottom margin-top-50\" style=\"width:70%; font-size: 19px;\">Gareggia</button>";}
-                ?>
+                <button 
+                  type="button" onclick="showForm(<?php echo $i?>)"
+                  class="button hover-red border-white text-white margin-bottom margin-top-50"
+                  style="width:70%; font-size: 19px;">
+                  Gareggia
+                </button>
             </div>
             <form method="POST" action="garage.php" class="modify-form" id="<?php echo "modify-form".$i?>">                
-                  <label for="data">Data</label>
-                  <input type="date" name="data" required>
-              
-                  <label for="ora">Ora inizio</label>
-                  <input type="time" name="ora" required>
+              <label for="data">Data</label>
+              <input type="date" name="data" required>
+          
+              <label for="ora">Ora inizio</label>
+              <input type="time" name="ora" required>
 
-                  <label for="oraFine">Ora fine</label>
-                  <input type="time" name="oraFine" required>
-                
-                  <button type="osubmit" name="subC" value="<?php echo $res["targa"];?>" style="width: 70%;" class="button hover-red border-white text-white margin-bottom margin-top-20">Prenota</button>
-                  <button type="button" id="closeBtn" class="button" onclick="hideForm(<?php echo $i?>)"><i class="fas fa-times"></i></button>
-              </form>
-          <?php }?>
-            </div>     
-        </div>
+              <label for="oraFine">Ora fine</label>
+              <input type="time" name="oraFine" required>
+            
+              <button type="osubmit" name="subC" value="<?php echo $res["targa"];?>" style="width: 70%;" class="button hover-red border-white text-white margin-bottom margin-top-20">Prenota</button>
+              <button type="button" id="closeBtn" class="button" onclick="hideForm(<?php echo $i?>)"><i class="fas fa-times"></i></button>
+          </form>
+          <?php }?>     
+
       </div>
-
-
-<?php $i++;} ?>
-      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-      <a class="next" onclick="plusSlides(1)">&#10095;</a>
-</div>
-    <br>
-
-
-    <div style="text-align:center">
-      <?php for($j = 1; $j <= $i; $j++) {?>
-        <span class="dot" onclick="currentSlide(<?php echo $j ?>)"></span>
-      <?php }?>
     </div>
-    <script>
-      var slideIndex = 1;
-      showSlides(slideIndex);
-      function plusSlides(n) {
-        showSlides(slideIndex += n);
-      }
-      function currentSlide(n) {
-        showSlides(slideIndex = n);
-      }
-      function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        var dots = document.getElementsByClassName("dot");
-        if(n > slides.length) {
-          slideIndex = 1
-        }
-        if(n < 1) {
-          slideIndex = slides.length
-        }
-        for(i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";
-        }
-        for(i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-      }
-    </script>
+    
+
+   
+  </div>
+  <?php $i++; } ?>
 </header>
 
 <?php 
@@ -311,7 +272,6 @@ if(isset($_POST["subC"]))
     if($canUpdate){
       $sql = "INSERT INTO prenotazione (durata, data, ora, oraFine, targa, cliente) VALUES (\"$durata\", \"$data\", \"$ora\", \"$oraFine\", \"$targa\", \"$cliente\")";
       $conn->query($sql);
-      notify_error("Prenotazione effettuata!");
     }   
   }else{
     notify_error("Compilare tutti i campi");

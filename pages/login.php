@@ -105,7 +105,7 @@ function clear($val){
 						</div>
 						<div class="hr"></div>
 						<div class="foot-lnk">
-							<a href="#forgot">Password dimenticata?</a>
+							<button type="submit" name="forgot" value="forgot" style="background-color:transparent; border:none; cursor:pointer">Password dimenticata?</button>
 						</div>
 					</div>
 					<div class="sign-up-htm">
@@ -144,6 +144,10 @@ function notify_error($msg="Errore"){
   }
 	require "../db.php";
 	$conn = new DB;
+
+	if(!empty($_POST["forgot"])){
+		notify_error("Ci dispiace :(");
+	}
 
 	if($_POST["sub"] == "Registrati")
 	{
