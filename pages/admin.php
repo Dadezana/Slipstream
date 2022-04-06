@@ -448,7 +448,7 @@
 			</form>
 		</div>
 <?php } ?>
-// TODO: se si cerca un utente e poi si clicca su "mostra vecchie prenotazioni" verranno mostrate anche le vecchie prenotazioni non di quell'utente
+
 
 <script>
 	// Toggle between showing and hiding the sidebar when clicking the menu icon
