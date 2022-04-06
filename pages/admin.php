@@ -298,7 +298,7 @@
 
 <?php $i = 0; while($res = $conn->fetch($reserv_query)){ ?> <!-- Per mostrare più risultati della query -->
 
-	<div class="container reservation" <?php if($res["data"] < $current_date){ echo "name=\"old_reservation\""; echo "style=\"display: none\"";}?>>
+	<div class="container reservation" <?php if($res["data"] < $current_date){ echo "name=\"old_reservation\""; echo "style=\"display: none\"";}?> value="<?php if($user == "admin") echo $res["cliente"];?>">
 
 		<?php if($user == "admin"){?>
 			<div id="username-title">
@@ -395,11 +395,25 @@
 	<?php if($user == "admin"){ ?>
 		
 		<input type="text" id="user_searched" onkeyup="searchUser()">
-		<button type="button" class="a" id="searchButton" onclick="displaySearchBar()"><i class="fas fa-search"></i></button>
-		<button type="submit" class="a" name="old_res" id="show_old_res" onclick="showOld(false)"><i id="res_eye" class="fas fa-eye-slash"></i></button>
-		<button type="button" class="a" onclick="showMantainance()"><i class="fas fa-tools"></i></button>
+
+		<button type="button" class="a tooltip" id="searchButton" onclick="displaySearchBar()">
+			<span class="tooltiptext">Cerca utente</span>
+			<i class="fas fa-search"></i>
+		</button>
+
+		<button type="submit" class="a tooltip" name="old_res" id="show_old_res" onclick="showOld(false)">
+			<span class="tooltiptext" id="show_old_res_tooltip">Mostra vecchie prenotazioni</span>
+			<i id="res_eye" class="fas fa-eye-slash"></i>
+		</button>
+		<button type="button" class="a tooltip" onclick="showMantainance()">
+			<i class="fas fa-tools"></i>
+			<span class="tooltiptext">Officina</span>
+		</button>
 	<?php } ?>
-	<button type="button" onclick="window.location.href='logout.php'" class="a"><i class="fas fa-sign-out-alt"></i></a>
+	<button type="button" onclick="window.location.href='logout.php'" class="a tooltip">
+		<i class="fas fa-sign-out-alt"></i>
+		<span class="tooltiptext">Logout</span>
+	</button>
 </div>
 
 <?php
@@ -434,7 +448,7 @@
 			</form>
 		</div>
 <?php } ?>
-// TODO: aggiungere tooltip
+// TODO: se si cerca un utente e poi si clicca su "mostra vecchie prenotazioni" verranno mostrate anche le vecchie prenotazioni non di quell'utente
 
 <script>
 	// Toggle between showing and hiding the sidebar when clicking the menu icon
@@ -467,6 +481,7 @@
 <?php if($user == "admin"){ ?>
 <script>
 	var canShowOld = false;		// if it's possible to show old reservations
+	var userToShow = "";
 	function showMantainance(){
 		officina = document.getElementById("officina");
 		officina.style.display = 'flex';
@@ -480,21 +495,37 @@
 	function showOld(showNew){
 		
 		let btn = document.getElementById("show_old_res");
+		let tooltip = document.getElementById("show_old_res_tooltip");
 		let icon = document.getElementById("res_eye");
 		let older_reserv = document.getElementsByName("old_reservation");
+
 		if(showNew){
 			btn.setAttribute('onclick', 'showOld(false)');
 			for(let i = 0; i < older_reserv.length; i++){
 				older_reserv[i].style.display = 'none';
 			}
+			tooltip.textContent = "Mostra vecchie prenotazioni";
 			icon.className = "fas fa-eye-slash";
 		}
 		else{
 			btn.setAttribute('onclick', 'showOld(true)');
-			for(let i = 0; i < older_reserv.length; i++){
-				older_reserv[i].style.display = 'flex';
-			}
 			icon.className = "fas fa-eye";
+			tooltip.textContent = "Mostra solo nuove prenotazioni";
+			for(let i = 0; i < older_reserv.length; i++)
+			{
+
+				if(older_reserv[i].getAttribute('value').includes(userToShow) || userToShow === ""){
+					console.log("yes");
+					older_reserv[i].style.display = 'flex';
+				}else{
+					console.log("no");
+					older_reserv[i].style.display = 'none';
+				}
+				
+				// older_reserv[i].style.display = 'flex';
+			}
+			
+			
 		}
 		canShowOld = !canShowOld;
 	}
@@ -503,6 +534,8 @@
 		let user = document.getElementById("user_searched").value;
 		let names = document.getElementsByName("usernames");
 		let forms = document.getElementsByClassName("container reservation");
+
+		userToShow = user;
 
 		for(let i = 0; i < names.length; i++){
 			if(names[i].textContent.includes(user)){
