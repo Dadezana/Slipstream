@@ -531,14 +531,14 @@
 	}
 
 	function searchUser(){
-		let user = document.getElementById("user_searched").value;
+		let user = document.getElementById("user_searched").value.toLowerCase();
 		let names = document.getElementsByName("usernames");
 		let forms = document.getElementsByClassName("container reservation");
 
 		userToShow = user;
 
 		for(let i = 0; i < names.length; i++){
-			if(names[i].textContent.includes(user)){
+			if(names[i].textContent.toLowerCase().includes(user)){
 				if(forms[i].getAttribute("name") == "old_reservation")
 				{
 					if(canShowOld){
