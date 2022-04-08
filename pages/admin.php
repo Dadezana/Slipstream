@@ -298,7 +298,7 @@
 
 <?php $i = 0; while($res = $conn->fetch($reserv_query)){ ?> <!-- Per mostrare più risultati della query -->
 
-	<div class="container reservation" <?php if($res["data"] < $current_date){ echo "name=\"old_reservation\""; echo "style=\"display: none\"";}?> value="<?php if($user == "admin") echo $res["cliente"];?>">
+	<div class="container reservation" <?php if($res["data"] < $current_date && $user == "admin"){ echo "name=\"old_reservation\""; echo "style=\"display: none\"";}?> value="<?php if($user == "admin") echo $res["cliente"];?>">
 
 		<?php if($user == "admin"){?>
 			<div id="username-title">
@@ -350,7 +350,7 @@
 		</div>
 		<form method="POST" action="admin.php" id="form-delete-btn">
 		
-			<button type="button" onclick="showForm(<?php echo $i ?>)" class="button control-btn"><i class="fas fa-cog margin-right"></i>Modifica</button>
+		<?php if($res["data"] > $current_date){ ?><button type="button" onclick="showForm(<?php echo $i ?>)" class="button control-btn"><i class="fas fa-cog margin-right"></i>Modifica</button><?php  }?>
 			<button type="submit" value="<?php echo $res["ID"] ?>" name="del" class="button control-btn"><i class="fas fa-trash-alt margin-right"></i>Elimina</button>
 		</form>
 
@@ -361,27 +361,29 @@
 		<!--
 		//*	FORM MODIFICA PRENOTAZIONE
 		 -->
-		<form method="POST" action="admin.php" class="modify-form" id="<?php echo "modify-form".$i ?>">
-			<label for="data">Data</label>
-			<input type="date" name="data">
-			
-			<label for="ora">Ora inizio</label>
-			<input type="time" name="ora">
+		<?php if($res["data"] > $current_date){ ?>
+			<form method="POST" action="admin.php" class="modify-form" id="<?php echo "modify-form".$i ?>">
+				<label for="data">Data</label>
+				<input type="date" name="data">
+				
+				<label for="ora">Ora inizio</label>
+				<input type="time" name="ora">
 
-			<label for="oraFine">Ora fine</label>
-			<input type="time" name="oraFine">
+				<label for="oraFine">Ora fine</label>
+				<input type="time" name="oraFine">
 
-			<label for="auto">Auto</label>
-			<select name="auto">
-				<option value=""></option>
-				<?php while( $temp = $conn->fetch($auto) ) { ?>
-					<option value="<?php echo $temp["targa"] ?>"><?php echo $temp["modello"] ?></option>
-				<?php } ?>
-			</select>
+				<label for="auto">Auto</label>
+				<select name="auto">
+					<option value=""></option>
+					<?php while( $temp = $conn->fetch($auto) ) { ?>
+						<option value="<?php echo $temp["targa"] ?>"><?php echo $temp["modello"] ?></option>
+					<?php } ?>
+				</select>
 
-			<button type="submit" name="mod" value="<?php echo $res["ID"]; ?>" style="width: 50%;" class="button hover-red border-black margin-bottom margin-top-20">Modifica</button>
-			<button type="button" onclick="hideForm(<?php echo $i ?>)" id="closeBtn" class="button"><i class="fas fa-times"></i></button>
-		</form>
+				<button type="submit" name="mod" value="<?php echo $res["ID"]; ?>" style="width: 50%;" class="button hover-red border-black margin-bottom margin-top-20">Modifica</button>
+				<button type="button" onclick="hideForm(<?php echo $i ?>)" id="closeBtn" class="button"><i class="fas fa-times"></i></button>
+			</form>
+		<?php } ?>
 	</div>
 	
 <?php $i++; } ?>
