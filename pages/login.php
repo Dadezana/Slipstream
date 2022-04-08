@@ -173,7 +173,7 @@ function notify_error($msg="Errore"){
 			die();
 		}
 
-		$sql = "SELECT username FROM cliente WHERE username='$username'";
+		$sql = "SELECT username FROM cliente WHERE username='$username' or email='$email'";
 		$query = $conn->query($sql);
 
 		if(mysqli_num_rows($query) > 0)
