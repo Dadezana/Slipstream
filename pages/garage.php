@@ -74,7 +74,7 @@
   $conn = new DB;
 
   if(!$conn->connect()){
-    // echo "<script>console.log('Failed to connect to db')</script>";
+    
   }
 ?>
 
@@ -260,14 +260,20 @@ if(isset($_POST["subC"]))
 
 		$current_date = date("Y-m-d");
 		$user_date = ($data);
-		// //  echo "<script>console.log('data before manipulation: $data')</script>";
-		// //  echo "<script>console.log('current_date: $current_date')</script>";
-		// //  echo "<script>console.log('user_date: $user_date')</script>";
 		if($user_date <= $current_date){
 			notify_error("Selezionare una data dopo oggi");
 			$canUpdate = false;
 		}
     if($canUpdate){
+        // controllo che non sia stato scelto un orario in cui siamo chiusi
+        if(check($oraFine, "20:00") > 0){
+          notify_error("La pista chiude alle ore 20:00");
+          $canUpdate = false;
+        }elseif(check($ora, "8:00") < 0){
+          notify_error("La pista apre alle ore 8:00");
+          $canUpdate = false;
+        }
+
 				// controllo se i minuti sono minimo 50
         $dateTime1 = date_create($ora);
         $dateTime2 = date_create($oraFine);
